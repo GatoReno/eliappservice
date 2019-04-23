@@ -84,7 +84,7 @@ app.use('/costumers', require('./routes/costumers'));
 app.use(express.static(path.join(__dirname, '../public/')));
 
 
-  app.set('port', process.env.PORT || 3000); //puerto 
+  app.set('port', process.env.PORT); //puerto 
   app.set('views', path.join(__dirname, 'views')); //vistas
   // view engine
   app.engine('.hbs', hbs({
