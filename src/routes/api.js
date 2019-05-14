@@ -103,48 +103,13 @@ router.get('/user-tc/:id', (req, res) => {
 });
 
 
-router.get('/false-news/', (req, res) => {
-    const {
-        id
-    } = req.params;
+router.get('/clients',(req,res)=>{
+    const qu = pool.query('SELECT * FROM USERS_ where user = 1');
 
-
-    //console.log(id)
-    const falsenews = {
-        title: 'test news false',
-        text1: '29f64cb637e74b83dfe9e0e233650293f967.jpg',
-        text2: '29f64cb637e74b83dfe9e0e233650293f967.jpg',
-        text3: '29f64cb637e74b83dfe9e0e233650293f967.jpg',
-        img1: '29f64cb637e74b83dfe9e0e233650293f967.jpg',
-        img2: '29f64cb637e74b83dfe9e0e233650293f967.jpg',
-        img3: '29f64cb637e74b83dfe9e0e233650293f967.jpg',
-        imgh: '29f64cb637e74b83dfe9e0e233650293f967.jpg',
-        id_proyecto: 1,
-        id_usercreated: 0
-
-    };
-
-    const insert = pool.query('INSERT INTO NEWS_ set = ?', [falsenews]);
-
-    var i;
-    for (i = 0; i < 20; i++) {
-        insert.then();
-    }
-
-    insert.then((data) => {
-        try {
-            req.flash('success', 'Noticia Generada con éxito');
-            res.redirect('/dashboard');
-        } catch (err) {
-            console.log(err)
-        }
-    }).catch((err) => {
-        console.log(err)
+    qu.then((data)=>{
+        res.json(data);
     });
-
-
-});
-
+})
 
 
 

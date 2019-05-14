@@ -46,21 +46,21 @@ function getprojects(){
     //$("#ownerT").load();
 
 };
-function getNews(){
+function getclients(){
     $.ajax({
         type: 'GET',
-        url: '/get-news',
+        url: '/clients',
         dataType: 'json',
         success: (data) => {
 
             data.forEach( ( item ) => {
                 const row = `<tr>
-                    <td><img width="155px" src="/uploads/${ item.imgh }"><br></td>
-                    <td>${ item.title }</td>
-                    <td>${ item.created_at }</td>
-                    <td><a href="/news/edit/${ item.id } " class="btn btn-default">Editar</a></td>
-                </tr>`;
-                $('#newsT').append( row );
+                    <td><a>${ item.id }</a><br></td>
+                    <td><a>${ item.name }</a></td>
+                    <td><a>${ item.mail }</a></td>
+                    <td><a hrf="">ver</a></td>
+                   </tr>`;
+                $('#clientsT').append( row );
             });
         }
 
@@ -76,9 +76,9 @@ function getadmins(){
 
             data.forEach( ( item ) => {
                 const row = `<tr>
-                    <td><img src="${ item.img }"></td>
+                    <td><input value="${ item.id }"></td>
                     <td>${ item.name }</td>
-                    <td><button>Eliminar</button></td>
+                    <td><a class="btn btn-default">Ver</a></td>
                 </tr>`;
                 $('#usersT').append( row );
             });
@@ -89,4 +89,4 @@ function getadmins(){
 
 };
 
-getowners(),getadmins(),getprojects(),getNews();
+getowners(),getadmins(),getprojects(),getclients();

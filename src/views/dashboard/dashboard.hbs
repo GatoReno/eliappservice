@@ -22,12 +22,11 @@
         {{!-- Navegador de pestañas --}}
         <ul class="nav nav-tabs">
             <li class="active"><a data-toggle="tab" href="#home">Perfil Admin</a></li>
-            <li><a data-toggle="tab" href="#menu1">Admin</a></li>
-            <li><a data-toggle="tab" href="#menu2">Noticias</a></li>
-            <li><a data-toggle="tab" href="#menu3">Proyectos</a></li>
-            <li><a data-toggle="tab" href="#menu4">Medallas</a></li>
+            <li><a data-toggle="tab" href="#menu1">Clientes</a></li>
+            <li><a data-toggle="tab" href="#menu2">Alumnos</a></li>
+            <li><a data-toggle="tab" href="#menu3">Maestros</a></li>
+            <li><a data-toggle="tab" href="#menu4">MEd</a></li>
             <li><a data-toggle="tab" href="#menu5">Actividades</a></li>
-            <li><a href="/costumers/">TrustCoins</a></li>
 
         </ul>
 
@@ -40,22 +39,19 @@
                         <li class="breadcrumb-item active" aria-current="page">Actualizar datos</li>
                     </ol>
                 </nav>
+
+
+
                 <div class="card hovercard">
                     <div class="cardheader">
 
                     </div>
-                    <div class="avatar">
-                        <img style=' width:100px;height:100px;' src='/uploads/{{user.img}}'>
 
-
-                    </div>
                     <div class="info">
-                        <div class="title">
-                            <a target="_blank" href="https://scripteden.com/">Script Eden</a>
-                        </div>
-                        <div class="desc">{{user.name}}</div>
-                        <div class="desc">Curious developer {{user.id_user}}</div>
-                        <div class="desc">Tech geek {{user.pass}}</div>
+
+                        <div class="desc"> user name : {{user.name}}</div>
+                        <div class="desc">id user :{{user.id_user}}</div>
+                        <div class="desc">crypto :{{user.pass}}</div>
                     </div>
                     <div class="bottom top2">
                         <a class="btn btn-primary btn-twitter btn-sm" href="https://twitter.com/webmaniac">
@@ -73,31 +69,15 @@
                     </div>
                 </div>
 
-            </div>
-
-            {{!-- Pestañas --}}
-            <div id="menu1" class="tab-pane fade p3">
-                <h3>Admin/sub-Admin</h3>
-
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#" data-toggle="modal"
-                                data-target="#myModalsubAdmin">Agregar sub-Admin</a></li>
-                        <li class="breadcrumb-item"><a href="#">Ver Lista </a></li>
-                        <li class="breadcrumb-item active" aria-current="page"></li>
-                    </ol>
-                </nav>
-
-
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <div class="col-lg-6 col-md-g col-sm-6">
                     <h3>Administración</h3>
                     <div class="top2 table-wrapper-scroll-y">
-                                               <table class="table table-hover">
+                        <table class="table table-hover">
                             <thead>
                                 <tr>
-                                    <th scope="col">Img</th>
+                                    <th scope="col">ID</th>
                                     <th scope="col">Name</th>
-                                    <th scope="col">Action</th>
+                                    <th scope="col">Ver</th>
 
                                 </tr>
                             </thead>
@@ -107,32 +87,48 @@
                             </tbody>
                         </table>
                     </div>
+                </div>
 
+
+            </div>
+
+            {{!-- Pestañas --}}
+            <div id="menu1" class="tab-pane fade p3">
+                <h3>Clientes</h3>
+
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#" data-toggle="modal"
+                                data-target="#myModalsubAdmin">Agregar cliente</a></li>
+                        <li class="breadcrumb-item"><a href="#">Ver Lista </a></li>
+                        <li class="breadcrumb-item active" aria-current="page"></li>
+                    </ol>
+                </nav>
+
+
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">Imagen cabecera</th>
+                                <th scope="col">Proyecto</th>
+                                <th scope="col">Fecha</th>
+                                <th>Acción</th>
+
+                            </tr>
+                        </thead>
+                        <tbody id="clientsT">
+
+                        </tbody>
+                    </table>
                 </div>
 
 
                 {{!Owner table}}
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                    <h3>Owner de proyecto</h3>
-                    <div class="top2 table-wrapper-scroll-y">
 
 
-                           <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Img</th>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Action</th>
-
-                                </tr>
-                            </thead>
-                            <tbody id="ownerT">
-
-
-                            </tbody>
-                        </table>
-                   
-                    </div>
 
                 </div>
 
@@ -144,18 +140,14 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                <h4 class="modal-title">Datos de usuario : <label for="">{{user.username}}</label></h4>
+                                <h4 class="modal-title">Datos de cliente : <label for="">{{user.username}}</label></h4>
                             </div>
                             <div class="modal-body">
-                                <form action="/auth/signup-subadmin" enctype="multipart/form-data" method="POST">
+                                <form action="/auth/signup-client" enctype="multipart/form-data" method="POST">
 
 
                                     <br>
-                                    <label for="">Role</label><br>
-                                    <select name="role" id="">
-                                        <option value="1">Admin</option>
-                                        <option value="2">Owner</option>
-                                    </select><br>
+
                                     <label for="">Nombre de usario</label><br>
                                     <input type="text" name="userName" placeholder="usuario"><br>
                                     <label for="">Nombre</label><br>
@@ -165,10 +157,11 @@
                                     <label for="">Apellido Materno</label><br>
                                     <input type="text" name="lastnameM" placeholder="Apellido Materno"><br>
                                     <label for="">Teléfono</label><br>
+                                    <input type="text" name="phone" placeholder="telefono"><br>
+
                                     <label for="exampleInputEmail1">Email address</label><br>
                                     <input type="email" name="mail" class="form-control" id="exampleInputEmail1"
                                         aria-describedby="emailHelp" placeholder="Enter email" autofocus><br>
-                                    <input type="text" name="phone" placeholder="telefono"><br>
                                     <label for="">Eliga una contraseña para el usuario</label><br>
 
                                     <input type="password" name="pass" placeholder="*****"><br>
@@ -210,7 +203,7 @@
                             </tr>
                         </thead>
                         <tbody id="newsT">
-{{!--
+                            {{!--
                             {{#each json.news}}
                             <tr>
 
@@ -239,9 +232,6 @@
 
                 {{! termina menu 2}}
             </div>
-
-
-
             <div id="menu3" class="tab-pane fade p3">
                 <h3>Administración Proyectos</h3>
 
@@ -252,21 +242,21 @@
                     </ol>
                 </nav>
 
-                                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th scope="col">Titulo</th>
-                                <th scope="col">Proyecto</th>
-                                <th scope="col">Editar</th>
-                                <th>Acción</th>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">Titulo</th>
+                            <th scope="col">Proyecto</th>
+                            <th scope="col">Editar</th>
+                            <th>Acción</th>
 
-                            </tr>
-                        </thead>
-                        <tbody id="projectsT">
+                        </tr>
+                    </thead>
+                    <tbody id="projectsT">
 
-                        </tbody>
-                    </table>
-{{!--
+                    </tbody>
+                </table>
+                {{!--
                 {{#each json.links}}
                 <div class="col-12 col-sm-6  col-md-4 col-lg-3">
 
@@ -352,17 +342,13 @@
     </div>
 
 
-<a href=""></a>
+    <a href=""></a>
 </div>
 
-<script src="http://code.jquery.com/jquery-3.3.1.js"
-			  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-			  crossorigin="anonymous"></script>
+<script src="http://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+    crossorigin="anonymous"></script>
 <script src="/js/populatetablesadmin.js"></script>
 
 
 {{else}}
 {{/if}}
-
-
-

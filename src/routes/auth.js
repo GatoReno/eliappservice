@@ -174,6 +174,55 @@ router.post('/signup-subadmin', async (req, res) => {
 
 
 
+router.post('/signup-client', async (req, res) => {
+    //console.log(req.body);
+    const mail = req.body.mail;
+    //const name = req.body.name;
+    const {
+
+        pass,
+        userName,
+        id,
+    
+        name
+    } = req.body;
+
+    const newUser = {
+        username: userName,
+        name: name,
+        mail: mail,
+        id_usercreated: 0,
+
+        mail: mail,
+        tutor: 0,
+        user : 1
+    };
+
+    
+
+    newUser.pass = await helpers.encryptPass(pass);
+
+    console.log(newUser);
+
+    const query = pool.query('INSERT INTO USERS_ set ?', [newUser]);
+
+    query.then((data) => {
+        //console.log(data.toString());
+        newUser.id = parseInt(data);
+        console.log(newUser);
+        res.redirect('/profile/', 200, req.flash('success', newUser.username + ' creado con éxito'));
+
+    }).catch((err) => {
+        console.log(err);
+
+        res.redirect('/profile/', 500, req.flash('err: ' + err));
+    });
+
+
+});
+
+
+
 
 
 module.exports = router;
