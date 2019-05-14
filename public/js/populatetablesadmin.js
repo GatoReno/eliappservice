@@ -90,5 +90,4 @@ function getadmins(){
 };
 
 //getprojects()getowners()
-getadmins()
-,getclients();
+getadmins(),getclients();
