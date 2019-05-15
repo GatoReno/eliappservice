@@ -146,10 +146,10 @@ router.post('/signup-subadmin', async (req, res) => {
 
         mail: mail,
         admin: null,
-        admin : 1
+        admin: 1
     };
 
-    
+
 
     newUser.pass = await helpers.encryptPass(pass);
 
@@ -175,48 +175,131 @@ router.post('/signup-subadmin', async (req, res) => {
 
 
 router.post('/signup-client', async (req, res) => {
-    //console.log(req.body);
-    const mail = req.body.mail;
-    //const name = req.body.name;
-    const {
 
-        pass,
-        userName,
-        id,
-    
-        name
+    // alumno cliente padre cliente madre
+
+    const {
+        name_alumno,
+        lastnameP_alumno,
+        lastnameM_alumno,
+        alergias_alumno,
+        tiposangre_alumno,
+        talla_alumno,
+        peso_alumno,
+        precede_alumno,
+        clave_alumno
     } = req.body;
 
-    const newUser = {
-        username: userName,
-        name: name,
-        mail: mail,
-        id_usercreated: 0,
+    const alumno = {
+        name: name_alumno,
+        lastnameP: lastnameP_alumno,
+        lastnameM: lastnameM_alumno,
+        alergias: alergias_alumno,
+        tiposangre: tiposangre_alumno,
+        talla: talla_alumno,
+        peso: peso_alumno,
+        precede: precede_alumno,
+        clave: clave_alumno,
+        status: 1
+    }
 
-        mail: mail,
-        tutor: 0,
-        user : 1
-    };
+    console.log(alumno);
 
+
+        // cliente padre
+        const {
+            name_padre,
+            escolaridad_padre,
+            ocupacion_padre,
+            trabajo_padre,
+            phone_padre,
+            oficina_padre,
+            mail_padre
+        } = req.body;
+    
+    
+        const padre = {
+            name_padre,
+            escolaridad_padre,
+            ocupacion_padre,
+            trabajo_padre,
+            phone_padre,
+            oficina_padre,
+            mail_padre
+        }
+    
+    
+        //cliente madre
+    
+        const {
+            name:name_madre,
+            escolaridad:escolaridad_madre,
+            ocupacion:ocupacion_madre,
+            trabajo:trabajo_madre,
+            phone:phone_madre,
+            oficina:oficina_madre,
+            mail:mail_madre
+        } = req.body;
+    
+        const madre = {
+            name:name_madre,
+            escolaridad:escolaridad_madre,
+            ocupacion:ocupacion_madre,
+            trabajo:trabajo_madre,
+            phone:phone_madre,
+            oficina:oficina_madre,
+            mail:mail_madre
+        }
     
 
-    newUser.pass = await helpers.encryptPass(pass);
+    const queryalumn = pool.query('INSERT INTO alumnos_ set  ?', [alumno]);
+    queryalumn.then((err, res) => {
+        if (err) throw err;
 
-    console.log(newUser);
+        if (res.length > 0) {
+            const alumn = res[0];
+           // console.log(alumn);
 
-    const query = pool.query('INSERT INTO USERS_ set ?', [newUser]);
+            const id = alumn.insertId;
+            const cartera = {id_alumno: id}
+            //return id;
 
-    query.then((data) => {
-        //console.log(data.toString());
-        newUser.id = parseInt(data);
-        console.log(newUser);
-        res.redirect('/profile/', 200, req.flash('success', newUser.username + ' creado con éxito'));
+            const querycart = pool.query('INSERT INTO cartera_ set  ?', [cartera]);
+            querycart.then((err, res) => {
+                if (err) throw err;
+                const cart = res[0];
+            console.log(cart);
+                const idcart = res.insertId;
+                console.log(idcart);
+                
 
+            }).catch((err) => {
+                console.log(err)
+            });
+
+        }
     }).catch((err) => {
-        console.log(err);
-
-        res.redirect('/profile/', 500, req.flash('err: ' + err));
+        console.log(err)
     });
+
+    console.log(queryalumn.id)
+/*
+
+const querycart = pool.query('INSERT INTO cartera_ set  ?', [cartera]);
+            querycart.then((err, res) => {
+                if (err) throw err;
+                const cart = res[0];
+            console.log(cart);
+                const idcart = res.insertId;
+
+                
+
+            }).catch((err) => {
+                console.log(err)
+            });
+
+*/
+
 
 
 });

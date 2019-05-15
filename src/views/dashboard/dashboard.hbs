@@ -99,7 +99,7 @@
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="#" data-toggle="modal"
-                                data-target="#myModalsubAdmin">Agregar cliente</a></li>
+                                data-target="#myModalsubClient">Agregar cliente</a></li>
                         <li class="breadcrumb-item"><a href="#">Ver Lista </a></li>
                         <li class="breadcrumb-item active" aria-current="page"></li>
                     </ol>
@@ -133,7 +133,7 @@
                 </div>
 
                 <!-- Modal -->
-                <div class="modal fade" id="myModalsubAdmin" role="dialog">
+                <div class="modal fade" id="myModalsubClient" role="dialog">
                     <div class="modal-dialog">
 
                         <!-- Modal content-->
@@ -145,30 +145,109 @@
                             <div class="modal-body">
                                 <form action="/auth/signup-client" enctype="multipart/form-data" method="POST">
 
-
+                                    <h4>Datos de alumno</h4>
                                     <br>
 
-                                    <label for="">Nombre de usario</label><br>
-                                    <input type="text" name="userName" placeholder="usuario"><br>
                                     <label for="">Nombre</label><br>
-                                    <input type="text" name="name" placeholder="Nombre"><br>
+                                    <input class="form-control" type="text" name="name_alumno" placeholder="...."><br>
+                                    <br>
                                     <label for="">Apellido Paterno</label><br>
-                                    <input type="text" name="lastnameP" placeholder="Apellido Paterno"><br>
+                                    <input class="form-control" type="text" name="lastnameP_alumno"
+                                        placeholder="...."><br>
                                     <label for="">Apellido Materno</label><br>
-                                    <input type="text" name="lastnameM" placeholder="Apellido Materno"><br>
+                                    <input class="form-control" type="text" name="lastnameM_alumno"
+                                        placeholder="...."><br>
+
+
+                                    <label for="">Alergias</label><br>
+                                    <input class="form-control" type="text" name="alergias_alumno"
+                                        placeholder="...."><br>
+
+                                    <label for="">Tipo de Sangre</label><br>
+                                    <input class="form-control" type="text" name="tiposangre_alumno"
+                                        placeholder="...."><br>
+
+                                    <label for="">Talla</label><br>
+                                    <input class="form-control" type="text" name="talla_alumno" placeholder="...."><br>
+
+                                    <label for="">Peso</label><br>
+                                    <input class="form-control" type="text" name="peso_alumno" placeholder="...."><br>
+
+                                    <label for="">Escuela de precendencia</label><br>
+                                    <input class="form-control" type="text" name="precede_alumno"
+                                        placeholder="...."><br>
+
+
+
+                                    <label for="">Clave</label><br>
+                                    <input class="form-control" type="text" name="clave_alumno"
+                                        placeholder="Apellido Materno"><br>
+
+
+
+                                    <h4>Datos del padre</h4>
+                                    <br>
+
+                                    <label for="">Nombre</label><br>
+                                    <input class="form-control" type="text" name="name_padre" placeholder="Nombre"><br>
+                                    <label for="">Escolaridad</label><br>
+                                    <input class="form-control" type="text" name="escolaridad_padre"
+                                        placeholder="Escolaridad"><br>
+
+
+                                    <label for="">Ocupación</label><br>
+                                    <input class="form-control" type="text" name="ocupacion_padre"
+                                        placeholder="Ocupación"><br>
+
+                                    <label for="">Institución de trabajo</label><br>
+                                    <input class="form-control" type="text" name="trabajo_padre"
+                                        placeholder="Institución u oficina"><br>
+
+
                                     <label for="">Teléfono</label><br>
-                                    <input type="text" name="phone" placeholder="telefono"><br>
+                                    <input class="form-control" type="text" name="phone_padre"
+                                        placeholder="telefono"><br>
+
+                                    <label for="">Oficina Teléfono</label><br>
+                                    <input class="form-control" type="text" name="oficina_padre"
+                                        placeholder="oficina"><br>
 
                                     <label for="exampleInputEmail1">Email address</label><br>
-                                    <input type="email" name="mail" class="form-control" id="exampleInputEmail1"
+                                    <input class="form-control" type="email" name="mail_padre" class="form-control"
+                                        id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"
+                                        autofocus><br>
+
+
+
+
+
+                                    <h4>Datos de la madre</h4>
+                                    <br>
+
+
+
+                                    <label for="">Nombre</label><br>
+                                    <input class="form-control" type="text" name="name_madre" placeholder="Nombre"><br>
+                                    <label for="">Escolaridad</label><br>
+                                    <input class="form-control" type="text" name="escolaridad_madre" placeholder="Escolaridad"><br>
+
+
+                                    <label for="">Ocupación</label><br>
+                                    <input class="form-control" type="text" name="ocupacion_madre" placeholder="Ocupación"><br>
+
+                                    <label for="">Institución de trabajo</label><br>
+                                    <input class="form-control" type="text" name="trabajo_madre" placeholder="Institución u oficina"><br>
+
+
+                                    <label for="">Teléfono</label><br>
+                                    <input class="form-control" type="text" name="phone_madre" placeholder="telefono"><br>
+
+                                    <label for="">Oficina Teléfono</label><br>
+                                    <input class="form-control" type="text" name="oficina_madre" placeholder="oficina"><br>
+
+                                    <label for="exampleInputEmail1">Email address</label><br>
+                                    <input class="form-control" type="email" name="mail_madre" class="form-control" id="exampleInputEmail1"
                                         aria-describedby="emailHelp" placeholder="Enter email" autofocus><br>
-                                    <label for="">Eliga una contraseña para el usuario</label><br>
-
-                                    <input type="password" name="pass" placeholder="*****"><br>
-
-                                    <label for="exampleInputPassword1">Día de nacimiento</label>
-                                    <input type="date" name="datenac" class="form-control" id="exampleInputPassword1"
-                                        placeholder="Password" autofocus>
 
 
 
