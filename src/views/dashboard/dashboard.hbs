@@ -25,7 +25,7 @@
             <li><a data-toggle="tab" href="#menu1">Clientes</a></li>
             <li><a data-toggle="tab" href="#menu2">Alumnos</a></li>
             <li><a data-toggle="tab" href="#menu3">Maestros</a></li>
-            <li><a data-toggle="tab" href="#menu4">MEd</a></li>
+            <li><a data-toggle="tab" href="#menu4">Horario</a></li>
             <li><a data-toggle="tab" href="#menu5">Actividades</a></li>
 
         </ul>
@@ -96,14 +96,7 @@
             <div id="menu1" class="tab-pane fade p3">
                 <h3>Clientes</h3>
 
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#" data-toggle="modal"
-                                data-target="#myModalsubClient">Agregar cliente</a></li>
-                        <li class="breadcrumb-item"><a href="#">Ver Lista </a></li>
-                        <li class="breadcrumb-item active" aria-current="page"></li>
-                    </ol>
-                </nav>
+
 
 
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
@@ -123,7 +116,48 @@
                         </tbody>
                     </table>
                 </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <form action="/add-client" method="POST">
 
+
+                        <h4>Datos de cliente</h4>
+                        <br>
+                        <input type="submit" value="crear" class="btn btn-default pull-right">
+                        <label for="">Nombre required</label><br>
+                        <input class="form-control" type="text" name="name_padre" placeholder="Nombre" required><br>
+
+                        <label for="">Parentesco</label><br>
+                        <input class="form-control" type="text" name="parentesco" placeholder="parentesco" required><br>
+                        <label for="">Escolaridad</label><br>
+                        <input class="form-control" type="text" name="escolaridad_padre" placeholder="Escolaridad"
+                            required><br>
+
+
+                        <label for="">Ocupación</label><br>
+                        <input class="form-control" type="text" name="ocupacion_padre" placeholder="Ocupación"
+                            required><br>
+
+                        <label for="">Institución de trabajo</label><br>
+                        <input class="form-control" type="text" name="trabajo_padre" placeholder="Institución u oficina"
+                            required><br>
+
+
+                        <label for="">Teléfono</label><br>
+                        <input class="form-control" type="text" name="phone_padre" placeholder="telefono" required><br>
+
+                        <label for="">Oficina Teléfono</label><br>
+                        <input class="form-control" type="text" name="oficina_padre" placeholder="oficina" required><br>
+
+                        <label for="exampleInputEmail1">Email address</label><br>
+                        <input class="form-control" type="email" name="mail_padre" class="form-control"
+                            id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" autofocus
+                            required><br>
+
+
+
+
+                    </form>
+                </div>
 
                 {{!Owner table}}
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
@@ -229,25 +263,31 @@
                                     <label for="">Nombre</label><br>
                                     <input class="form-control" type="text" name="name_madre" placeholder="Nombre"><br>
                                     <label for="">Escolaridad</label><br>
-                                    <input class="form-control" type="text" name="escolaridad_madre" placeholder="Escolaridad"><br>
+                                    <input class="form-control" type="text" name="escolaridad_madre"
+                                        placeholder="Escolaridad"><br>
 
 
                                     <label for="">Ocupación</label><br>
-                                    <input class="form-control" type="text" name="ocupacion_madre" placeholder="Ocupación"><br>
+                                    <input class="form-control" type="text" name="ocupacion_madre"
+                                        placeholder="Ocupación"><br>
 
                                     <label for="">Institución de trabajo</label><br>
-                                    <input class="form-control" type="text" name="trabajo_madre" placeholder="Institución u oficina"><br>
+                                    <input class="form-control" type="text" name="trabajo_madre"
+                                        placeholder="Institución u oficina"><br>
 
 
                                     <label for="">Teléfono</label><br>
-                                    <input class="form-control" type="text" name="phone_madre" placeholder="telefono"><br>
+                                    <input class="form-control" type="text" name="phone_madre"
+                                        placeholder="telefono"><br>
 
                                     <label for="">Oficina Teléfono</label><br>
-                                    <input class="form-control" type="text" name="oficina_madre" placeholder="oficina"><br>
+                                    <input class="form-control" type="text" name="oficina_madre"
+                                        placeholder="oficina"><br>
 
                                     <label for="exampleInputEmail1">Email address</label><br>
-                                    <input class="form-control" type="email" name="mail_madre" class="form-control" id="exampleInputEmail1"
-                                        aria-describedby="emailHelp" placeholder="Enter email" autofocus><br>
+                                    <input class="form-control" type="email" name="mail_madre" class="form-control"
+                                        id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"
+                                        autofocus><br>
 
 
 
@@ -269,41 +309,76 @@
                 {{! termina menu 1}}
             </div>
             <div id="menu2" class="tab-pane fade p3">
-                <h3>Noticias</h3>
-                <div class="top2 table-wrapper-scroll-y">
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th scope="col">Imagen cabecera</th>
-                                <th scope="col">Proyecto</th>
-                                <th scope="col">Fecha</th>
-                                <th>Acción</th>
-
-                            </tr>
-                        </thead>
-                        <tbody id="newsT">
-                            {{!--
-                            {{#each json.news}}
-                            <tr>
-
-                                <td>
-                                    {{title}}
-                                </td>
-                                <td>{{proyecto}}</td>
-                                <td>
-                                    {{formatDate created_at "short"}}</td>
-                                <td>
-                                    <a href="/links/newsinfo/{{id_news}}" class="btn btn-default btn-sm">Update</a>
-
-                                </td>
+                <h3>Alumnos</h3>
 
 
-                            </tr>
-                            {{/each}}
---}}
-                        </tbody>
-                    </table>
+
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <div class="top2 table-wrapper-scroll-y">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Imagen cabecera</th>
+                                    <th scope="col">Fecha de ingreso a sistema</th>
+                                    <th scope="col"></th>
+                                    <th>Detalles</th>
+
+                                </tr>
+                            </thead>
+                            <tbody id="alumnosT">
+
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
+
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <form action="/add-alumno" method="POST">
+                        <input type="submit" class="btn btn-default pull-right" value="Crear">
+
+
+                        <h4>Agregar de alumno</h4>
+                        <br>
+                        <label for="">Elegir tutor</label> <small>Esta es una lista de los actuales clientes</small>
+                        <select class="form-control" name="id_client" id="clientselect" required>
+
+                        </select>
+                        <br>
+                        <input class="form-control" type="text" name="name_alumno" placeholder="Nombre " required><br>
+                        <input class="form-control" type="text" name="lastnameP_alumno" placeholder="Apellido Paterno"
+                            required><br>
+                        <input class="form-control" type="text" name="lastnameM_alumno" placeholder="Apellido Materno"
+                            required><br>
+
+
+                        <input class="form-control" type="text" name="alergias_alumno" placeholder="Alergias"
+                            required><br>
+
+                        <input class="form-control" type="text" name="tiposangre_alumno" placeholder="Tipo de Sangre"
+                            required><br>
+
+                        <input class="form-control" type="text" name="talla_alumno" placeholder="Talla" required><br>
+
+                        <input class="form-control" type="text" name="peso_alumno" placeholder="Peso" required><br>
+
+                        <input class="form-control" type="text" name="precede_alumno"
+                            placeholder="Escuela de precendencia" required><br>
+
+                        <input class="form-control" type="text" name="clave_alumno" placeholder="Clave" required><br>
+
+                        <input class="form-control" type="text" name="colegiatura" placeholder="Colegiatura - $.00 mx"
+                            required><br>
+
+
+
+
+                    </form>
+                </div>
+
+
+
+
+
 
 
 
@@ -314,12 +389,7 @@
             <div id="menu3" class="tab-pane fade p3">
                 <h3>Administración Proyectos</h3>
 
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="/projects/add-project">Agregar Proyecto</a></li>
 
-                    </ol>
-                </nav>
 
                 <table class="table table-hover">
                     <thead>
@@ -331,67 +401,54 @@
 
                         </tr>
                     </thead>
-                    <tbody id="projectsT">
+                    <tbody id="maestrosT">
 
                     </tbody>
                 </table>
-                {{!--
-                {{#each json.links}}
-                <div class="col-12 col-sm-6  col-md-4 col-lg-3">
 
-                    <div class="card text-center">
-                        <a href="">
-                            <a href="/links/viewproyect/{{id}}">
-                                <h3 class="card-title text-uppercase">
-                                    {{title}}
-                                </h3>
-                            </a>
-                        </a>
-                        <div class="card-body ">
-                            <div>
-                                {{description}}
-                            </div>
-
-                            <br>
-                            <div>
-                                <a href="/links/viewproyect/{{id}}" class="btn btn-default btn-sm">Ver Proyecto</a>
-                            </div>
-                        </div>
-                        <div class="card-footer">
-                            <div>
-                                <br>
-                                <a href="/links/delete/{{id}}" class="btn btn-default btn-sm">Delete</a>
-                                <a href="/links/update/{{id}}" class="btn btn-default btn-sm">Update</a>
-
-                            </div>
-                            <div>
-                                <br>
-                                creado el día: {{timeago created_at}}
-                            </div>
-                        </div>
-                    </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12"></div>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <form action="/add-maestro" method="POST">
+                        <input type="submit" class="btn btn-default pull-right" value="Crear">
 
 
+                        <h4>Agregar de alumno</h4>
+                        <br>
+                        <label for="">Elegir tutor</label> <small>Esta es una lista de los actuales clientes</small>
 
-                </div>
-                {{else}}
-                <div class="col-12 ">
-                    <div class="card text-center">
-                        <div class="card-body">
-                            <p>No hay projectos cargados</p>
-                            
-                            <a href="/projects/add-project" class="btn btn-default">Añadir proyecto</a>
-                        </div>
-                    </div>
+                        <br>
+                        <input class="form-control" type="text" name="name" placeholder="Nombre Completo" required><br>
+                        <input class="form-control" type="text" name="numerotel" placeholder="Telefono" required><br>
+                        <input class="form-control" type="text" name="asignatura" placeholder="Asignatura" required><br>
+
+
+                        <input class="form-control" type="text" name="sueldo" placeholder="sueldo" required><br>
+
+                        <input class="form-control" type="text" name="curp" placeholder="curp" required><br>
+
+                        <input class="form-control" type="text" name="profesion" placeholder="profesion" required><br>
+
+                        <input class="form-control" type="mail" name="mail" placeholder="mail@ejemplo.com" required><br>
+
+                        <input class="form-control" type="text" name="rfc" placeholder="rfc" required><br>
+
+                        <small>fecha de ingreso</small>
+                        <input class="form-control" type="date" name="fingreso" placeholder="fingreso" required><br>
+                        <small>fecha de egreso</small>
+
+                        <input class="form-control" type="date" name="fegreso" placeholder="fegreso" required><br>
+
+
+                    </form>
                 </div>
 
-                {{/each}}
-                --}}
-                {{! termina menu 3}}
+
+
+
             </div>
 
             <div id="menu4" class="tab-pane fade p3">
-                <h3>Medallas</h3>
+                <h3>Horario</h3>
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="/links/add">Agregar Proyecto</a></li>

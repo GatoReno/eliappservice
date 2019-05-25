@@ -206,99 +206,96 @@ router.post('/signup-client', async (req, res) => {
     console.log(alumno);
 
 
-        // cliente padre
-        const {
-            name_padre,
-            escolaridad_padre,
-            ocupacion_padre,
-            trabajo_padre,
-            phone_padre,
-            oficina_padre,
-            mail_padre
-        } = req.body;
-    
-    
-        const padre = {
-            name_padre,
-            escolaridad_padre,
-            ocupacion_padre,
-            trabajo_padre,
-            phone_padre,
-            oficina_padre,
-            mail_padre
-        }
-    
-    
-        //cliente madre
-    
-        const {
-            name:name_madre,
-            escolaridad:escolaridad_madre,
-            ocupacion:ocupacion_madre,
-            trabajo:trabajo_madre,
-            phone:phone_madre,
-            oficina:oficina_madre,
-            mail:mail_madre
-        } = req.body;
-    
-        const madre = {
-            name:name_madre,
-            escolaridad:escolaridad_madre,
-            ocupacion:ocupacion_madre,
-            trabajo:trabajo_madre,
-            phone:phone_madre,
-            oficina:oficina_madre,
-            mail:mail_madre
-        }
-    
+    // cliente padre
+    const {
+        name_padre,
+        escolaridad_padre,
+        ocupacion_padre,
+        trabajo_padre,
+        phone_padre,
+        oficina_padre,
+        mail_padre
+    } = req.body;
+
+
+    const padre = {
+        name_padre,
+        escolaridad_padre,
+        ocupacion_padre,
+        trabajo_padre,
+        phone_padre,
+        oficina_padre,
+        mail_padre
+    }
+
+
+    //cliente madre
+
+    const {
+        name: name_madre,
+        escolaridad: escolaridad_madre,
+        ocupacion: ocupacion_madre,
+        trabajo: trabajo_madre,
+        phone: phone_madre,
+        oficina: oficina_madre,
+        mail: mail_madre
+    } = req.body;
+
+    const madre = {
+        name: name_madre,
+        escolaridad: escolaridad_madre,
+        ocupacion: ocupacion_madre,
+        trabajo: trabajo_madre,
+        phone: phone_madre,
+        oficina: oficina_madre,
+        mail: mail_madre
+    }
+
 
     const queryalumn = pool.query('INSERT INTO alumnos_ set  ?', [alumno]);
-    queryalumn.then((err, res) => {
+    queryalumn.then(  (err, resx) => {
         if (err) throw err;
 
-        if (res.length > 0) {
-            const alumn = res[0];
-           // console.log(alumn);
+        if (resx.length > 0) {
+            /*
+            const alumn = resx[0];
+            // console.log(alumn);
 
             const id = alumn.insertId;
-            const cartera = {id_alumno: id}
+            const cartera = {
+                id_alumno: id
+            }
             //return id;
 
-            const querycart = pool.query('INSERT INTO cartera_ set  ?', [cartera]);
-            querycart.then((err, res) => {
-                if (err) throw err;
-                const cart = res[0];
-            console.log(cart);
-                const idcart = res.insertId;
-                console.log(idcart);
-                
+            const querycart = await pool.query('INSERT INTO cartera_ set  ?', [cartera]);
+            */
 
-            }).catch((err) => {
-                console.log(err)
-            });
+            const alumn = resx[0];
 
+            const cartera = {id_alumno: alumn.insertId}
+try{
+    const resCart =  pool.query('INSERT INTO cartera_ set cartera = ?', [cartera]);
+    const resUserp =  pool.query('INSERT INTO users_ set  = ?', [padre]);
+    const resUserm =  pool.query('INSERT INTO users_ set  = ?', [madre]);
+    if(resCart) console.log(resCart.id);
+            if(resUserp) console.log(resUserp.id);
+            if(resUserm) console.log(resUserm.id);
+}
+catch(e){
+    console.log(e)
+}
+         
+            const cart = resx[0];
+            const idcart = cart.insertId;
+
+        
         }
     }).catch((err) => {
         console.log(err)
     });
 
-    console.log(queryalumn.id)
-/*
 
-const querycart = pool.query('INSERT INTO cartera_ set  ?', [cartera]);
-            querycart.then((err, res) => {
-                if (err) throw err;
-                const cart = res[0];
-            console.log(cart);
-                const idcart = res.insertId;
 
-                
-
-            }).catch((err) => {
-                console.log(err)
-            });
-
-*/
 
 
 

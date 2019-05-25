@@ -1,0 +1,259 @@
+<script src="http://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+  crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js  "></script>
+
+<div class="row">
+  <div class="container">
+    {{#if user}}
+    soy usuario {{user.name}}
+
+
+
+
+    {{#each cliente}}
+    hay cliente
+    {{name}}
+    {{escolaridad}}
+    {{ocupacion}}
+    {{trabajo}}
+    {{mail}}
+    {{phone}}
+    {{oficina}}
+    {{alergias}}
+    {{colegiatura}}
+    {{parentesco}}
+
+    {{id}}
+    {{#if id_cartera}}
+
+
+    <div class="col-lg-12">
+      <h4>Generar Pago</h4>
+      <form action="">
+        <input type="submit" value="Registrar pago" class="btn btn-default pull-right">
+        <input type="text" class="hidden " value="{{id}}" name="id_client" placeholder="concepto" required>
+
+        <input type="text" class="form-control" value="" name="concepto" placeholder="concepto" required>
+        <input type="text" class="form-control" value="" name="amount" placeholder="$ 0.00" required>
+
+        <select name="mes" id="" required>
+          <option value="1">enero</option>
+          <option value="2">febrero</option>
+
+          <option value="3">marzo</option>
+
+          <option value="4">abril</option>
+
+          <option value="5">mayo</option>
+
+          <option value="6">junio</option>
+
+          <option value="7">julio</option>
+
+          <option value="8">agosto</option>
+
+          <option value="9">septiembre</option>
+
+          <option value="10">octubre</option>
+
+          <option value="11">noviembre</option>
+
+          <option value="12">diciembre</option>
+
+        </select>
+      </form>
+    </div>
+    <div class="col-lg-6">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">Estado</th>
+            <th scope="col">Detalles</th>
+
+          </tr>
+        </thead>
+        <tbody id="carterasT">
+
+        </tbody>
+      </table>
+
+
+      <script>
+
+        function carteras() {
+
+          $.ajax({
+            type: 'GET',
+            url: '/carteras/{{id}}',
+            dataType: 'json',
+            success: (data) => {
+
+              data.forEach((item) => {
+                const row = `<tr>
+                    <td><input value="${ item.status}"></td>
+
+                    <td><a href="/infocartera/${ item.id}" class="btn btn-default">Ver</a></td>
+                </tr>`;
+                $('#carterasT').append(row);
+              });
+            }
+
+          });
+          //$("#ownerT").load();
+
+        };
+        carteras();
+      </script>
+
+    </div>
+    <div class="col-lg-6">
+      <a href="">Crear cartera</a>
+
+      <form action="/cartera-add" method="POST">
+        <input type="text" id="ic" value="{{id}}" name="id_cliente">
+
+        <input type="submit" class="btn btn-default" name="" id="" value="Crear nueva cartera">
+
+      </form>
+    </div>
+
+    {{else }}
+
+    <div class="col-lg-6">
+      <a href="">Crear cartera</a>
+
+      <form action="/cartera-add " method="POST">
+        <input type="text" value="{{id}}" name="id_cliente">
+        <input type="submit" class="btn btn-default" name="" id="" value="Crear cartera">
+
+      </form>
+    </div>
+
+    {{/if}}
+
+    {{else}}
+    {{/each}}
+
+
+    {{#each cartera}}
+    hay cartera
+
+
+    {{id}}
+    {{id_cliente}}
+
+    {{status}}
+    {{enero}}
+    {{febrero}}
+    {{marzo}}
+    {{abril}}
+    {{mayo}}
+    {{junio}}
+    {{julio}}
+    {{agost}}
+    {{sept}}
+    {{nov}}
+    {{dic}}
+
+    <div class="col-lg-12">
+
+      {{#if id_alumno}}
+
+      {{else}}
+
+      <h4>Cartera sin asignar</h4>
+
+
+      <form action="/cartera-update" method="post">
+        <input type="submit" class="btn btn-default pull-right" value="Vincular cartera con este alumno">
+        <input type="text" class="hidden" name="id_cartera" value="{{id}}">
+        <select class="form-control" name="id_alumno" id="alumnosSelect">
+
+        </select>
+        <script>
+          function alumnosSelect() {
+            $.ajax({
+              type: 'GET',
+              url: '/alumnos',
+              dataType: 'json',
+              success: (data) => {
+
+                data.forEach((item) => {
+                  const row = `<option value="${item.id}">
+                    ${ item.name} - ${item.lastnameP} - ${item.lastnameM} 
+                   </option>`;
+                  $('#alumnosSelect').append(row);
+                });
+              }
+
+            });
+          };alumnosSelect();
+
+
+        </script>
+      </form>
+
+      {{/if}}
+
+    </div>
+
+    {{else}}
+    {{/each}}
+
+
+    {{#each alumno}}
+    hay alumno
+
+
+    {{id}}
+    {{id_cliente}}
+    {{name}}
+    {{lastnameP}}
+    {{lastnameM}}
+    {{tiposangre}}
+    {{talla}}
+    {{peso}}
+    {{precede}}
+    {{alergias}}
+    {{colegiatura}}
+
+    {{else}}
+    {{/each}}
+
+
+
+
+
+
+
+
+
+    {{#each maestro}}
+    hay maestro
+
+
+    {{id}}
+    {{id_horarios}}
+
+    {{numerotel}}
+    {{asignatura}}
+    {{sueldo}}
+    {{trabajo}}
+    {{mail}}
+    {{profesion}}
+    {{rfc}}
+    {{alergias}}
+    {{estudios}}
+    {{areadeop}}
+    {{compensa}}
+    {{sobresaliente}}
+    {{fingreso}}
+    {{fegreso}}
+
+    {{else}}
+    {{/each}}
+
+    {{else}}
+    {{/if}}
+  </div>
+</div>

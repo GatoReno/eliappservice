@@ -46,7 +46,8 @@ function getprojects(){
     //$("#ownerT").load();
 
 };
-function getclients(){
+
+function getclientsSelect(){
     $.ajax({
         type: 'GET',
         url: '/clients',
@@ -54,18 +55,35 @@ function getclients(){
         success: (data) => {
 
             data.forEach( ( item ) => {
-                const row = `<tr>
-                    <td><a>${ item.id }</a><br></td>
-                    <td><a>${ item.name }</a></td>
-                    <td><a>${ item.mail }</a></td>
-                    <td><a hrf="">ver</a></td>
-                   </tr>`;
-                $('#clientsT').append( row );
+                const row = `<option value="${ item.id }">
+                    ${ item.name }
+                   </option>`;
+                $('#clientselect').append( row );
             });
         }
 
     });
 };
+
+
+function alumnosSelect(){
+    $.ajax({
+        type: 'GET',
+        url: '/alumnos',
+        dataType: 'json',
+        success: (data) => {
+
+            data.forEach( ( item ) => {
+                const row = `<option value="${ item.id }">
+                    ${ item.name } - ${ item.lastnameP } - ${ item.lastnameM } 
+                   </option>`;
+                $('#alumnosSelect').append( row );
+            });
+        }
+
+    });
+};
+
 function getadmins(){
     
     $.ajax({
@@ -89,5 +107,79 @@ function getadmins(){
 
 };
 
+
+function getalumn(){
+    
+    $.ajax({
+        type: 'GET',
+        url: '/alumnos',
+        dataType: 'json',
+        success: (data) => {
+
+            data.forEach( ( item ) => {
+                const row = `<tr>
+                    <td><input value="${ item.name }"></td>
+                    <td>${ item.created_at }</td>
+                    <td></td>
+                    <td><a href="/infoalumno/${ item.id }" class="btn btn-default">Ver</a></td>
+                </tr>`;
+                $('#alumnosT').append( row );
+            });
+        }
+
+    });
+    //$("#ownerT").load();
+
+};
+
+
+function getmaestros(){
+    
+    $.ajax({
+        type: 'GET',
+        url: '/maestros',
+        dataType: 'json',
+        success: (data) => {
+
+            data.forEach( ( item ) => {
+                const row = `<tr>
+                    <td><input value="${ item.name }"></td>
+                    <td>${ item.created_at }</td>
+                    <td></td>
+                    <td><a href="/infomaestro/${ item.id }" class="btn btn-default">Ver</a></td>
+                </tr>`;
+                $('#maestrosT').append( row );
+            });
+        }
+
+    });
+    //$("#ownerT").load();
+
+};
+
+
+
+function getclients(){
+    $.ajax({
+        type: 'GET',
+        url: '/clients',
+        dataType: 'json',
+        success: (data) => {
+
+            data.forEach( ( item ) => {
+                const row = `<tr>
+                    
+                    <td>${ item.name }</td>
+                    <td></td>
+                    <td>${ item.mail }</td>
+                    <td><a class="btn btn-default" href="/infocliente/${ item.id}">ver</a></td>
+                   </tr>`;
+                $('#clientsT').append( row );
+            });
+        }
+
+    });
+};
+
 //getprojects()getowners()
-getadmins(),getclients();
+getadmins(),getclients(),getclientsSelect(),getalumn(),getmaestros(),alumnosSelect();
