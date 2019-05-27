@@ -6,10 +6,6 @@
   <div class="container">
     {{#if user}}
     soy usuario {{user.name}}
-
-
-
-
     {{#each cliente}}
     hay cliente
     {{name}}
@@ -36,7 +32,7 @@
         <input type="text" class="form-control" value="" name="concepto" placeholder="concepto" required>
         <input type="text" class="form-control" value="" name="amount" placeholder="$ 0.00" required>
 
-        <select name="mes" id="" required>
+        <select name="mes" id="" >
           <option value="1">enero</option>
           <option value="2">febrero</option>
 
@@ -61,9 +57,18 @@
           <option value="12">diciembre</option>
 
         </select>
+
+
+        <select name="id_cartera" id="carterasSelect" >
+
+        </select>
+
+
+
       </form>
     </div>
     <div class="col-lg-6">
+      <h4>Carteras</h4>
       <table class="table table-hover">
         <thead>
           <tr>
@@ -102,7 +107,26 @@
           //$("#ownerT").load();
 
         };
-        carteras();
+                function carteras2() {
+
+          $.ajax({
+            type: 'GET',
+            url: '/carteras/{{id}}',
+            dataType: 'json',
+            success: (data) => {
+
+              data.forEach((item) => {
+                const row = `
+                    <option value="${ item.id}">${ item.name}</option>`;
+                $('#carterasSelect').append(row);
+              });
+            }
+
+          });
+          //$("#ownerT").load();
+
+        };
+        carteras(),carteras2();
       </script>
 
     </div>
@@ -174,7 +198,7 @@
           function alumnosSelect() {
             $.ajax({
               type: 'GET',
-              url: '/alumnos',
+              url: '/alumnos-sincartera',
               dataType: 'json',
               success: (data) => {
 
@@ -187,7 +211,7 @@
               }
 
             });
-          };alumnosSelect();
+          }; alumnosSelect();
 
 
         </script>
@@ -217,12 +241,172 @@
     {{alergias}}
     {{colegiatura}}
 
+
+
+
+    <div class="col-lg-6">
+      <table class="table table-hover">
+
+
+        <thead>
+          <tr>
+            <th scope="col">...</th>
+            <th scope="col">...</th>
+
+          </tr>
+        </thead>
+        <tbody id="alumnoUnicoT">
+          <td>{{name}} -
+            {{lastnameP}} -
+            {{lastnameM}}</td>
+
+
+
+          <td><a class="btn btn-default" href="/infocliente/${ item.id}">ver</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+
+
+
+
+    <div class="col-md-6">
+      <h4>Alumno</h4> <small>status: {{status}}</small>
+
+      <table class="table table-hover">
+
+
+        <thead>
+          <tr>
+            <th scope="col">...</th>
+            <th scope="col">...</th>
+
+          </tr>
+        </thead>
+        <tbody id="">
+          <tr>
+            <td>Colegiatura</td>
+            <td>{{colegiatura}}</td>
+          </tr>
+          <tr>
+            <td>Nombre</td>
+            <td>{{name}}-{{lastnameP}}-{{lastnameM}}</td>
+          </tr>
+          <tr>
+            <td>Tipo de sangre</td>
+            <td>{{tiposangre}}</td>
+          </tr>
+          <tr>
+            <td>Talla</td>
+            <td>{{talla}}</td>
+          </tr>
+          <tr>
+            <td>Peso</td>
+            <td>{{peso}}</td>
+          </tr>
+          <tr>
+            <td>Escuela de precedencia</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>{{precede}}</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Alergias</td>
+            <td>{{alergias}}</td>
+          </tr>
+
+
+
+
+
+          <td><a class="btn btn-default" href="/infocliente/${ item.id}">ver</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="col-md-6">
+      <h4>Cliente</h4>
+      <table class="table table-hover">
+
+
+        <thead>
+          <tr>
+            <th scope="col">...</th>
+            <th scope="col">...</th>
+
+          </tr>
+        </thead>
+        <tbody id="clienteT">
+
+
+        </tbody>
+      </table>
+    </div>
+
+
+    <script>
+
+      function alumnoUnicoT() {
+        $.ajax({
+          type: 'GET',
+          url: '/alumno-cartera/{{id}}',
+          dataType: 'json',
+          success: (data) => {
+
+            data.forEach((item) => {
+              const row = `<tr>
+                    
+                    <td>Estado Actual</td>
+                    <td>${ item.status}</td>
+                   </tr>`;
+              $('#alumnoUnicoT').append(row);
+            });
+          }
+
+        });
+      };
+      function tutorcliente() {
+        $.ajax({
+          type: 'GET',
+          url: '/cliente/{{id_cliente}}',
+          dataType: 'json',
+          success: (data) => {
+
+            data.forEach((item) => {
+              const row = `
+                <tr>
+                   <td>Nombre</td>
+                    <td>${ item.name}</td>
+                   </tr>
+                    <tr>Teléfono<td>Teléfono  </td>
+                    <td>${ item.phone}</td></tr>
+                    <tr><td>Email</td>
+                     <td>${ item.mail}</td></tr>
+                    <tr> <td>Lugar de trabajo</td>
+                     <td>${ item.oficina}</td></tr>
+                     <tr> <td>Paretesco</td>
+                     <td>${ item.parentesco}</td></tr>
+                </tr>`;
+              $('#clienteT').append(row);
+            });
+          }
+
+        });
+      };
+      alumnoUnicoT(), tutorcliente();
+    </script>
+
     {{else}}
     {{/each}}
 
 
 
-
+    <td></td>
 
 
 

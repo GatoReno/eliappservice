@@ -170,7 +170,7 @@ function getclients(){
                 const row = `<tr>
                     
                     <td>${ item.name }</td>
-                    <td></td>
+                    <td>${ item.parentesco }</td>
                     <td>${ item.mail }</td>
                     <td><a class="btn btn-default" href="/infocliente/${ item.id}">ver</a></td>
                    </tr>`;
@@ -182,4 +182,5 @@ function getclients(){
 };
 
 //getprojects()getowners()
+
 getadmins(),getclients(),getclientsSelect(),getalumn(),getmaestros(),alumnosSelect();

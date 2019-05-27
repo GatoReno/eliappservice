@@ -27,4 +27,4 @@ function pagintaionNews(){
 
 
 
-pagintaionNews();
+//pagintaionNews();
