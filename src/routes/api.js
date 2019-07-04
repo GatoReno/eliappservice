@@ -115,18 +115,24 @@ router.post('/add-alumno', (req, res) => {
         clave: clave_alumno,
         id_cliente: id_client,
         colegiatura: colegiatura,
-        status: 1
+        status: 'alta en sistema'
     }
 
 
 
     const qu = pool.query('Insert into alumnos_ set ?', [alumno]);
 
-    qu.then((result) => {
+    qu.then(async (result) => {
         if (result.insertId) {
-            req.flash('message', 'Cliente creado con éxito');
+            const cartera = {
+                id_alumno :result.insertId,
+                status: 'alta en sistema, sin pagos aún'
+            }
+            const query = await pool.query('Insert into cartera_ set ?', [cartera]);
+            req.flash('message', 'Datos generados con éxito');
             res.render('dashboard/dashboard');
         }
+        
 
     }).catch((err) => {
         console.log(err);
@@ -259,11 +265,11 @@ router.get('/maestros', (req, res) => {
 
 
 router.post('/pago',(req,res)=>{
-    const {id_cliente,id_cartera,mes,
-        colegiatura,otrospagos} 
+    const {id_cliente,id_cartera_alumno,mes,
+        colegiatura} 
     = req.body;
         console.log(id_cliente,id_cartera,mes,
-            colegiatura,otrospagos);
+            colegiatura);
 
 
 });
@@ -282,8 +288,8 @@ const qu = pool.query('select * from cartera_ where id_cliente = ?',[id]);
 router.get('/alumnos', (req, res) => {
 
 
-
-    const qu = pool.query('select * from alumnos_ where id_cartera');
+//where id_cartera
+    const qu = pool.query('select * from alumnos_ ');
 
     qu.then((result) => {
         res.json(result);

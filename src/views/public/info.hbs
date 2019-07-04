@@ -25,14 +25,14 @@
 
     <div class="col-lg-12">
       <h4>Generar Pago</h4>
-      <form action="">
+      <form action="/pago" method="POST">
         <input type="submit" value="Registrar pago" class="btn btn-default pull-right">
         <input type="text" class="hidden " value="{{id}}" name="id_client" placeholder="concepto" required>
 
         <input type="text" class="form-control" value="" name="concepto" placeholder="concepto" required>
         <input type="text" class="form-control" value="" name="amount" placeholder="$ 0.00" required>
 
-        <select name="mes" id="" >
+        <select name="mes" id="" required>
           <option value="1">enero</option>
           <option value="2">febrero</option>
 
@@ -59,7 +59,7 @@
         </select>
 
 
-        <select name="id_cartera" id="carterasSelect" >
+        <select name="id_cartera_alumno" id="carterasSelect" required>
 
         </select>
 
@@ -107,7 +107,7 @@
           //$("#ownerT").load();
 
         };
-                function carteras2() {
+        function carteras2() {
 
           $.ajax({
             type: 'GET',
@@ -117,7 +117,7 @@
 
               data.forEach((item) => {
                 const row = `
-                    <option value="${ item.id}">${ item.name}</option>`;
+                    <option value="${ item.id}">${item.name}</option>`;
                 $('#carterasSelect').append(row);
               });
             }
@@ -126,28 +126,27 @@
           //$("#ownerT").load();
 
         };
-        carteras(),carteras2();
+        carteras(), carteras2();
       </script>
 
     </div>
     <div class="col-lg-6">
-      <a href="">Crear cartera</a>
+      <small>
 
-      <form action="/cartera-add" method="POST">
-        <input type="text" id="ic" value="{{id}}" name="id_cliente">
-
-        <input type="submit" class="btn btn-default" name="" id="" value="Crear nueva cartera">
-
-      </form>
+        Este usuario aún no cuenta con cartera,la cartera es una referencia para lo pagos de los clientes
+      </small>
+     
     </div>
 
     {{else }}
 
     <div class="col-lg-6">
-      <a href="">Crear cartera</a>
+      <small>
 
+        Este usuario aún no cuenta con cartera,la cartera es una referencia para lo pagos de los clientes
+      </small>
       <form action="/cartera-add " method="POST">
-        <input type="text" value="{{id}}" name="id_cliente">
+        <input type="text" value="{{id}}" class="hidden" name="id_cliente">
         <input type="submit" class="btn btn-default" name="" id="" value="Crear cartera">
 
       </form>
@@ -262,7 +261,14 @@
 
 
 
-          <td><a class="btn btn-default" href="/infocliente/${ item.id}">ver</a></td>
+          <td>
+            <select name="estatus" id="">
+                 <option value="">Pagado</option>
+              <option value="">Deudor</option>
+               <option value="">Alta</option>
+                <option value="">Baja</option>
+            </select>
+          </td>
           </tr>
         </tbody>
       </table>
@@ -323,7 +329,8 @@
 
 
 
-          <td><a class="btn btn-default" href="/infocliente/${ item.id}">ver</a></td>
+          
+          <td><a class="btn btn-default " href="/cartera/{{id}}">ver cartera</a></td>
           </tr>
         </tbody>
       </table>
