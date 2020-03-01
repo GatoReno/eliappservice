@@ -118,7 +118,7 @@ function getalumn(){
 
             data.forEach( ( item ) => {
                 const row = `<tr>
-                    <td><input value="${ item.name }"></td>
+                    <td>${ item.name } _ ${ item.lastnameP } _ ${ item.lastnameM }</td>
                     <td>${ item.created_at }</td>
                     <td></td>
                     <td><a href="/infoalumno/${ item.id }" class="btn btn-default">Ver</a></td>
@@ -128,6 +128,8 @@ function getalumn(){
         }
 
     });
+
+
     //$("#ownerT").load();
 
 };
@@ -183,4 +185,43 @@ function getclients(){
 
 //getprojects()getowners()
 
+function LookFor_Alumnos() {
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("alumnosT");
+    tr = table.getElementsByTagName("tr");
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[0];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }       
+    }
+  }
+
+  function LookFor_Clients() {
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("myInputclients");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("clientsT");
+    tr = table.getElementsByTagName("tr");
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[0];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }       
+    }
+  }
+
+  
 getadmins(),getclients(),getclientsSelect(),getalumn(),getmaestros(),alumnosSelect();

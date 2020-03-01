@@ -24,9 +24,9 @@
             <li class="active"><a data-toggle="tab" href="#home">Perfil Admin</a></li>
             <li><a data-toggle="tab" href="#menu1">Clientes</a></li>
             <li><a data-toggle="tab" href="#menu2">Alumnos</a></li>
-            <li><a data-toggle="tab" href="#menu3">Maestros</a></li>
+            {{!-- <li><a data-toggle="tab" href="#menu3">Maestros</a></li>
             <li><a data-toggle="tab" href="#menu4">Horario</a></li>
-            <li><a data-toggle="tab" href="#menu5">Actividades</a></li>
+            <li><a data-toggle="tab" href="#menu5">Actividades</a></li> --}}
 
         </ul>
 
@@ -111,6 +111,7 @@
 
                             </tr>
                         </thead>
+                         <input type="text" id="myInputclients" onkeyup="LookFor_Clients()" placeholder="Buscar cliente ..." class="form-control" title="Type in a name">
                         <tbody id="clientsT">
 
                         </tbody>
@@ -325,6 +326,7 @@
 
                                 </tr>
                             </thead>
+                            <input type="text" id="myInput" onkeyup="LookFor_Alumnos()" placeholder="Buscar alumno ..." class="form-control"  " title="Type in a name">
                             <tbody id="alumnosT">
 
                             </tbody>
