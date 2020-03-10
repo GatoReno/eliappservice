@@ -44,6 +44,23 @@ router.get('/api/protected', ensureToken, (req, res) => {
 
 //clientes
 
+router.post('/delete-cliente',(req,res)=>{
+    const {id_user,id_usercreated} = req.body;
+
+    
+    const query = pool.query('DELETE FROM clientes_ where id = ?',[id_user]);
+
+    query.then(()=>{
+
+
+        req.flash('message', 'Cliente eliminado con éxito');
+        res.redirect('/dashboard');
+    }).catch((err)=>{
+        res.json(err)
+    });
+});
+
+
 router.post('/add-client', (req, res) => {
 
 
@@ -84,6 +101,22 @@ router.post('/add-client', (req, res) => {
         console.log(err);
     });
 
+});
+
+
+
+router.post('/delete-alumno', (req,res)=>{
+    const {id_user,id_usercreated} = req.body;
+    const query = pool.query('DELETE FROM alumnos_ where id = ?',[id_user]);
+
+    query.then(()=>{
+
+
+        req.flash('message', 'Alumno eliminado con éxito');
+        res.redirect('/dashboard');
+    }).catch((err)=>{
+        res.json(err)
+    });
 });
 
 

@@ -51,7 +51,7 @@ passport.use('local.signup', new LStrategy({
     const newUser = {
         username: name,
         mail: mail,
-        datenac: datenac,
+        //datenac: datenac,
         id_usercreated: 0
     };
 
