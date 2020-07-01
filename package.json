@@ -1,7 +1,10 @@
 {
   "name": "eliappjmadmin",
   "version": "1.0.0",
-  "description": "",
+  "description": "Managmet app",
+  "engines": {
+    "node": "6.11.1"
+  },
   "main": "index.js",
   "scripts": {
     "start": "node src/ ",
