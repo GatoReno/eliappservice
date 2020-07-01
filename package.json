@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Managmet app",
   "engines": {
-    "node": "6.11.1"
+    "node": "12.1g.3"
   },
   "main": "index.js",
   "scripts": {
