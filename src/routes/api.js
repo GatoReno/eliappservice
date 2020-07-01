@@ -532,6 +532,49 @@ router.get('/clients', (req, res) => {
 })
 
 
+router.get('/client/alumnos/:id', (req, res) => {
+    const id_cliente = req.params;
+        console.log(id_cliente);
+    const qu = pool.query('SELECT * FROM alumnos_ where id_cliente = ?',[id_cliente.id]);
+
+    qu.then((data) => {
+        res.json(data);
+    });
+})
+
+router.get('/client/pagos/:id', (req, res) => {
+    const id_cliente = req.params;
+        
+    const qu = pool.query('SELECT * FROM pagos_ where id_cliente = ?',[id_cliente]);
+
+    qu.then((data) => {
+        res.json(data);
+    });
+})
+
+
+router.post('/pago-add', (req, res) => {
+    console.log(req.body);
+    const {
+        id_cliente
+    } = req.body;
+
+    const pago = req.body;
+    pago.id_client = id_cliente;
+    const qu = pool.query('Insert into pagos_ set ?', [pago]);
+
+    qu.then(async (result) => {
+        if (result.insertId) {
+            //const query = await pool.query('Update clientes_ set id_cartera = ? where id = ?', [result.insertId, id_cliente]);
+            req.flash('message', 'Pago creado con éxito');
+            res.render('dashboard/dashboard');
+        }
+
+    }).catch((err) => {
+        console.log(err);
+    });
+
+});
 
 
 module.exports = router;
