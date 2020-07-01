@@ -9,6 +9,7 @@ $(document).ready(function() {
 });
 
 function modalPago(){
+    $('#modal_title_client').append('Generar Pago');
         $('#modal_body').empty();
         var str = `<form action="">
         <small>
