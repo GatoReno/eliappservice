@@ -119,6 +119,58 @@ router.post('/delete-alumno', (req,res)=>{
     });
 });
 
+router.post('/update-alumno', (req, res) => {
+    const alumno = req.body;
+    const id = req.body.id;
+
+
+ 
+    const qu = pool.query('UPDATE alumnos_ set ? where id = ? ', [alumno, id]);
+
+
+    qu.then((response) => {
+        try {
+            console.log(response)
+            req.flash('success', 'Datos actualizados');
+            //res.redirect('/infoalumno/' + req.body. id);
+            res.redirect('back');
+        } catch (err) {
+            console.log(err)
+        }
+    }).catch((err) => {
+        console.log(err)
+    });
+});
+
+
+router.post('/update-client', (req, res) => {
+        const client = req.body;
+        const id = req.body.id;
+    
+    
+     
+        const qu = pool.query('UPDATE clientes_ set ? where id = ? ', [client, id]);
+    
+    
+        qu.then((response) => {
+            try {
+                console.log(response)
+                req.flash('success', 'Datos actualizados');
+                //res.redirect('/infoalumno/' + req.body. id);
+                res.redirect('back');
+            } catch (err) {
+                console.log(err)
+            }
+        }).catch((err) => {
+            console.log(err)
+        });
+
+
+/*
+    */
+
+});
+
 
 router.post('/add-alumno', (req, res) => {
     console.log(req.body);

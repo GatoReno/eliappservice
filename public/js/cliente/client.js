@@ -7,6 +7,91 @@ $(document).ready(function() {
   //  alert(id_client)
     
 });
+
+function modal_client_edit(id){
+    //cliente
+
+    $.ajax({
+        url: '/cliente/'+id,
+        type: 'GET',
+        
+        dataType: 'json',
+        success: function(resp) {
+            console.log(resp);
+            $('#modal_body').empty();
+            $('#modal_title_client').empty();
+            $('#modal_title_client').append('Datos cliente');
+
+
+            st = `
+            
+            <form method="POST" action="/update-client">
+            <input type="hidden" class="form-control" value="${resp[0].id}" name="id">
+            <label>Estado</label>
+           
+
+            <input type="text" class="form-control" disabled value="${resp[0].estado}" name="estado">
+            <hr>
+            <select name="estado" id="" class="form-control" >
+                <option value="Vigente">Vigente</option>
+                <option value="Deudor">Deudor</option>
+                <option value="Prorroga">Solicito prorroga</option>
+                <option value="Baja temporal">Baja temporal</option>
+                <option value="Baja definitiva">Baja definitiva</option>
+                </select>
+
+                <hr>
+
+         
+            <label>Nombre</label>
+            <input type="text" class="form-control" value="${resp[0].name}" name="name">
+            <hr>
+
+            <label>escolaridad</label>
+            <input type="text" class="form-control" value="${resp[0].escolaridad}" name="escolaridad">
+            <hr>
+            <label>ocupacion</label>
+            <input type="text" class="form-control" value="${resp[0].ocupacion}" name="ocupacion">
+            <hr>
+            <label>mail</label>
+            <input type="text" class="form-control" value="${resp[0].mail}" name="mail">
+            <hr>
+            <label>Telefono</label>
+            <input type="text" class="form-control" value="${resp[0].phone}" name="phone">
+            <hr>
+            <label>oficina</label>
+            <input type="text" class="form-control" value="${resp[0].oficina}" name="oficina">
+            <hr>
+            <label>parentesco</label>
+            <input type="text" class="form-control" value="${resp[0].parentesco}" name="parentesco">
+            <hr>
+
+            <label>trabajo</label>
+            <input type="text" class="form-control" value="${resp[0].trabajo}" name="trabajo">
+            <hr>
+
+          
+
+
+            <input type="submit" value="Actualizar datos" class="btn btn-success">
+            </form>
+            `;
+            $('#modal_body').append(st);
+            
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            var data = jqXHR.responseJSON;
+            if (jqXHR.status == 401) {
+                //location.reload();
+            }
+            console.log(errorThrown)
+
+        }
+    });
+
+
+}
+
 function getDatosPago(id){
     console.log(id);
 
