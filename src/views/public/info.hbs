@@ -42,12 +42,17 @@
         <table class="table table-hover">
         <thead>
           <tr>
-            <th scope="col">Estado</th>
-            <th scope="col">Detalles</th>
+            <th scope="col">...</th>
+            <th scope="col">...</th>
 
           </tr>
         </thead>
         <tbody id="carterasT">
+           
+            <tr>
+              <td>Estado Actual </td>
+              <td>{{estado}}</td>
+            </tr>
             <tr>
               <td>Nombre {{parentesco}}</td>
               <td>{{name}}</td>
@@ -81,12 +86,16 @@
   <div id="div_pagos">
    
   </div>
+
+    <div id="div_alumnos_client">
+   
+  </div>
 </div>
 
     <div class="col-lg-12">
       <hr>
-    </div>
-
+   
+ </div>
     <div class="col-md-12" class="pull-right">
       <ol class="breadcrumb">
                         <li class="breadcrumb-item"> <form action="/delete-cliente" method="POST">
@@ -103,7 +112,13 @@
      
 
         
-    </div>
+  
+  
+  
+    </div>  
+
+
+ 
 
 
 <div id="modal_client" class="modal" tabindex="-1" role="dialog">
@@ -128,6 +143,9 @@
       
     </div>
   </div>
+
+
+  
 </div>
 <script src="/js/cliente/client.js"></script>
 
@@ -389,11 +407,11 @@
         <tbody id="">
           <tr>
             <td>Colegiatura</td>
-            <td>{{colegiatura}}</td>
+            <td> $ {{colegiatura}} mx</td>
           </tr>
           <tr>
             <td>Nombre</td>
-            <td>{{name}}-{{lastnameP}}-{{lastnameM}}</td>
+            <td>{{name}} {{lastnameP}} {{lastnameM}}</td>
           </tr>
           <tr>
             <td>Tipo de sangre</td>
@@ -442,22 +460,13 @@
 
           </tr>
         </thead>
-        <tbody id="alumnoUnicoT">
-          <td>{{name}} -
-            {{lastnameP}} -
-            {{lastnameM}}</td>
+        <tbody id="">
+          <td>Estado actual : </td>
+
+            <td>{{estado}}</td>
 
 
-          {{!
-          <td>
-            <select name="estatus" id="">
-                 <option value="">Pagado</option>
-              <option value="">Deudor</option>
-               <option value="">Alta</option>
-                <option value="">Baja</option>
-            </select>
-          </td> 
-          --}}
+          
           </tr>
         </tbody>
       </table>
@@ -553,7 +562,7 @@
               const row = `
                 <tr>
                    <td>Nombre</td>
-                    <td>${ item.name}</td>
+                    <td><a href="/infocliente/${item.id}">${ item.name}</a></td>
                    </tr>
                     <tr>Teléfono<td>Teléfono  </td>
                     <td>${ item.phone}</td></tr>

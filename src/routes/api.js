@@ -469,10 +469,25 @@ router.get('/alumn/search/', function (req, res) {
         });
     });
 
+});
 
 
+
+router.get('/alumno_pagos/:id', (req, res) => {
+    const {
+        id
+    } = req.params;
+    const qu = pool.query('select * from pagos_ where id_alumno = ?', [id]);
+    qu.then((resp) => {
+       // console.log(error, result, rows, fields);
+        res.json(resp)
+
+    }).catch((err) => {
+        console.log(err);
+    });
 
 });
+
 router.get('/alumno/:id', (req, res) => {
     const {
         id
@@ -613,7 +628,37 @@ router.get('/pago/data/:id', (req, res) => {
     qu.then((data) => {
         res.json(data);
     });
-})
+});
+
+router.get('/pagos/all', (req, res) => {
+    
+        
+    const qu = pool.query('SELECT * FROM pagos_ ');
+
+    qu.then((data) => {
+        res.json(data);
+    });
+});
+
+
+router.get('/pagos/current_year/', (req, res) => {
+     
+        
+    const qu = pool.query('SELECT * FROM pagos_ where YEAR(created_at) = YEAR(CURDATE())');
+
+    qu.then((data) => {
+        res.json(data);
+    });
+});
+
+router.get('/pagos/current_month/', (req, res) => {    
+        
+    const qu = pool.query('SELECT * FROM pagos_ where Month(created_at) = Month(CURDATE()) && YEAR(created_at) = YEAR(CURDATE())');
+
+    qu.then((data) => {
+        res.json(data);
+    });
+});
 
 router.post('/pago-add', (req, res) => {
     console.log(req.body);

@@ -4,6 +4,7 @@ $(document).ready(function() {
     
     var id_client = $("#id_client").val();
     getPagos(id_client);
+    getAlumnosClient(id_client);
   //  alert(id_client)
     
 });
@@ -107,7 +108,12 @@ function getDatosPago(id){
             $('#modal_title_client').append('Datos Pago');
 
 
-            st = `<label for="">Cantidad: </label>
+            st = `
+            <label for="">Corresponde al alumno : </label>
+            <div id="div_name_modal"></div>
+            <hr>
+
+            <label for="">Cantidad: </label>
             $ ${resp[0].amount} mx
             <hr>
             
@@ -136,6 +142,9 @@ function getDatosPago(id){
             <hr>
             `;
             $('#modal_body').append(st);
+
+            getAlumno(resp[0].id_alumno);
+
             
         },
         error: function(jqXHR, textStatus, errorThrown) {
@@ -223,7 +232,7 @@ function getPagos(id_client){
             
             <div class="top2 table-wrapper-scroll-y">
             <h5 class="card-title">Pagos</h5>
-                <table class="table table-hover" height="300">
+                <table class="table table-hover" >
                     <thead>
                         <tr>
                             <th scope="col">Fecha</th>
@@ -252,6 +261,8 @@ function getPagos(id_client){
                 
             });
             
+
+
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
@@ -263,7 +274,34 @@ function getPagos(id_client){
         }
     });
 }
+function getAlumno(id){
 
+    //div_name_modal
+    $.ajax({
+        url: '/alumno/'+id,
+        type: 'GET',
+        
+        dataType: 'json',
+        success: function(resp) {
+            console.log(resp);
+            $('#div_name_modal').empty();
+             
+        
+               $('#div_name_modal').append(` ${resp[0].name}   ${resp[0].lastnameP}  ${resp[0].lastnameM} `);
+           
+
+         
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            var data = jqXHR.responseJSON;
+            if (jqXHR.status == 401) {
+                //location.reload();
+            }
+            console.log(errorThrown)
+
+        }
+    });
+}
 function getAlumnos(id_client){
    
     $.ajax({
@@ -277,6 +315,44 @@ function getAlumnos(id_client){
              
         resp.forEach(e => {
                $('#seleAlumno').append(`<option value="${e.id}">${e.name}</option>`);
+           });
+
+         
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            var data = jqXHR.responseJSON;
+            if (jqXHR.status == 401) {
+                //location.reload();
+            }
+            console.log(errorThrown)
+
+        }
+    });
+}
+
+
+
+function getAlumnosClient(id_client){
+   
+    $.ajax({
+        url: '/client/alumnos/'+id_client,
+        type: 'GET',
+        
+        dataType: 'json',
+        success: function(resp) {
+            console.log(resp);
+            $('#div_alumnos_client').empty();
+             
+        resp.forEach(e => {
+               $('#div_alumnos_client').append(`
+                <hr>
+                <a href="/infoalumno/${e.id}">
+                <label  >${e.name} ${e.lastnameP} ${e.lastnameM}</label></a>                    
+                <br>
+                <label> Estado :  </label> ${e.estado} 
+                    
+                <hr>
+               `);
            });
 
          

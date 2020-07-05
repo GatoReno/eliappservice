@@ -24,8 +24,9 @@
             <li class="active"><a data-toggle="tab" href="#home">Perfil Admin</a></li>
             <li><a data-toggle="tab" href="#menu1">Clientes</a></li>
             <li><a data-toggle="tab" href="#menu2">Alumnos</a></li>
-            {{!-- <li><a data-toggle="tab" href="#menu3">Maestros</a></li>
-            <li><a data-toggle="tab" href="#menu4">Horario</a></li>
+            <li><a data-toggle="tab" href="#menu4">Pagos</a></li>
+            {{!-- <li><a data-toggle="tab" href="#menu3">Pagos</a></li>
+            
             <li><a data-toggle="tab" href="#menu5">Actividades</a></li> --}}
 
         </ul>
@@ -101,7 +102,7 @@
 
 
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-
+                    
                     <table class="table table-hover">
                         <thead>
                             <tr>
@@ -327,7 +328,7 @@
 
                                 </tr>
                             </thead>
-                            <input type="text" id="myInput" onkeyup="LookFor_Alumnos()" placeholder="Buscar alumno ..." class="form-control"  " title="Type in a name">
+                            <input type="text" id="myInput" onkeyup="LookFor_Alumnos()" placeholder="Buscar alumno ..." class="form-control"   title="Type in a name">
                             <tbody id="alumnosT">
 
                             </tbody>
@@ -449,14 +450,42 @@
             </div>
 
             <div id="menu4" class="tab-pane fade p3">
-                <h3>Horario</h3>
+                 <a href="" data-toggle="modal" onclick="return modal_reiniciarColegiaturas()"
+                        data-target="#modal_dash" class="btn btn-warning pull-right">Reiniciar Colegiaturas</a>
+                    
+                <h3>Pagos</h3>
+               
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="/links/add">Agregar Proyecto</a></li>
+                        <li class="breadcrumb-item">Pagos</li>
 
+                         <li class="breadcrumb-item"><a onclick="return currentMonth()">Mes Actual</a></li>
+                          <li class="breadcrumb-item"><a onclick="return currentYear()">Año Actual</a></li>
+                        <li class="breadcrumb-item"><a onclick="return getpagosall()">Todos</a></li>
                     </ol>
                 </nav>
 
+                   <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                       
+                    <div class="top2 ">
+                          <table class="table table-hover table-wrapper-scroll-y">
+                            <thead>
+                                <tr>
+                                    <th scope="col">concepto / fecha</th>
+                                    <th scope="col">cantidad </th>
+                                    <th scope="col"><div id="saldo_concepto"></div></th>                                    
+                                    <th>Detalles</th>
+
+                                </tr>
+                            </thead>
+                            <input type="text" id="myInputPagos" onkeyup="LookFor_Pagos()" placeholder="Buscar pago ..." class="form-control"   title="Type in a name">
+                            <tbody id="pagosT">
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div id="div_dash_pagos"></div>
 
                 {{! termina menu 4}}
             </div>
@@ -482,11 +511,35 @@
     <a href=""></a>
 </div>
 
+
+<div id="modal_dash" class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modal_title_dash"></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      
+        
+        <div class="modal-body" >
+          <div id="modal_body_dash"></div>
+        </div>
+        <div class="modal-footer">
+        
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+      </div>
+      </div>
+      
+    </div>
+  </div>
+
 <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
     crossorigin="anonymous"></script>
 <script src="/js/populatetablesadmin.js"></script>
 <script src="/js/typeahead.min.js"></script>
 
-
+<script src="/js/dashboard/pagos.js"></script>
 {{else}}
 {{/if}}

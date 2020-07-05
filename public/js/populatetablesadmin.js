@@ -118,7 +118,7 @@ function getalumn(){
 
             data.forEach( ( item ) => {
                 const row = `<tr>
-                    <td>${ item.name } _ ${ item.lastnameP } _ ${ item.lastnameM }</td>
+                    <td>${ item.name }  ${ item.lastnameP }  ${ item.lastnameM }</td>
                     <td>${ item.created_at }</td>
                     <td></td>
                     <td><a href="/infoalumno/${ item.id }" class="btn btn-default">Ver</a></td>
@@ -183,7 +183,57 @@ function getclients(){
     });
 };
 
+function getpagosall(){
+    $.ajax({
+        type: 'GET',
+        url: '/pagos/all',
+        dataType: 'json',
+        success: (data) => {
+        console.log(data);
+        $('#pagosT').empty();
+        $('#saldo_concepto').empty();
+        $('#saldo_concepto').append('saldo pendiente');
+        
+            data.forEach( ( item ) => {
+                const row = `<tr>
+                <td>${ item.concepto } / ${ item.created_at }</td>
+                   
+                    <td>$ ${ item.amount } mx</td>                    
+                    <td>$ ${ item.saldo_pendiente } mx</td>
+                    <td><a class="btn btn-default"  data-toggle="modal" data-target="#modal_dash" onclick="return modal_pagosInfo(${ item.id})">ver</a></td>
+                   </tr>`;
+                $('#pagosT').append( row );
+            });
+        }
+
+    });
+};
+
+
+
 //getprojects()getowners()
+
+function LookFor_Pagos() {
+    
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("myInputPagos");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("pagosT");
+    tr = table.getElementsByTagName("tr");
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[0];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        console.log(txtValue)
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }       
+    }
+  }
+
 
 function LookFor_Alumnos() {
     var input, filter, table, tr, td, i, txtValue;
@@ -223,5 +273,105 @@ function LookFor_Alumnos() {
     }
   }
 
-  
-getadmins(),getclients(),getclientsSelect(),getalumn(),getmaestros(),alumnosSelect();
+
+
+function modal_reiniciarColegiaturas(){
+    $('#modal_title_dash').empty();
+    $('#modal_body_dash').empty();
+
+    $('#modal_title_dash').append('<h4>Seguro quieres reiniciar las colegiaturas?</h4>');
+    var st = `<p>Al hacer esto actualizaras a todos los clientes y a todos los alumnos como deudores.</p>
+    <small>Sabiendo esto seguro deseas continuar?<small><br>
+        <a class="btn btn-success ">Si estoy seguro, continuar</a>
+    `;
+
+$('#modal_body_dash').append(st);
+
+}
+
+
+
+function getAlumnoPagoDiv(id){
+
+    //div_name_modal
+    $.ajax({
+        url: '/alumno/'+id,
+        type: 'GET',
+        
+        dataType: 'json',
+        success: function(resp) {
+            console.log(resp);
+            $('#payment_for').empty();
+                     
+               $('#payment_for').append(` ${resp[0].name}   ${resp[0].lastnameP}  ${resp[0].lastnameM} `);                    
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            var data = jqXHR.responseJSON;
+            if (jqXHR.status == 401) {
+                //location.reload();
+            }
+            console.log(errorThrown)
+
+        }
+    });
+}
+
+function getClientPagoDiv(id){
+    $.ajax({
+        url: '/cliente/'+id,
+        type: 'GET',
+        
+        dataType: 'json',
+        success: function(resp) {
+            console.log(resp);
+            $('#payment_owner').empty();
+                     
+               $('#payment_owner').append(` <a href="/infocliente/${resp[0].id}"> ${resp[0].name} </a>`);                    
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            var data = jqXHR.responseJSON;
+            if (jqXHR.status == 401) {
+                //location.reload();
+            }
+            console.log(errorThrown)
+
+        }
+    });
+}
+
+function modal_pagosInfo(id){
+
+
+$.ajax({
+    type: 'GET',
+    url: '/pago/data/'+id,
+    dataType: 'json',
+    success: (data) => {
+    console.log(data);
+    $('#modal_title_dash').empty();
+    $('#modal_body_dash').empty();
+    //call alumno y cliente info
+        
+            const row = `
+            <p>${ data[0].concepto } / ${ data[0].created_at }</p>
+               
+                <p>Cantidad : $ ${ data[0].amount } mx</p>                    
+                <p>Saldo pendiente :  $ ${ data[0].saldo_pendiente } mx</p>
+                <p>Saldo a favor :  $ ${ data[0].saldo_afavor } mx</p>
+                <p>Refrencia :  ${ data[0].referencia } </p>
+                <p>Tipo de pago :  ${ data[0].tipo_pago } </p>
+                <p>Prorroga :  ${ data[0].prorroga } </p>
+                <p>Cliente  <div id="payment_owner"></div> </p>
+                <p>Alumno  <div id="payment_for"></div> </p>
+               `;
+               $('#modal_body_dash').append(row);
+               getAlumnoPagoDiv(data[0].id_alumno);
+               getClientPagoDiv(data[0].id_cliente);
+               $('#modal_title_dash').append(data[0].concepto);
+    }
+
+});
+
+}
+
+getadmins(),getclients(),getclientsSelect(),getalumn(),getmaestros(),alumnosSelect(),getpagosall();
