@@ -682,4 +682,34 @@ router.post('/pago-add', (req, res) => {
 });
 
 
+//querytable
+
+router.get('/pagos/current_month/dates', (req, res) => {    
+        
+    const qu = pool.query('SELECT distinct DATE_FORMAT(created_at,`%d/%m/%Y`) created_at  FROM pagos_ where Month(created_at) = Month(CURDATE())');
+
+    qu.then((data) => {
+        res.json(data);
+    });
+});
+
+router.get('/pagos/current_month/count_per_day', (req, res) => {    
+        
+    const qu = pool.query('SELECT distinct DATE_FORMAT(created_at,`%d/%m/%Y`) created_at  FROM pagos_ where Month(created_at) = Month(CURDATE())');
+
+    qu.then((data) => {
+        res.json(data);
+    });
+});
+
+router.get('/pagos/current_month/all_pagos', (req, res) => {    
+        
+    const qu = pool.query('SELECT count( DATE_FORMAT(created_at,`%d/%m/%Y`) ) total FROM pagos_ where Month(created_at) = Month(CURDATE());');
+
+    qu.then((data) => {
+        res.json(data);
+    });
+});
+
+
 module.exports = router;

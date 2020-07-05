@@ -171,8 +171,8 @@ function getclients(){
             data.forEach( ( item ) => {
                 const row = `<tr>
                     
-                    <td>${ item.name }</td>
-                    <td>${ item.parentesco }</td>
+                    <td>${ item.name} / ${ item.parentesco }</td>
+                    <td>${ item.estado }</td>
                     <td>${ item.mail }</td>
                     <td><a class="btn btn-default" href="/infocliente/${ item.id}">ver</a></td>
                    </tr>`;

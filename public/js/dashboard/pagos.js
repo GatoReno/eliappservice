@@ -27,7 +27,7 @@ function currentYear(){
                     <td>${ item.created_at }</td>
                     <td>$ ${ item.amount } mx</td>
                     <td>${ item.concepto }</td>
-                    <td><a class="btn btn-default" href="/infocliente/${ item.id}">ver</a></td>
+                    <td><a class="btn btn-default" data-toggle="modal" data-target="#modal_dash" onclick="return modal_pagosInfo(${ item.id})">ver</a></td>
                    </tr>`;
                 $('#pagosT').append( row );
             });
@@ -66,7 +66,7 @@ function currentMonth(){
                     <td>${ item.created_at }</td>
                     <td>$ ${ item.amount } mx</td>
                     <td>${ item.concepto }</td>
-                    <td><a class="btn btn-default" href="/infocliente/${ item.id}">ver</a></td>
+                    <td><a class="btn btn-default" data-toggle="modal" data-target="#modal_dash" onclick="return modal_pagosInfo(${ item.id})">ver</a></td>
                    </tr>`;
                 $('#pagosT').append( row );
             });
