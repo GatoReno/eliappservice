@@ -373,5 +373,69 @@ $.ajax({
 });
 
 }
+function getLabelAndDataPagos(){
+    $.ajax({
+       type: 'GET',
+       url: '/pagos/current_month/count_per_day',
+       dataType: 'json',
+       success: (data) => {
+       console.log(data);
+       drawChartPagos(data);
 
+       }
+
+   });
+}
+
+   function drawChartPagos(obj){
+   console.log(obj);
+
+   var labels =[]
+   var data = [];
+
+
+   obj.forEach(e => {
+        labels.push(e.day);
+        data.push(e.pagos);
+    });
+    var t= new Date();
+
+    var date = new Date(), y = date.getFullYear(), m = date.getMonth();
+var firstDay = new Date(y, m, 1);
+var lastDay = new Date(y, m + 1, 0);
+
+
+
+    labels.push('ULTIMO DIA DEL MES');
+
+           var ctx = document.getElementById('myChart');
+   var myChart = new Chart(ctx, {
+   type: 'line',
+   data: {
+       labels: labels,
+       datasets: [{
+           label: '# pagos del mes',
+           data: data,
+           backgroundColor: [
+               
+           ],
+           borderColor: [
+               
+           ],
+           borderWidth: 2
+       }]
+   },
+   options: {
+               scales: {
+                   yAxes: [{
+                       ticks: {
+                           beginAtZero: true
+                       }
+                   }]
+               }
+           }
+       });
+
+   }
+getLabelAndDataPagos(),
 getadmins(),getclients(),getclientsSelect(),getalumn(),getmaestros(),alumnosSelect(),getpagosall();

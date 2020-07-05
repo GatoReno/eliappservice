@@ -28,6 +28,19 @@ function modal_alumno_edit(id){
                 <form method="POST" action="/update-alumno">
                 <input type="hidden" class="form-control" value="${resp[0].id}" name="id">
                 <label>Estado</label>
+                <input type="text" class="form-control" disabled value="${resp[0].estado}" name="estado">
+                <hr>
+                <select name="estado" id="" class="form-control" >
+                    <option value="Vigente">Vigente - al corriente con sus pagos</option>
+                    <option value="Deudor">Deudor</option>
+                    <option value="Prorroga">Solicito prorroga</option>
+                    <option value="Baja temporal">Baja temporal</option>
+                    <option value="Baja definitiva">Baja definitiva</option>
+                    </select>
+
+                    <hr>
+
+                <label>SituacionEstado</label>
                 <input type="text" class="form-control" value="${resp[0].status}" name="status">
                 <hr>
 
@@ -95,18 +108,7 @@ function modal_alumno_edit(id){
                 <input type="text" class="form-control" value="${resp[0].promocion}" name="promocion">
                 <hr>
 
-                <label>estado</label>
-                <input type="text" class="form-control" disabled value="${resp[0].estado}" name="estado">
-                <hr>
-                <select name="estado" id="" class="form-control" >
-                    <option value="Vigente">Vigente</option>
-                    <option value="Deudor">Deudor</option>
-                    <option value="Prorroga">Solicito prorroga</option>
-                    <option value="Baja temporal">Baja temporal</option>
-                    <option value="Baja definitiva">Baja definitiva</option>
-                    </select>
-
-                    <hr>
+               
 
 
                 <input type="submit" value="Actualizar datos" class="btn btn-success">
