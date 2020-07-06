@@ -401,40 +401,40 @@ function getLabelAndDataPagos(){
     var t= new Date();
 
     var date = new Date(), y = date.getFullYear(), m = date.getMonth();
-var firstDay = new Date(y, m, 1);
-var lastDay = new Date(y, m + 1, 0);
+    var firstDay = new Date(y, m, 1);
+    var lastDay = new Date(y, m + 1, 0);
 
 
 
     labels.push('ULTIMO DIA DEL MES');
 
-           var ctx = document.getElementById('myChart');
-   var myChart = new Chart(ctx, {
-   type: 'line',
-   data: {
-       labels: labels,
-       datasets: [{
-           label: '# pagos del mes',
-           data: data,
-           backgroundColor: [
-               
-           ],
-           borderColor: [
-               
-           ],
-           borderWidth: 2
-       }]
-   },
-   options: {
-               scales: {
-                   yAxes: [{
-                       ticks: {
-                           beginAtZero: true
-                       }
-                   }]
-               }
-           }
-       });
+    var ctx = document.getElementById('myChart');
+    var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: labels,
+        datasets: [{
+            label: '# pagos del mes',
+            data: data,
+            backgroundColor: [
+                
+            ],
+            borderColor: [
+                
+            ],
+            borderWidth: 2
+        }]
+    },
+    options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
 
    }
 getLabelAndDataPagos(),
