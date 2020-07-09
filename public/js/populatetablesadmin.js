@@ -1,6 +1,6 @@
 
 // -- /get-owners
-function getowners(){
+/*function getowners(){
     
     $.ajax({
         type: 'GET',
@@ -45,7 +45,7 @@ function getprojects(){
     });
     //$("#ownerT").load();
 
-};
+};*/
 
 function getclientsSelect(){
     $.ajax({
@@ -189,10 +189,13 @@ function getpagosall(){
         url: '/pagos/all',
         dataType: 'json',
         success: (data) => {
-        console.log(data);
+        //console.log(data);
         $('#pagosT').empty();
+        
         $('#saldo_concepto').empty();
         $('#saldo_concepto').append('saldo pendiente');
+        $('#tablepagostitle').empty();
+        $('#tablepagostitle').append('Todos los pagos hasta hoy');
         
             data.forEach( ( item ) => {
                 const row = `<tr>
@@ -211,7 +214,7 @@ function getpagosall(){
 
 
 
-//getprojects()getowners()
+ 
 
 function LookFor_Pagos() {
     
@@ -224,7 +227,7 @@ function LookFor_Pagos() {
       td = tr[i].getElementsByTagName("td")[0];
       if (td) {
         txtValue = td.textContent || td.innerText;
-        console.log(txtValue)
+        //console.log(txtValue)
         if (txtValue.toUpperCase().indexOf(filter) > -1) {
           tr[i].style.display = "";
         } else {
@@ -289,6 +292,23 @@ $('#modal_body_dash').append(st);
 
 }
 
+function modal_GenerarInforme(){
+    $('#modal_title_dash').empty();
+    $('#modal_body_dash').empty();
+
+    $('#modal_title_dash').append('<h4>Seguro quieres generar un reporte mensual?</h4>');
+    var st = `<p>Esta accion creara un reporte de los datos recolectados en el mes presente y hasta el momento
+    en que esta accion se ejecute. Dicho reporte se adjuntara a la seccion de reportes. <b> Asegurate de tener a todos los alumnos 
+    y clientes con un estado antes de hacer un reporte<b/>
+    Se recomiendo hacer esta accion cada fin de mes y por lo menos una vez al mes.</p>
+    <small>Sabiendo esto seguro deseas continuar?<small><br>
+        <a class="btn btn-success ">Si estoy seguro, continuar</a>
+    `;
+
+$('#modal_body_dash').append(st);
+
+}
+
 
 
 function getAlumnoPagoDiv(id){
@@ -300,7 +320,7 @@ function getAlumnoPagoDiv(id){
         
         dataType: 'json',
         success: function(resp) {
-            console.log(resp);
+           // console.log(resp);
             $('#payment_for').empty();
                      
                $('#payment_for').append(` ${resp[0].name}   ${resp[0].lastnameP}  ${resp[0].lastnameM} `);                    
@@ -323,7 +343,7 @@ function getClientPagoDiv(id){
         
         dataType: 'json',
         success: function(resp) {
-            console.log(resp);
+            // console.log(resp);
             $('#payment_owner').empty();
                      
                $('#payment_owner').append(` <a href="/infocliente/${resp[0].id}"> ${resp[0].name} </a>`);                    
@@ -347,7 +367,7 @@ $.ajax({
     url: '/pago/data/'+id,
     dataType: 'json',
     success: (data) => {
-    console.log(data);
+    //console.log(data);
     $('#modal_title_dash').empty();
     $('#modal_body_dash').empty();
     //call alumno y cliente info
@@ -379,7 +399,21 @@ function getLabelAndDataPagos(){
        url: '/pagos/current_month/count_per_day',
        dataType: 'json',
        success: (data) => {
-       console.log(data);
+       //console.log(data);
+       drawChartPagos(data);
+       
+       }
+
+   });
+}
+
+function getLabelAndDataPagos(){
+    $.ajax({
+       type: 'GET',
+       url: '/pagos/current_month/count_per_day',
+       dataType: 'json',
+       success: (data) => {
+       //console.log(data);
        drawChartPagos(data);
 
        }
@@ -388,7 +422,7 @@ function getLabelAndDataPagos(){
 }
 
    function drawChartPagos(obj){
-   console.log(obj);
+   //console.log(obj);
 
    var labels =[]
    var data = [];
@@ -416,13 +450,13 @@ function getLabelAndDataPagos(){
         datasets: [{
             label: '# pagos del mes',
             data: data,
-            backgroundColor: [
-                
+            backgroundColor:  [ 
+                'rgba(75, 192, 192, 0.2)'
             ],
-            borderColor: [
-                
+            borderColor: [ 
+                'rgba(75, 192, 192, 1)' 
             ],
-            borderWidth: 2
+            borderWidth: 1
         }]
     },
     options: {
@@ -437,5 +471,136 @@ function getLabelAndDataPagos(){
         });
 
    }
-getLabelAndDataPagos(),
-getadmins(),getclients(),getclientsSelect(),getalumn(),getmaestros(),alumnosSelect(),getpagosall();
+
+   function getClientesGeneral(){
+
+    $.ajax({
+        type: 'GET',
+        url: '/clientes-estados-count',
+        dataType: 'json',
+        success: (data) => {
+        
+        drawChartClientesGeneral(data);
+ 
+        }
+ 
+    });
+   }
+
+   function getAlumnosGeneral(){
+    $.ajax({
+        type: 'GET',
+        url: '/alumnos-estados-count',
+        dataType: 'json',
+        success: (data) => {
+        
+        drawChartAlumnosGeneral(data);
+ 
+        }
+ 
+    });
+   }
+
+   function drawChartAlumnosGeneral(obj){
+    console.log(obj);
+
+     if(obj[0].estadoSinAsignar){
+         alert("Tienes alumnos sin estado! Puedes consultarlos en Alumnos > Ver > Actualizar datos > 'eliges el estado' > Actualizar estado. Recuerda hacer esto siempre que registres un pago.");
+     }
+ 
+     
+     new Chart(document.getElementById("myChartAlumnos"), {
+        type: 'pie',
+        data: {
+          labels: ["Vigentes", "No vigentes", "En prorroga","Sin estado"],
+          datasets: [{
+            label: "Clientes",
+            backgroundColor: ["rgba(75, 192, 192, 0.7)", "rgba(241,39,39,0.7)","rgba(249,234,37,0.7)"],
+            borderColor: ["rgba(75, 192, 192, 1)","(241,39,55,1)","rgba(249,245,26,1)"],
+            data: [obj[0].totalVigentes,obj[0].totalNoVigentes,obj[0].totalEnProrroga,obj[0].estadoSinAsignar]
+          }]
+        },
+        options: {
+          title: {
+            display: true,
+            text: 'Estado de los alumnos'
+          }
+        }
+    });
+ 
+    }
+   function drawChartClientesGeneral(obj){
+    console.log(obj);
+
+    if(obj[0].estadoSinAsignar){
+        alert("Tienes clientes sin estado! Puedes consultarlos en Clientes > Ver > Actualizar datos > 'eliges el estado' > Actualizar estado. Recuerda hacer esto siempre que registres un pago.");
+    }
+ 
+     
+     new Chart(document.getElementById("myChartClientes"), {
+        type: 'pie',
+        data: {
+          labels: ["Vigentes", "No vigentes", "En prorroga","Sin estado"],
+          datasets: [{
+            label: "Clientes",
+            backgroundColor: ["rgba(75, 192, 192, 0.7)", "rgba(241,39,39,0.7)","rgba(249,234,37,0.7)"],
+            borderColor: ["rgba(75, 192, 192, 1)","(241,39,55,1)","rgba(249,245,26,1)"],
+            data: [obj[0].totalVigentes,obj[0].totalNoVigentes,obj[0].totalEnProrroga,obj[0].estadoSinAsignar]
+          }]
+        },
+        options: {
+          title: {
+            display: true,
+            text: 'Estado de los clientes'
+          }
+        }
+    });
+ 
+    }
+
+
+    function countAlumnos(){
+        $.ajax({
+            type: 'GET',
+            url: '/alumnos-count',
+            dataType: 'json',
+            success: (data) => {
+            
+             $('#alumnos_count').empty();
+             $('#alumnos_count').append('Total de alumnos: '+data[0].totalAlumnos);
+     
+            }     
+        });
+    }
+    function countClientes(){
+        $.ajax({
+            type: 'GET',
+            url: '/clientes-count',
+            dataType: 'json',
+            success: (data) => {
+        
+                $('#clientes_count').empty();
+                $('#clientes_count').append('Total de clientes: '+data[0].totalClientes);
+                   
+               }     
+            }     
+        );
+    }
+    function countPagosTotalPorAlumno(){
+        //
+        $.ajax({
+            type: 'GET',
+            url: '/pagos/current_month/count',
+            dataType: 'json',
+            success: (data) => {
+        
+                $('#pagomes_count').empty();
+                $('#pagomes_count').append('Total de pagos en el mes : '+data[0].totalPagosMes);
+                   
+               }     
+            }     
+        );
+    }
+getLabelAndDataPagos(),getAlumnosGeneral(),countClientes(),countAlumnos(),countPagosTotalPorAlumno(),
+getadmins(),getclients(),getclientsSelect(),getalumn(),getmaestros(),alumnosSelect(),getpagosall()
+,getClientesGeneral();

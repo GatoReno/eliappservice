@@ -659,6 +659,16 @@ router.get('/pagos/current_month/', (req, res) => {
         res.json(data);
     });
 });
+router.get('/pagos/current_month/count', (req, res) => {    
+        
+    const qu = pool.query('SELECT count(*) totalPagosMes FROM pagos_ where Month(created_at) = Month(CURDATE()) && YEAR(created_at) = YEAR(CURDATE())');
+
+    qu.then((data) => {
+        res.json(data);
+    });
+});
+
+
 
 router.post('/pago-add', (req, res) => {
     console.log(req.body);
@@ -671,7 +681,7 @@ router.post('/pago-add', (req, res) => {
     qu.then(async (result) => {
         if (result.insertId) {
             //const query = await pool.query('Update clientes_ set id_cartera = ? where id = ?', [result.insertId, id_cliente]);
-            req.flash('message', 'Pago creado con éxito');
+            req.flash('message', 'Pago creado con éxito! Actualiza la info de este cliente segun corresponda!');
             res.redirect('infocliente/'+req.body.id_cliente);
         }
 
@@ -710,6 +720,77 @@ router.get('/pagos/current_month/all_pagos', (req, res) => {
         res.json(data);
     });
 });
+
+
+//Estados para tablas
+
+
+router.get('/alumnos-count/', (req, res) => {    
+        
+    const qu = pool.query("SELECT count(*) totalAlumnos from alumnos_ ;");
+
+    qu.then((data) => {
+        res.json(data);
+    });
+});
+
+
+router.get('/clientes-count/', (req, res) => {    
+        
+    const qu = pool.query("SELECT count(*) totalClientes from clientes_ ;");
+
+    qu.then((data) => {
+        res.json(data);
+    });
+});
+
+router.get('/alumnos-estados-count/', (req, res) => {    
+        
+    const qu = pool.query(`SELECT totalVigentes, totalNoVigentes, totalEnProrroga, estadoSinAsignar
+    FROM (
+         SELECT count(*) totalVigentes from alumnos_ where estado = 'Vigente'
+         ) a
+    INNER JOIN (
+         SELECT count(*) totalNoVigentes from alumnos_ where estado = 'Deudor' || estado = 'Prorroga'
+         ) b on 1=1
+    INNER JOIN (
+        SELECT count(*) totalEnProrroga from alumnos_ where estado = 'Prorroga'
+        ) c on 1=1
+        INNER JOIN (
+        SELECT count(*) estadoSinAsignar from alumnos_ where estado IS NULL
+        ) d on 1=1`);
+
+    qu.then((data) => {
+        res.json(data);
+    });
+});
+
+
+
+
+
+
+router.get('/clientes-estados-count/', (req, res) => {    
+        
+    const qu = pool.query(`SELECT totalVigentes, totalNoVigentes, totalEnProrroga, estadoSinAsignar
+    FROM (
+         SELECT count(*) totalVigentes from clientes_ where estado = 'Vigente'
+         ) a
+    INNER JOIN (
+         SELECT count(*) totalNoVigentes from clientes_ where estado = 'Deudor' || estado = 'Prorroga'
+         ) b on 1=1
+    INNER JOIN (
+        SELECT count(*) totalEnProrroga from clientes_ where estado = 'Prorroga'
+        ) c on 1=1
+        INNER JOIN (
+        SELECT count(*) estadoSinAsignar from clientes_ where estado IS NULL
+        ) d on 1=1`);
+
+    qu.then((data) => {
+        res.json(data);
+    });
+});
+
 
 
 module.exports = router;

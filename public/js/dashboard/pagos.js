@@ -1,11 +1,4 @@
-  
-$(document).ready(function() {
-    
-
-    
-});
-
-
+ 
  
 
 function currentYear(){
@@ -21,6 +14,9 @@ function currentYear(){
             $('#pagosT').empty();
             $('#saldo_concepto').empty();
         $('#saldo_concepto').append('concepto');
+        $('#tablepagostitle').empty();
+        $('#tablepagostitle').append('Todos los pagos del año presente');
+        
             data.forEach( ( item ) => {
                 const row = `<tr>
                     
@@ -60,6 +56,9 @@ function currentMonth(){
             $('#pagosT').empty();
             $('#saldo_concepto').empty();
         $('#saldo_concepto').append('concepto');
+        $('#tablepagostitle').empty();
+        $('#tablepagostitle').append('Todos los pagos del mes hasta hoy');
+        
             data.forEach( ( item ) => {
                 const row = `<tr>
                     
