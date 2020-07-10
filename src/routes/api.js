@@ -715,6 +715,26 @@ router.post('/expenses-add', (req, res) => {
     });
 
 });
+
+router.get('/expenses-month-get', (req, res) => {
+    console.log(req.body);
+
+    const pago = req.body;
+    
+    const qu = pool.query('Select * from expensas_  Where Month(created_at) = Month(CURDATE()) || Year(created_at) = Year(CURDATE()) ');
+    
+    
+    qu.then(async (result) => {        
+            console.log(result);                     
+            res.json(result);
+        
+
+    }).catch((err) => {
+        console.log(err);
+    });
+
+});
+
 //
 
 

@@ -217,6 +217,35 @@ function getclients(){
     });
 };
 
+//tableGastosTitle
+
+
+function getexpensassall(){
+    $.ajax({
+        type: 'GET',
+        url: '/expenses-month-get',
+        dataType: 'json',
+        success: (data) => {
+        //console.log(data);
+        $('#gastosT').empty();
+        
+        $('#tableGastosTitle').empty();
+        $('#tableGastosTitle').append('Gastos del mes ');
+       
+            data.forEach( ( item ) => {
+                const row = `<tr>
+                <td>${ item.concepto }</td>
+                   
+                    <td>$ ${ item.amount } mx</td>                    
+                    <td>$ ${ item.created_at } mx</td>
+ 
+                   </tr>`;
+                $('#gastosT').append( row );
+            });
+        }});};
+
+        
+
 function getpagosall(){
     $.ajax({
         type: 'GET',
@@ -241,10 +270,7 @@ function getpagosall(){
                    </tr>`;
                 $('#pagosT').append( row );
             });
-        }
-
-    });
-};
+        }});};
 
 
 
@@ -296,6 +322,26 @@ function LookFor_Alumnos() {
     input = document.getElementById("myInputclients");
     filter = input.value.toUpperCase();
     table = document.getElementById("clientsT");
+    tr = table.getElementsByTagName("tr");
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[0];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }       
+    }
+  }
+
+
+   function LookFor_Gastos() {
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("myInputGastos");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("gastosT");
     tr = table.getElementsByTagName("tr");
     for (i = 0; i < tr.length; i++) {
       td = tr[i].getElementsByTagName("td")[0];
@@ -673,4 +719,4 @@ function getLabelAndDataPagos(){
     }
 getLabelAndDataPagos(),getAlumnosGeneral(),countClientes(),countAlumnos(),countPagosTotalPorAlumno(),
 getadmins(),getclients(),getclientsSelect(),getalumn(),getmaestros(),alumnosSelect(),getpagosall()
-,getClientesGeneral();
+,getClientesGeneral(),getexpensassall();
