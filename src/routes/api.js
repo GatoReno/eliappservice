@@ -692,7 +692,40 @@ router.post('/pago-add', (req, res) => {
 });
 
 
-//querytable
+
+
+router.post('/expenses-add', (req, res) => {
+    console.log(req.body);
+
+    const pago = req.body;
+    
+    const qu = pool.query('Insert into expensas_ set ?', [pago]);
+    
+    
+    qu.then(async (result) => {
+        if (result.insertId) {
+            console.log(result);
+            //const query = await pool.query('Update clientes_ set id_cartera = ? where id = ?', [result.insertId, id_cliente]);
+            req.flash('message', 'Ticket creado con éxito!');
+            res.redirect('/dashboard');
+        }
+
+    }).catch((err) => {
+        console.log(err);
+    });
+
+});
+//
+
+
+router.get('/expenses/current_month', (req, res) => {    
+        
+    const qu = pool.query("SELECT * FROM expensas_ where  Month(created_at) = Month(CURDATE()) || Year(created_at) = Year(CURDATE()) ");
+
+    qu.then((data) => {
+        res.json(data);
+    });
+});
 
 router.get('/pagos/current_month/dates', (req, res) => {    
         
@@ -743,6 +776,55 @@ router.get('/clientes-count/', (req, res) => {
         res.json(data);
     });
 });
+
+
+router.get('/alumnos-nivel-count/', (req, res) => {    
+        
+            const qu = pool.query(`
+            SELECT  primero, segundo, tercero, cuarto, quinto, sexto
+    FROM (
+         select Count(*) primero from alumnos_ where grado like '1' 
+         ) a
+    INNER JOIN (
+         select Count(*) segundo from alumnos_ where grado like '2' 
+         ) b on 1=1
+             INNER JOIN (
+         select Count(*) tercero from alumnos_ where grado like '3' 
+         ) c on 1=1
+             INNER JOIN (
+         select Count(*) cuarto from alumnos_ where grado like '4' 
+         ) d on 1=1
+             INNER JOIN (
+         select Count(*) quinto from alumnos_ where grado like '5' 
+         ) e on 1=1
+             INNER JOIN (
+         select Count(*) sexto from alumnos_ where grado like '6' 
+         ) f on 1=1            
+                 `);
+        
+            qu.then((data) => {
+                res.json(data);
+            });
+        });
+
+         router.get('/alumnos-genero-count/', (req, res) => {    
+        
+            const qu = pool.query(`SELECT  masculinos, femeninos, total
+                FROM (
+                    select Count(*) masculinos from alumnos_ where sexo like 'masculin' 
+                    ) a
+                INNER JOIN (
+                    select Count(*) femeninos from alumnos_ where sexo like 'femenino' 
+                    ) b on 1=1
+                 INNER JOIN (
+                    select Count(*) total from alumnos_  
+                    ) c on 1=1
+                 `);
+        
+            qu.then((data) => {
+                res.json(data);
+            });
+        });
 
 router.get('/alumnos-estados-count/', (req, res) => {    
         

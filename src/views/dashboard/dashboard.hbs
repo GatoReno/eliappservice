@@ -25,6 +25,7 @@
             <li><a data-toggle="tab" href="#menu1">Clientes</a></li>
             <li><a data-toggle="tab" href="#menu2">Alumnos</a></li>
             <li><a data-toggle="tab" href="#menu4">Pagos</a></li>
+            <li><a data-toggle="tab" href="#menu5">Expenses</a></li>
             {{!-- <li><a data-toggle="tab" href="#menu3">Pagos</a></li>
             
             <li><a data-toggle="tab" href="#menu5">Actividades</a></li> --}}
@@ -316,15 +317,16 @@
                 <h3>Alumnos</h3>
 
 
-
+                
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <div> <small id="genero-data"></small></div>
                     <div class="top2 table-wrapper-scroll-y">
                         <table class="table table-hover">
                             <thead>
                                 <tr>
                                     <th scope="col">Nombre</th>
                                     <th scope="col">Fecha de ingreso a sistema</th>
-                                    <th scope="col"></th>
+                                    <th scope="col">Estado</th>
                                     <th>Detalles</th>
 
                                 </tr>
@@ -335,6 +337,8 @@
                             </tbody>
                         </table>
                     </div>
+                    <hr>
+                    <div> <small id="nivel-data"></small></div>
                 </div>
 
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
@@ -535,16 +539,16 @@
 
 
             <div id="menu5" class="tab-pane fade p3">
-                <h3>Actividades</h3>
+                <h3>expenses</h3>
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="/links/add">Agregar Proyecto</a></li>
+                        <li class="breadcrumb-item"><a  data-toggle="modal" data-target="#modal_dash" onclick="return modal_addTicket()">Agregar Ticket</a></li>
 
                     </ol>
                 </nav>
 
 
-                {{! termina menu 4}}
+                {{! termina menu 5}}
             </div>
 
         </div>

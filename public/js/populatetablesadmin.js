@@ -120,20 +120,54 @@ function getalumn(){
                 const row = `<tr>
                     <td>${ item.name }  ${ item.lastnameP }  ${ item.lastnameM }</td>
                     <td>${ item.created_at }</td>
-                    <td></td>
+                    <td>${ item.estado }</td>
                     <td><a href="/infoalumno/${ item.id }" class="btn btn-default">Ver</a></td>
                 </tr>`;
                 $('#alumnosT').append( row );
             });
+            getalumnGenders();
+            getalumnLevels();
         }
 
     });
 
-
-    //$("#ownerT").load();
-
 };
 
+
+function getalumnGenders(){
+    
+    $.ajax({
+        type: 'GET',
+        url: '/alumnos-genero-count',
+        dataType: 'json',
+        success: (data) => {            
+                $('#genero-data').empty();
+                $('#genero-data').append(`boys : ${ data[0].masculinos }  / girls : ${ data[0].femeninos } / total : ${ data[0].total }`);
+         
+        }});
+}
+
+
+function getalumnLevels(){
+    
+    $.ajax({
+        type: 'GET',
+        url: '/alumnos-nivel-count',
+        dataType: 'json',
+        success: (data) => {            
+                $('#nivel-data').empty();
+                $('#nivel-data').append(`
+                first : ${ data[0].primero }  / 
+                second : ${ data[0].segundo } / 
+                thrid : ${ data[0].tercero } /
+                fourth : ${ data[0].cuarto } / 
+                fifth : ${ data[0].quinto } / 
+                sixth : ${ data[0].sexto } / 
+                
+                `);
+         
+        }});
+}
 
 function getmaestros(){
     
@@ -291,6 +325,42 @@ function modal_reiniciarColegiaturas(){
 $('#modal_body_dash').append(st);
 
 }
+
+
+
+function modal_addTicket(){
+    $('#modal_title_dash').empty();
+    $('#modal_body_dash').empty();
+
+    $('#modal_title_dash').append('<h4>Agregar Ticket de compra</h4>');
+    var st = `
+    <small>Deseas agregar algun concepto a los gatos del mes?<small><br>
+    <hr>
+    <form method="POST" action="/expenses-add">
+            <label>Concepto</label>
+            <input name="concepto" required class="form-control" placeholder="Compra de inmueble / despensa / mantenimiento / pago de agua /  pago de luz" type="text">
+            <br>
+
+
+    
+            <label>Cantidad</label>
+            <input name="amount" required class="form-control" placeholder="" type="number">
+            <br>
+            
+
+            <hr>
+            <label>Referencia o ticker</label>
+            <input name="referencia" required class="form-control" placeholder="numero de referencia / factura / etc" type="">
+            <br>
+            <hr>
+            <input type="submit" value="Save" class="btn btn-success "/>
+    </form>
+    `;
+
+$('#modal_body_dash').append(st);
+
+}
+
 
 function modal_GenerarInforme(){
     $('#modal_title_dash').empty();
