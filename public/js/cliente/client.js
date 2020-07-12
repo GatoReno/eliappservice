@@ -1,7 +1,10 @@
 
   
 $(document).ready(function() {
-    
+
+
+    $("#div_reporteCliente").hide();
+    $("#reporteHolder").hide();  
     var id_client = $("#id_client").val();
     getPagos(id_client);
     getAlumnosClient(id_client);
@@ -367,3 +370,97 @@ function getAlumnosClient(id_client){
         }
     });
 }
+
+function GenerarReportePagosCliente(id_client) {
+
+    $.ajax({
+        url: '/cliente-pagos-all/'+id_client,
+        type: 'GET',
+        
+        dataType: 'json',
+        success: function(resp) {
+            console.log(resp);
+            var t = ` 
+            
+            <div class="top2 table-wrapper-scroll-y">
+            <h5 class="card-title">Pagos</h5>
+                <table class="table table-hover" >
+                    <thead>
+                        <tr>
+                            <th scope="col"> Fecha</th>
+                            <th scope="col"> Concepto</th>
+                            <th scope="col"> Antidad</th>
+                            <th scope="col"> Prorroga  </th>
+                            <th scope="col"> Tipo de pago  </th>
+                            <th scope="col"> Referencia  </th>
+                        </tr>
+                    </thead>
+                    <tbody id="repoPagosT">
+
+
+                    </tbody>
+                </table>
+            </div>
+            `
+            $('#repoClient2').append(t);
+             
+        resp.forEach(e => {
+               const row = `<tr>
+                    <td> ${ e.created_at }</td>
+                    <td>${ e.concepto }</td>
+                    <td> $ ${ e.amount } mx </td>
+                    <td> ${ e.prorroga } </td>
+                    <td> ${ e.tipo_pago } </td>
+                    <td> ${ e.referencia } </td>
+                </tr>`;
+                $('#repoPagosT').append( row );
+           });
+
+         
+          
+                  
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+            var data = jqXHR.responseJSON;
+            if (jqXHR.status == 401) {
+                //location.reload();
+            }
+            console.log(errorThrown)
+
+        }
+    });
+    
+
+ $.ajax({
+        url: '/pagos-cliente-all-accounts/'+id_client,
+        type: 'GET',
+        
+        dataType: 'json',
+        success: function(resp) {
+            console.log(resp);
+             
+             
+       $('#repoClient1').append('Saldo a en contra:  $ '+
+       resp[0].saldoencontra + ' mx / Saldo a favor:  $ '+
+       resp[0].saldofavor+' mx');
+         
+          
+ 
+
+                  
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            var data = jqXHR.responseJSON;
+            if (jqXHR.status == 401) {
+                //location.reload();
+            }
+            console.log(errorThrown)
+
+        }
+    });
+   $("#div_reporteCliente").show();  
+   $("#reporteHolder").show();  
+    
+}
+
+

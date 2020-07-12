@@ -673,23 +673,20 @@ router.get('/pagos/current_month/count', (req, res) => {
 router.post('/pago-add', (req, res) => {
     console.log(req.body);
 
-    const pago = req.body;
-    
-    const qu = pool.query('Insert into pagos_ set ?', [pago]);
-    
-    
+    const pago = req.body;    
+    const qu = pool.query('Insert into pagos_ set ?', [pago]);        
     qu.then(async (result) => {
         if (result.insertId) {
             //const query = await pool.query('Update clientes_ set id_cartera = ? where id = ?', [result.insertId, id_cliente]);
             req.flash('message', 'Pago creado con éxito! Actualiza la info de este cliente segun corresponda!');
             res.redirect('infocliente/'+req.body.id_cliente);
         }
-
     }).catch((err) => {
         console.log(err);
     });
-
 });
+
+
 
 
 
@@ -716,6 +713,7 @@ router.post('/expenses-add', (req, res) => {
 
 });
 
+
 router.get('/expenses-month-get', (req, res) => {
     console.log(req.body);
 
@@ -735,8 +733,62 @@ router.get('/expenses-month-get', (req, res) => {
 
 });
 
-//
 
+//  
+
+
+router.get('/cliente-pagos-all/:id', (req, res) => {
+ 
+    const id = req.params.id;
+    
+    const qu = pool.query('Select * from pagos_ where id_cliente = ?',[id]);
+    
+    
+    qu.then(async (result) => {        
+            console.log(result);                     
+            res.json(result);
+        
+
+    }).catch((err) => {
+        console.log(err);
+    });
+
+});
+
+
+router.get('/generar-historial-cliente/:id', (req, res) => {
+    console.log(req.body);
+
+    const pago = req.body;    
+    const qu = pool.query('Insert into pagos_ set ?', [pago]);        
+    qu.then(async (result) => {
+        res.json(result)
+    }).catch((err) => {
+        console.log(err);
+    });
+});
+
+
+router.get('/pagos-cliente-all-accounts/:id', (req, res) => {    
+        const id = req.params.id;
+        console.log(id)
+        const qu = pool.query(`
+        SELECT  pagos, saldofavor , saldoencontra 
+        FROM (
+        select sum(amount) pagos from pagos_ where id_cliente =  ${id}  
+        ) a
+        INNER JOIN (
+        select sum(saldo_afavor) saldofavor from pagos_ where id_cliente =   ${id} 
+        ) b on 1=1
+        INNER JOIN (
+        select sum(saldo_pendiente) saldoencontra from pagos_ where id_cliente =  ${id} 
+        ) c on 1=1  
+    `);
+
+    qu.then((data) => {
+        res.json(data);
+    });
+});
 
 router.get('/expenses/current_month', (req, res) => {    
         
