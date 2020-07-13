@@ -462,7 +462,120 @@
                         data-target="#modal_dash" class="btn btn-success pull-right">Generar Informe Mensual</a>
                    </div> 
                 <h3>Pagos</h3>
+                <a class="btn btn-default pull-right hidden" id="backPagos"   onclick="return ShowPagos()" >Volver</a>
+                <a class="btn btn-default pull-right hidden"   id="printRepo" onclick="return ImprimirReportePagos()" >Imprimir</a>
+               <div id="pagosReporte" class="hidden" style="background-color:white;padding: 6%;">
+                    <h4 style="background-color:white">  Preescoloar</h4>
+                    <div id="" style="background-color:white">
+
+                        <div class="top2 " style="background-color:white">
+                                        <table class="table table-hover  " style="background-color:white">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">nombre</th>
+                                                    <th scope="col">colegiatura </th>
+                                                    <th scope="col">estado<div id="saldo_concepto"></div></th>                                    
+                                                    
+
+                                                </tr>
+                                            </thead>
+                                            <div><small id="preescolarTitle">  </small></div>
+                                            
+                                            <tbody id="preescolarT">
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                    </div>
+
+                    <hr>
+
+                    <h4 style="background-color:white"  >Primaria</h4>
+
+                    <div id="primT" style="background-color:white">
+
+                    <div class="top2 " style="background-color:white">
+                                        <table class="table table-hover  " style="background-color:white">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Nombre</th>
+                                                    <th scope="col">Colegiatura </th>
+                                                    <th scope="col">estado<div id="saldo_concepto"></div></th>                                    
+                                                    
+
+                                                </tr>
+                                            </thead>
+                                            <div><small id="primariaTitle">  </small></div>
+                                            
+                                            <tbody id="primariaT">
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                    </div>
+
+                    <hr>
+
+                    <h4 style="background-color:white">Clientes deudores</h4>
+
+                    <div id="" style="background-color:white">
+
+
+                        <div style="background-color:white" class="top2 ">
+                                        <table class="table table-hover  ">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Nombre</th>
+                                                    <th scope="col"> Parentesco </th>
+                                                    <th scope="col"> Estado<div id="saldo_concepto"></div></th>                                    
+                                                    
+
+                                                </tr>
+                                            </thead>
+                                            <div><small id="deudoresTitle">  </small></div>
+                                            
+                                            <tbody id="deudoresT">
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                
+
+                    </div>
+
+                            <hr>                    
+                    <h4 style="background-color:white">Total de Pagos</h4>
+
+                    <div id="" style="background-color:white">
+
+
+                        <div class="top2 ">
+                                        <table class="table table-hover  " style="background-color:white">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">concepto</th>
+                                                    <th scope="col"> fecha </th>
+                                                    <th scope="col"> pago <div id=""></div></th>                                    
+                                                    <th scope="col"> saldo a favor </th>
+                                                    <th scope="col"> faldo pendiente </th>
+
+                                                </tr>
+                                            </thead>
+                                            <div><small id="pagosCurrenTitle" style="background-color:white">  </small></div>
+                                            
+                                            <tbody id="pagosCurrenT" style="background-color:white">
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                
+
+                    </div>
+
+               </div>
                
+               <div id="pagosStandar">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">Pagos</li>
@@ -495,41 +608,41 @@
                     </div>
                 </div>
                 <div id="div_dash_pagos"></div>
-    <div class="col-lg-12">
-        <hr>
-         <small id="pagomes_count"></small>
-    </div>
-         <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
-              <small>Estado de cliente segun pagos</small>
-              <hr>
-               <div id="pagos_chart">
-
-                    <canvas id="myChart" width="100" height="70"></canvas>
-
+                    <div class="col-lg-12">
+                    <hr>
+                    <small id="pagomes_count"></small>
                 </div>
-            </div>
+                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                    <small>Estado de cliente segun pagos</small>
+                    <hr>
+                    <div id="pagos_chart">
 
-                 <div class="col-lg-6 col-md-6">     
-              
-               <div >
-                <small>Clientes vigentes</small>
-                <hr>
-                <small id="clientes_count"></small>
-                    <canvas id="myChartClientes" width="400" height="300"></canvas>
-                </div>
-            </div>
-        <div class="col-lg-6 col-md-6">     
-              
-               <div >
-                <small>Alumnos vigentes</small>                
-                <hr>
-                <small id="alumnos_count"></small>
-                    <canvas id="myChartAlumnos" width="400" height="300"></canvas>
+                            <canvas id="myChart" width="100" height="70"></canvas>
 
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6">     
+                
+                <div >
+                    <small>Clientes vigentes</small>
+                    <hr>
+                    <small id="clientes_count"></small>
+                        <canvas id="myChartClientes" width="400" height="300"></canvas>
+                    </div>
                 </div>
-            </div>
+                <div class="col-lg-6 col-md-6">     
+                
+                <div >
+                    <small>Alumnos vigentes</small>                
+                    <hr>
+                    <small id="alumnos_count"></small>
+                        <canvas id="myChartAlumnos" width="400" height="300"></canvas>
+
+                    </div>
+                </div>
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
-
+            </div>
 <script>
 
 </script>
@@ -610,5 +723,39 @@
 <script src="/js/typeahead.min.js"></script>
 
 <script src="/js/dashboard/pagos.js"></script>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
+<script src="/js/cliente/client.js"></script>
+
+  <script>
+    
+    function ImprimirReportePagos(){
+      var today = new Date();
+      var dd = today.getDate();
+
+      var mm = today.getMonth()+1; 
+      var yyyy = today.getFullYear();
+      if(dd<10) 
+      {
+          dd='0'+dd;
+      } 
+
+      if(mm<10) 
+      {
+          mm='0'+mm;
+      } 
+      today = mm+'-'+dd+'-'+yyyy;
+    var name = 'Reporte General de Pagos JMAdmin '+today ;
+   
+        var pdf = new jsPDF();
+              
+              pdf.addHTML($("#pagosReporte"),function() {
+              pdf.save(name+'.pdf');
+          });
+}
+
+</script>
+
 {{else}}
 {{/if}}
