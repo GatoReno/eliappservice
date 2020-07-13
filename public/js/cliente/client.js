@@ -382,9 +382,9 @@ function GenerarReportePagosCliente(id_client) {
             console.log(resp);
             var t = ` 
             
-            <div class="top2 table-wrapper-scroll-y">
+            <div class="top2 table-wrapper-scroll-y"  style="background-color: white;">
             <h5 class="card-title">Pagos</h5>
-                <table class="table table-hover" >
+                <table class="table table-hover" style="background-color: white;" >
                     <thead>
                         <tr>
                             <th scope="col"> Fecha</th>
@@ -405,7 +405,7 @@ function GenerarReportePagosCliente(id_client) {
             $('#repoClient2').append(t);
              
         resp.forEach(e => {
-               const row = `<tr>
+               const row = `<tr  style="background-color: white;">
                     <td> ${ e.created_at }</td>
                     <td>${ e.concepto }</td>
                     <td> $ ${ e.amount } mx </td>
