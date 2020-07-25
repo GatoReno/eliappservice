@@ -646,7 +646,149 @@
 
 
     {{#each maestro}}
-    hay maestro
+  
+     <input type="hidden" value="{{id}}" id="id_user">
+    <div class="col-md-6">
+<h4>Staff</h4>
+ <a class="btn btn-default btn-sm pull-right" data-toggle="modal" 
+      data-target="#modal_staff" onclick="return modal_staff_edit({{id}})" >Actualizar Datos</a>
+ <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">..</th>
+                            <th scope="col">...</th>
+                            <th>...</th>
+
+                        </tr>
+                    </thead>
+                    <tbody id="maestrosT">
+                        <tr>
+                          <td>Nombre</td>
+                          <td>
+                               {{name}}
+ 
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Email</td>
+                          <td>
+                               {{email}} 
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Telefono</td>
+                          <td>{{telefono}}</td>
+                        </tr>
+                        <tr>
+                          <td>CURP</td>
+                          <td>{{curp}}</td>
+                        </tr>
+                        <tr>
+                          <td>RFC</td>
+                          <td>{{rfc}}</td>
+                        </tr>
+                        <tr>
+                          <td>Trabajo por horas</td>
+                          <td>{{porhora}}</td>
+                        </tr>
+                        <tr>
+                          <td>Sueldo</td>
+                          <td>{{sueldo}}</td>
+                        </tr>
+                          <tr>
+                          <td>Profesion</td>
+                          <td>{{profesion}}</td>
+                        </tr>
+                          <tr>
+                          <td>Domicilio</td>
+                          <td>{{domicilio}}</td>
+                        </tr>
+                          <tr>
+                          <td>Estudios</td>
+                          <td>{{estudios}}</td>
+                        </tr>
+                          <tr>
+                          <td>Observaciones</td>
+                          <td>{{observaciones}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+    </div>
+    <div class="col-md-6">
+<h4>Pagos</h4>
+ <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">Fecha</th>
+                            <th scope="col">Cantidad</th>
+                            <th scope="col">Observaciones</th>
+                            <th scope="col">Concepto</th>
+
+                        </tr>
+                    </thead>
+                   <tbody id="maestroPagosT"></tbody>
+                </table>
+
+    </div>
+
+    <div class="col-lg-12">
+        <ol class="breadcrumb">
+                        <li class="breadcrumb-item"> 
+                          <a class="btn btn-danger" data-toggle="modal" data-target="#modal_staff"onclick="return eliminarPersonal()">Eliminar Staff</a>
+                            
+                        </li>
+                        <li class="breadcrumb-item">
+                          <a class="btn btn-default" data-toggle="modal" data-target="#modal_staff" onclick="return modalPagoStaff()">Generar Pago</a>
+                        </li>
+
+                         <li class="breadcrumb-item">
+                          otro
+                        </li>
+                        
+                    </ol>
+    </div>
+
+
+
+    <div id="modal_staff" class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modal_title"></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      
+        
+        <div class="modal-body" >
+          <div id="modal_staff_body"></div>
+        </div>
+        <div class="modal-footer">
+        
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+      </div>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+<script src="/js/staff/staff.js"></script>
+
+    {{else}}
+    {{/each}}
+
+
+
+
+{{!-- 
+
+concepto
+
+  {{#each cocepto}}
+    hay concepto
 
 
     {{id}}
@@ -670,6 +812,7 @@
     {{else}}
     {{/each}}
 
+--}}
     {{else}}
     {{/if}}
   </div>

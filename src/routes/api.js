@@ -226,49 +226,6 @@ router.post('/add-alumno', (req, res) => {
 });
 
 
-router.post('/add-maestro', (req, res) => {
-    console.log(req.body);
-    const {
-        name,
-        numerotel,
-        asignatura,
-        sueldo,
-        curp,
-        profesion,
-        mail,
-        rfc,
-        fingreso,
-        fegreso,
-    } = req.body;
-
-    const maestro = {
-        name: name,
-        numerotel: numerotel,
-        asignatura: asignatura,
-        sueldo: sueldo,
-        curp: curp,
-        profesion: profesion,
-        mail: mail,
-        rfc: rfc,
-        fingreso: fingreso,
-        fegreso: fegreso
-    }
-
-
-
-    const qu = pool.query('Insert into maestros_ set ?', [maestro]);
-
-    qu.then((result) => {
-        if (result.insertId) {
-            req.flash('message', 'Maestro creado con éxito');
-            res.render('dashboard/dashboard');
-        }
-
-    }).catch((err) => {
-        console.log(err);
-    });
-
-});
 
 
 router.post('/cartera-update', (req, res) => {
@@ -338,7 +295,7 @@ router.get('/carteras/:id', (req, res) => {
 });
 
 router.get('/maestros', (req, res) => {
-    const qu = pool.query('select * from maestros_');
+    const qu = pool.query('select * from personal_');
 
     qu.then((result) => {
         res.json(result);
@@ -400,12 +357,82 @@ router.get('/alumnos-sincartera', (req, res) => {
 
 });
 
-router.get('/infomaestro/:id', (req, res) => {
+
+router.post('/add-personal', (req, res) => {
+    console.log(req.body);
+    const {
+        name,
+        telefono,
+            
+        sueldo,
+        curp,
+        profesion,
+        email,
+        rfc,
+        fingreso,estudios,porhora,
+    } = req.body;
+
+    const maestro = {
+        name: name,
+        estudios:estudios,
+        porhora :porhora,
+        telefono: telefono,
+        
+        sueldo: sueldo,
+        curp: curp,
+        profesion: profesion,
+        email: email,
+        rfc: rfc,
+        fecha_ingreso: fingreso
+    }
+
+
+
+    const qu = pool.query('Insert into personal_ set ?', [maestro]);
+
+    qu.then((result) => {
+        if (result.insertId) {
+            req.flash('message', 'Personal creado con éxito');
+            res.render('dashboard/dashboard');
+        }
+
+    }).catch((err) => {
+        console.log(err);
+    });
+
+});
+
+
+router.get('/data_personal/:id', (req, res) => {
 
     const {
         id
     } = req.params;
-    const qu = pool.query('select * from maestros_ where id = ?', [id]);
+    const qu = pool.query('select * from personal_ where id = ?', [id]);
+
+    
+
+    qu.then((data) => {
+
+        console.log(data)
+        data.forEach((data) => {
+           res.json(data);
+        });
+
+      
+
+    }).catch((err) => {
+        console.log(err)
+    });
+
+});
+
+router.get('/info_personal/:id', (req, res) => {
+
+    const {
+        id
+    } = req.params;
+    const qu = pool.query('select * from personal_ where id = ?', [id]);
 
     const maestro = [];
 
@@ -674,12 +701,12 @@ router.post('/pago-add', (req, res) => {
     console.log(req.body);
 
     const pago = req.body;    
-    const qu = pool.query('Insert into pagos_ set ?', [pago]);        
+    const qu = pool.query('Insert into pagos_personal set ?', [pago]);        
     qu.then(async (result) => {
         if (result.insertId) {
             //const query = await pool.query('Update clientes_ set id_cartera = ? where id = ?', [result.insertId, id_cliente]);
             req.flash('message', 'Pago creado con éxito! Actualiza la info de este cliente segun corresponda!');
-            res.redirect('infocliente/'+req.body.id_cliente);
+            res.redirect('info_personal/'+req.body.id_staff);
         }
     }).catch((err) => {
         console.log(err);
@@ -687,6 +714,19 @@ router.post('/pago-add', (req, res) => {
 });
 
 
+
+router.get('/pagos-personal-list/:id', (req, res) => {
+    
+    const id = req.params.id;
+    const qu = pool.query(' SELECT * from pagos_personal where id = ?',[id]);
+    qu.then(async (result) => {        
+            console.log(result);                     
+            res.json(result);        
+    }).catch((err) => {
+        console.log(err);
+    });
+
+});
 
 
 
@@ -799,7 +839,9 @@ router.get('/alumnosPree', (req, res) => {
 router.get('/reiniciar-colegiaturas/', (req, res) => {
     console.log(req.body);
 
-    const pago = req.body;    
+    const pago = req.body;  
+    
+    const qu = pool.query("UPDATE clientes_ set estado = 'Deudor' " );
    
 });
 

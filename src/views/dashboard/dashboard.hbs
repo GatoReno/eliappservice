@@ -22,11 +22,12 @@
         {{!-- Navegador de pestañas --}}
         <ul class="nav nav-tabs">
             <li class="active"><a data-toggle="tab" href="#home">Perfil Admin</a></li>
-            <li><a data-toggle="tab" href="#menu1">Clientes</a></li>
+            <li><a data-toggle="tab" href="#menu1">Clients</a></li>
             <li><a data-toggle="tab" href="#menu2">Alumnos</a></li>
-            <li><a data-toggle="tab" href="#menu4">Pagos</a></li>
+            <li><a data-toggle="tab" href="#menu4">Payments</a></li>
             <li><a data-toggle="tab" href="#menu5">Expenses</a></li>
-            {{!-- <li><a data-toggle="tab" href="#menu3">Pagos</a></li>
+            <li><a data-toggle="tab" href="#menu3">Staff</a></li>
+            {{!-- 
             
             <li><a data-toggle="tab" href="#menu5">Actividades</a></li> --}}
 
@@ -396,9 +397,9 @@
                 {{! termina menu 2}}
             </div>
             <div id="menu3" class="tab-pane fade p3">
-                <h3>Maestros</h3>
+                <h3>Staff</h3>
 
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                 <table class="table table-hover">
                     <thead>
                         <tr>
@@ -414,36 +415,38 @@
                 </table>
 
                 </div>
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <form action="/add-maestro" method="POST">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <form action="/add-personal" method="POST">
                         <input type="submit" class="btn btn-default pull-right" value="Crear">
 
 
-                        <h4>Agregar de maestro</h4>
+                        <h4>Agregar de staff</h4>
                         <br>
-                        <label for="">Elegir tutor</label> <small>Esta es una lista de los actuales clientes</small>
+                        <label for="">Elegir staff</label> <small>Esta es una lista de los actuales staff</small>
 
                         <br>
                         <input class="form-control" type="text" name="name" placeholder="Nombre Completo" required><br>
-                        <input class="form-control" type="text" name="numerotel" placeholder="Telefono" required><br>
-                        <input class="form-control" type="text" name="asignatura" placeholder="Asignatura" required><br>
+                        <input class="form-control" type="text" name="telefono" placeholder="Telefono" required><br>
+                        <input class="form-control" type="text" name="porhora" placeholder="Por horas / no es por horas" required><br>
 
 
-                        <input class="form-control" type="text" name="sueldo" placeholder="sueldo" required><br>
+                        <input class="form-control" type="number" name="sueldo" placeholder="sueldo" required><br>
 
                         <input class="form-control" type="text" name="curp" placeholder="curp" required><br>
 
+                        
                         <input class="form-control" type="text" name="profesion" placeholder="profesion" required><br>
+                        <input class="form-control" type="text" name="estudios" placeholder="estudios" required><br>
 
-                        <input class="form-control" type="mail" name="mail" placeholder="mail@ejemplo.com" required><br>
+                        <input class="form-control" type="mail" name="email" placeholder="mail@ejemplo.com" required><br>
 
                         <input class="form-control" type="text" name="rfc" placeholder="rfc" required><br>
 
                         <small>fecha de ingreso</small>
-                        <input class="form-control" type="date" name="fingreso" placeholder="fingreso" required><br>
-                        <small>fecha de egreso</small>
-
-                        <input class="form-control" type="date" name="fegreso" placeholder="fegreso" required><br>
+                        <input class="form-control" type="date" name="fingreso" placeholder="fingreso"  ><br>
+                       
+                       <input class="form-control" type="text" name="observaciones" placeholder="observaciones" required><br>
+                        <br>
 
 
                     </form>
@@ -465,9 +468,11 @@
                 <a class="btn btn-default pull-right hidden" id="backPagos"   onclick="return ShowPagos()" >Volver</a>
                 <a class="btn btn-default pull-right hidden"   id="printRepo" onclick="return ImprimirReportePagos()" >Imprimir</a>
                <div id="pagosReporte" class="hidden" style="background-color:white;padding: 6%;">
-                    <h4 style="background-color:white">  Preescoloar</h4>
-                    <div id="" style="background-color:white">
+               
 
+               <div id="pagosReporte_both">
+                    <div id="prescT" style="background-color:white">
+                        <h4 style="background-color:white">  Preescoloar</h4>
                         <div class="top2 " style="background-color:white">
                                         <table class="table table-hover  " style="background-color:white">
                                             <thead>
@@ -515,12 +520,15 @@
 
                     </div>
 
+                    </div>
+
+
                     <hr>
 
-                    <h4 style="background-color:white">Clientes deudores</h4>
+                   
 
-                    <div id="" style="background-color:white">
-
+                    <div id="deudores_div" style="background-color:white">
+                        <h4 style="background-color:white">Clientes deudores</h4>
 
                         <div style="background-color:white" class="top2 ">
                                         <table class="table table-hover  ">
@@ -545,10 +553,10 @@
                     </div>
 
                             <hr>                    
-                    <h4 style="background-color:white">Total de Pagos</h4>
+                   
 
-                    <div id="" style="background-color:white">
-
+                    <div id="totalpagos_div" style="background-color:white">
+                        <h4 style="background-color:white">Total de Pagos</h4>
 
                         <div class="top2 ">
                                         <table class="table table-hover  " style="background-color:white">
@@ -731,6 +739,7 @@
   <script>
     
     function ImprimirReportePagos(){
+        
       var today = new Date();
       var dd = today.getDate();
 
@@ -750,10 +759,71 @@
    
         var pdf = new jsPDF();
               
-              pdf.addHTML($("#pagosReporte"),function() {
+              pdf.addHTML($("#pagosReporte_both"),function() {
+              pdf.save(name+'.pdf');
+          });
+
+          ImprimirReportePagosDeudores();
+}
+
+
+   function ImprimirReportePagosDeudores(){
+        
+      var today = new Date();
+      var dd = today.getDate();
+
+      var mm = today.getMonth()+1; 
+      var yyyy = today.getFullYear();
+      if(dd<10) 
+      {
+          dd='0'+dd;
+      } 
+
+      if(mm<10) 
+      {
+          mm='0'+mm;
+      } 
+      today = mm+'-'+dd+'-'+yyyy;
+    var name = 'Reporte General de Deudores JMAdmin '+today ;
+   
+        var pdf = new jsPDF();
+              
+              pdf.addHTML($("#deudores_div"),function() {
+              pdf.save(name+'.pdf');
+          });
+
+          ImprimirReportePagosTotal();
+}
+ 
+
+   function ImprimirReportePagosTotal(){
+        
+      var today = new Date();
+      var dd = today.getDate();
+
+      var mm = today.getMonth()+1; 
+      var yyyy = today.getFullYear();
+      if(dd<10) 
+      {
+          dd='0'+dd;
+      } 
+
+      if(mm<10) 
+      {
+          mm='0'+mm;
+      } 
+      today = mm+'-'+dd+'-'+yyyy;
+    var name = 'Reporte General de Total Pagos JMAdmin '+today ;
+   
+        var pdf = new jsPDF();
+              
+              pdf.addHTML($("#totalpagos_div"),function() {
               pdf.save(name+'.pdf');
           });
 }
+
+
+
 
 </script>
 

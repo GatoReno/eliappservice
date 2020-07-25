@@ -182,7 +182,7 @@ function getmaestros(){
                     <td><input value="${ item.name }"></td>
                     <td>${ item.created_at }</td>
                     <td></td>
-                    <td><a href="/infomaestro/${ item.id }" class="btn btn-default">Ver</a></td>
+                    <td><a href="/info_personal/${ item.id }" class="btn btn-default">Ver</a></td>
                 </tr>`;
                 $('#maestrosT').append( row );
             });
