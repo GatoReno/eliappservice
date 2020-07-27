@@ -697,7 +697,9 @@ router.get('/pagos/current_month/count', (req, res) => {
 
 
 
-router.post('/pago-add', (req, res) => {
+
+
+router.post('/pago-add-personal', (req, res) => {
     console.log(req.body);
 
     const pago = req.body;    
@@ -707,6 +709,24 @@ router.post('/pago-add', (req, res) => {
             //const query = await pool.query('Update clientes_ set id_cartera = ? where id = ?', [result.insertId, id_cliente]);
             req.flash('message', 'Pago creado con éxito! Actualiza la info de este cliente segun corresponda!');
             res.redirect('info_personal/'+req.body.id_staff);
+        }
+    }).catch((err) => {
+        console.log(err);
+    });
+});
+
+
+
+router.post('/pago-add', (req, res) => {
+    console.log(req.body);
+
+    const pago = req.body;    
+    const qu = pool.query('Insert into pagos_ set ?', [pago]);        
+    qu.then(async (result) => {
+        if (result.insertId) {
+            //const query = await pool.query('Update clientes_ set id_cartera = ? where id = ?', [result.insertId, id_cliente]);
+            req.flash('message', 'Pago creado con éxito! Actualiza la info de este cliente segun corresponda!');
+            res.redirect('infocliente/'+req.body.id_cliente);
         }
     }).catch((err) => {
         console.log(err);
