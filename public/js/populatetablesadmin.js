@@ -778,7 +778,7 @@ function getLabelAndDataPagos(){
           datasets: [{
             label: "Clientes",
             backgroundColor: ["rgba(75, 192, 192, 0.7)", "rgba(241,39,39,0.7)","rgba(249,234,37,0.7)"],
-            borderColor: ["rgba(75, 192, 192, 1)","(241,39,55,1)","rgba(249,245,26,1)"],
+            borderColor: ["rgba(75, 192, 192, 1)","rgba(241,39,55,1)","rgba(249,245,26,1)"],
             data: [obj[0].totalVigentes,obj[0].totalNoVigentes,obj[0].totalEnProrroga,obj[0].estadoSinAsignar]
           }]
         },
@@ -806,7 +806,7 @@ function getLabelAndDataPagos(){
           datasets: [{
             label: "Clientes",
             backgroundColor: ["rgba(75, 192, 192, 0.7)", "rgba(241,39,39,0.7)","rgba(249,234,37,0.7)"],
-            borderColor: ["rgba(75, 192, 192, 1)","(241,39,55,1)","rgba(249,245,26,1)"],
+            borderColor: ["rgba(75, 192, 192, 1)","rgba(241,39,55,1)","rgba(249,245,26,1)"],
             data: [obj[0].totalVigentes,obj[0].totalNoVigentes,obj[0].totalEnProrroga,obj[0].estadoSinAsignar]
           }]
         },
