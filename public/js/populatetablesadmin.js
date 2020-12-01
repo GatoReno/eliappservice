@@ -365,7 +365,7 @@ function modal_reiniciarColegiaturas(){
     $('#modal_title_dash').append('<h4>Seguro quieres reiniciar las colegiaturas?</h4>');
     var st = `<p>Al hacer esto actualizaras a todos los clientes y a todos los alumnos como deudores.</p>
     <small>Sabiendo esto seguro deseas continuar?<small><br>
-        <a class="btn btn-success ">Si estoy seguro, continuar</a>
+        <a class="btn btn-success" href="/restart-clogiaturas" >Si estoy seguro, continuar</a>
     `;
 
 $('#modal_body_dash').append(st);
