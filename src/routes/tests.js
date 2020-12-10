@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-
+const pool = require('../db');
  
 router.get('/t/client/alumnos/:id', (req, res) => {
     const id_cliente = req.params;
