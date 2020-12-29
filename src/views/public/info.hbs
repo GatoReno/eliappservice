@@ -32,6 +32,9 @@
 
 
 <input type="hidden" value="{{id}}" id="id_client">
+<input type="hidden" value="{{mail}}" id="mail_client">
+
+ 
   <div class="col-lg-6 col-md-6 col-sm-6">
   
     <div class="card" >
@@ -111,6 +114,10 @@
                          <li class="breadcrumb-item">
                           <a class="btn btn-default"  onclick="return GenerarReportePagosCliente({{id}})">Generar historial Cliente</a>
                         </li>
+                        <li class="breadcrumb-item" id="fibFeatures">
+                          <a class="btn btn-default" onclick="habilitarFib('{{mail}}')"  >Habilitar app</a> 
+                        </li>
+                        
                         
                     </ol>
  

@@ -25,5 +25,19 @@ router.get('/fbi-clients',(req,res)=>{
     });
 });
 
+router.get('/fbi-client-per-email/:email',(req,res)=>{
+    const {email} = req.params;
+
+     admin.auth().getUserByEmail(email).then((getUsersResult) => {
+        console.log('Successfully fetched user data:');
+        console.log(getUsersResult);
+        res.json(getUsersResult);
+    })
+    .catch((error) => {
+        console.log('Error fetching user data:', error);
+    });
+  
+});
+
 
 module.exports = router;

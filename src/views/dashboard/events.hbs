@@ -1,0 +1,112 @@
+<div class="container">
+  <h2>Events Page</h2>
+  <p>Todos los eventos y anuncios creados aqui seran mostrados en la aplicacion de clientes de forma mensual</p>
+
+  <ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#home">Instructions</a></li>
+    <li><a data-toggle="tab" href="#menu1">Events</a></li>
+    <li><a data-toggle="tab" href="#menu2">Annoucements</a></li>
+   
+  </ul>
+
+  <div class="tab-content">
+    <div id="home" class="tab-pane fade in active">
+      <h3>Instructions</h3>
+      <p>
+        Bienvenido, esta seccion es para agregar informacion a la 
+        applicacion de clientes. <b>Events y Annoucements</b>
+        ambos se veran reflejados en las paginas principales, la seccion de 
+        <b>Title</b> es para el titulo del anuncios
+        <b>Description</b> es el area en donde hay que describir a gran razgo la natruales del evento
+        <b>Date</b> el Evento / Anuncio como tal consta de dos fechas, una donde se agenda la fecha y la de la creacion
+        del mismo.
+      </p>
+      <p> Los anuncios y eventos se venran unicamente de forma <b>mensual</b> en la applicacion para los clientes </p>
+    </div>
+    <div id="menu1" class="tab-pane fade">
+      <h3>Events</h3>
+      <div class="col-lg-6 col-md-6" >
+      
+      <div class="top2 table-wrapper-scroll-y">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                <th scope="col">Title</th>
+                                    <th scope="col">Date</th>
+                          
+
+                                </tr>
+                            </thead>
+                            <tbody id="eventsT">
+
+
+                            </tbody>
+                        </table>
+                    </div>
+     
+    </div>
+     <div class="col-lg-6 col-md-6" >
+     <p>Agregar Evento.</p>
+    <div class="card"  >
+       
+        <div class="card-body">
+            <h5 class="card-title">Evento</h5>
+            <form method="POST" action="/add-event">
+
+                <div class="form-group">
+                    <input  class="form-control" name="title" placeholder="title" required/>
+                </div>
+                <hr>
+
+                <div class="form-group">
+                    <input  class="form-control" name="description" placeholder="descripcion" required />
+                                    </div>
+                <hr>
+ 
+
+                {{!-- <div class="form-group">
+                    <div class='input-group date' id='datetimepicker1'>
+                    <input type='text' name="event_date" class="form-control" />
+                    <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                    </div>
+                </div> --}}
+
+
+                <div class="form-group ">
+                  <label for="example-datetime-local-input" class="col-2 col-form-label">Date and time</label>
+                  <div class="col-10">
+                    <input class="form-control" name="event_date" type="datetime-local" required id="example-datetime-local-input">
+                  </div>
+                </div>
+                <hr>
+
+             <button class="btn btn-default" type="submit"> Agregar Evento</button>
+            </form>
+         
+        </div>
+        </div>
+    </div>
+    </div>
+    <div id="menu2" class="tab-pane fade">
+      <h3>Annoucements</h3>
+      <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+    </div>
+    <div id="menu3" class="tab-pane fade">
+      <h3>Menu 3</h3>
+      <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+    </div>
+  </div>
+</div>
+
+ 
+<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+    crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" integrity="sha512-3n19xznO0ubPpSwYCRRBgHh63DrV+bdZfHK52b1esvId4GsfwStQNPJFjeQos2h3JwCmZl0/LgLxSKMAI55hgw==" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment-with-locales.min.js" integrity="sha512-LGXaggshOkD/at6PFNcp2V2unf9LzFq6LE+sChH7ceMTDP0g2kn6Vxwgg7wkPP7AAtX+lmPqPdxB47A0Nz0cMQ==" crossorigin="anonymous"></script>
+
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+
+<script src="/js/events/events_annoucements.js"></script>
+  

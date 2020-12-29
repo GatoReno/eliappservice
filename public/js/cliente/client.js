@@ -290,9 +290,7 @@ function getAlumno(id){
             $('#div_name_modal').empty();
              
         
-               $('#div_name_modal').append(` ${resp[0].name}   ${resp[0].lastnameP}  ${resp[0].lastnameM} `);
-           
-
+               $('#div_name_modal').append(` ${resp[0].name}   ${resp[0].lastnameP}  ${resp[0].lastnameM} `);           
          
         },
         error: function(jqXHR, textStatus, errorThrown) {
@@ -382,7 +380,7 @@ function GenerarReportePagosCliente(id_client) {
             console.log(resp);
             var t = ` 
             
-            <div class="top2 table-wrapper-scroll-y"  style="background-color: white;">
+            <div class="top2 table"  style="background-color: white;">
             <h5 class="card-title">Pagos</h5>
                 <table class="table table-hover" style="background-color: white;" >
                     <thead>
@@ -464,3 +462,39 @@ function GenerarReportePagosCliente(id_client) {
 }
 
 
+function fibClientInfo(email){
+    $.ajax({
+        url: '/fbi-client-per-email/'+email,
+        type: 'GET',        
+        dataType: 'json',
+        success: function(resp) {
+            console.log(resp);
+            if(resp.uid)
+            {
+                $('#fibFeatures').empty();
+                $('#fibFeatures').append(
+                    '<a class="btn btn-success" disabled >App habilitada</a> ');
+            } 
+            },
+        error: function(jqXHR, textStatus, errorThrown) {
+            var data = jqXHR.responseJSON;
+            if (jqXHR.status == 401) {
+                //location.reload();
+            }
+            if (jqXHR.status == 500) {
+                // var emailclient = $('#mail_client').val();
+                // $('#fibFeatures').append(
+                //     '<a class="btn btn-default" onclick="habilitarFib('+emailclient+')" >Habilitar app</a> ');
+       
+            }
+            console.log(errorThrown)
+
+        }
+    });
+}
+
+
+
+var emailClient = $('#mail_client').val();
+
+fibClientInfo(emailClient);
