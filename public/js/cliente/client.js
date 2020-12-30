@@ -493,7 +493,34 @@ function fibClientInfo(email){
     });
 }
 
+function habilitarFib(){
+    $('#modal_body').empty();
+    $('#modal_title_client').empty();
+    $('#modal_title_client').append('Habilitar applicacion para cliente');
 
+    var mail = $('#mail_client').val();
+    var phone = $('#phone_client').val();
+    var name = $('#name_client').val();
+    var id = $('#id_client').val();
+    $('#modal_body').append(
+        `
+        <form action="/fibRegistClient" method="POST">
+        <small>Por default la contraseña del cliente sera <b>12345678</b> se le sugiere al usuario la cambie desde su applicacion en la opcion de recuperar contraseña<small>
+        <hr>
+        <input type="hidden" class="form-control" name="id" value="${id}">
+            <input type="text" class="form-control" name="displayName" value="${name}">
+            <hr>
+            <input type="text" class="form-control" name="email" value="${mail}">
+            <hr>
+            <input type="text" class="form-control" name="phone" value="${phone}">
+            <hr>
+            <input type="submit" class="btn btn-success"   value="Habilitar para usar applicacion">
+            </form>
+        `
+    );
+
+    
+}
 
 var emailClient = $('#mail_client').val();
 

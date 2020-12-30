@@ -19,5 +19,24 @@ function getAllEvents(){
                     });
                 }
             });}
+function getAllAnnoucements(){
+    $.ajax({
+        type: 'GET',
+        url: '/announcements-all',
+        dataType: 'json',
+        success: (data) => {
+        console.log(data)
+            data.forEach( ( item ) => {
+                 
+                const row = `<tr>
+                    <td>${ item.title }</td>
+                    <td>${ item.description }</td>    
+                    <td><a class="btn btn-sm btn-danger" href="/delete-announcement/${ item.id }">Delete</a>
+                    </td>                   
+                </tr>`;
+                $('#announcemntsT').append( row );
+            });
+        }
+    });}
 
-   getAllEvents();
+   getAllEvents(),getAllAnnoucements();
