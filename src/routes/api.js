@@ -44,18 +44,21 @@ router.get('/api/protected', ensureToken, (req, res) => {
 
 //clientes
 
-router.post('/delete-cliente',(req,res)=>{
-    const {id_user,id_usercreated} = req.body;
 
-    
-    const query = pool.query('DELETE FROM clientes_ where id = ?',[id_user]);
 
-    query.then(()=>{
+
+router.post('/delete-cliente', (req, res) => {
+    const { id_user, id_usercreated } = req.body;
+
+
+    const query = pool.query('DELETE FROM clientes_ where id = ?', [id_user]);
+
+    query.then(() => {
 
 
         req.flash('message', 'Cliente eliminado con éxito');
         res.redirect('/dashboard');
-    }).catch((err)=>{
+    }).catch((err) => {
         res.json(err)
     });
 });
@@ -106,16 +109,16 @@ router.post('/add-client', (req, res) => {
 
 
 
-router.post('/delete-alumno', (req,res)=>{
-    const {id_user,id_usercreated} = req.body;
-    const query = pool.query('DELETE FROM alumnos_ where id = ?',[id_user]);
+router.post('/delete-alumno', (req, res) => {
+    const { id_user, id_usercreated } = req.body;
+    const query = pool.query('DELETE FROM alumnos_ where id = ?', [id_user]);
 
-    query.then(()=>{
+    query.then(() => {
 
 
         req.flash('message', 'Alumno eliminado con éxito');
         res.redirect('/dashboard');
-    }).catch((err)=>{
+    }).catch((err) => {
         res.json(err)
     });
 });
@@ -125,7 +128,7 @@ router.post('/update-alumno', (req, res) => {
     const id = req.body.id;
 
 
- 
+
     const qu = pool.query('UPDATE alumnos_ set ? where id = ? ', [alumno, id]);
 
 
@@ -145,30 +148,30 @@ router.post('/update-alumno', (req, res) => {
 
 
 router.post('/update-client', (req, res) => {
-        const client = req.body;
-        const id = req.body.id;
-    
-    
-     
-        const qu = pool.query('UPDATE clientes_ set ? where id = ? ', [client, id]);
-    
-    
-        qu.then((response) => {
-            try {
-                console.log(response)
-                req.flash('success', 'Datos actualizados');
-                //res.redirect('/infoalumno/' + req.body. id);
-                res.redirect('back');
-            } catch (err) {
-                console.log(err)
-            }
-        }).catch((err) => {
+    const client = req.body;
+    const id = req.body.id;
+
+
+
+    const qu = pool.query('UPDATE clientes_ set ? where id = ? ', [client, id]);
+
+
+    qu.then((response) => {
+        try {
+            console.log(response)
+            req.flash('success', 'Datos actualizados');
+            //res.redirect('/infoalumno/' + req.body. id);
+            res.redirect('back');
+        } catch (err) {
             console.log(err)
-        });
+        }
+    }).catch((err) => {
+        console.log(err)
+    });
 
 
-/*
-    */
+    /*
+     */
 
 });
 
@@ -208,17 +211,17 @@ router.post('/add-alumno', (req, res) => {
 
     const qu = pool.query('Insert into alumnos_ set ?', [alumno]);
 
-    qu.then(async (result) => {
+    qu.then(async(result) => {
         if (result.insertId) {
             const cartera = {
-                id_alumno :result.insertId,
+                id_alumno: result.insertId,
                 status: 'alta en sistema, sin pagos aún'
             }
             const query = await pool.query('Insert into cartera_ set ?', [cartera]);
             req.flash('message', 'Datos generados con éxito');
             res.render('dashboard/dashboard');
         }
-        
+
 
     }).catch((err) => {
         console.log(err);
@@ -236,7 +239,7 @@ router.post('/cartera-update', (req, res) => {
     } = req.body;
     console.log(id_alumno, id_cartera);
     const qu = pool.query('Update cartera_ set id_alumno = ?, status = ? where id = ?', [id_alumno, 'alta-en-sistema', id_cartera]);
-    qu.then(async (resp, error, result, rows, fields) => {
+    qu.then(async(resp, error, result, rows, fields) => {
         console.log(error, result, rows, fields);
         if (resp.affectedRows > 0) {
             const query2 = await pool.query('Update alumnos_ set id_cartera = ? ,  status = ?  where id =  ?', [id_cartera, 'alta-en-sistema', id_alumno]);
@@ -260,7 +263,7 @@ router.post('/cartera-add', (req, res) => {
     }
     const qu = pool.query('Insert into cartera_ set ?', [wallet]);
 
-    qu.then(async (result) => {
+    qu.then(async(result) => {
         if (result.insertId) {
             const query = await pool.query('Update clientes_ set id_cartera = ? where id = ?', [result.insertId, id_cliente]);
             req.flash('message', 'Cartera creado con éxito');
@@ -307,23 +310,26 @@ router.get('/maestros', (req, res) => {
 });
 
 
-router.post('/pago',(req,res)=>{
-    const {id_cliente,id_cartera_alumno,mes,
-        colegiatura} 
-    = req.body;
-        console.log(id_cliente,id_cartera,mes,
-            colegiatura);
+router.post('/pago', (req, res) => {
+    const {
+        id_cliente,
+        id_cartera_alumno,
+        mes,
+        colegiatura
+    } = req.body;
+    console.log(id_cliente, id_cartera, mes,
+        colegiatura);
 
 
 });
 
-router.get('/cliente-carteras/:id',(req,res)=>{
-const {id} = req.params;
- 
-const qu = pool.query('select * from cartera_ where id_cliente = ?',[id]);
-    qu.then((resp)=>{
-            res.json(resp);
-    }).catch((err)=>{
+router.get('/cliente-carteras/:id', (req, res) => {
+    const { id } = req.params;
+
+    const qu = pool.query('select * from cartera_ where id_cliente = ?', [id]);
+    qu.then((resp) => {
+        res.json(resp);
+    }).catch((err) => {
         console.log(err);
     });
 });
@@ -331,7 +337,7 @@ const qu = pool.query('select * from cartera_ where id_cliente = ?',[id]);
 router.get('/alumnos', (req, res) => {
 
 
-//where id_cartera
+    //where id_cartera
     const qu = pool.query('select * from alumnos_ ');
 
     qu.then((result) => {
@@ -364,21 +370,23 @@ router.post('/add-personal', (req, res) => {
     const {
         name,
         telefono,
-            
+
         sueldo,
         curp,
         profesion,
         email,
         rfc,
-        fingreso,estudios,porhora,
+        fingreso,
+        estudios,
+        porhora,
     } = req.body;
 
     const maestro = {
         name: name,
-        estudios:estudios,
-        porhora :porhora,
+        estudios: estudios,
+        porhora: porhora,
         telefono: telefono,
-        
+
         sueldo: sueldo,
         curp: curp,
         profesion: profesion,
@@ -411,16 +419,16 @@ router.get('/data_personal/:id', (req, res) => {
     } = req.params;
     const qu = pool.query('select * from personal_ where id = ?', [id]);
 
-    
+
 
     qu.then((data) => {
 
         console.log(data)
         data.forEach((data) => {
-           res.json(data);
+            res.json(data);
         });
 
-      
+
 
     }).catch((err) => {
         console.log(err)
@@ -481,11 +489,11 @@ router.get('/infocartera/:id', (req, res) => {
 
 });
 
-router.get('/alumn/search/', function (req, res) {
+router.get('/alumn/search/', function(req, res) {
 
 
-    req.getConnection(function (err, connection) {
-        pool.query('SELECT * FROM pacjenci WHERE name LIKE "%' + req.query.key + '%"', function (err, rows, fields) {
+    req.getConnection(function(err, connection) {
+        pool.query('SELECT * FROM pacjenci WHERE name LIKE "%' + req.query.key + '%"', function(err, rows, fields) {
             if (err)
                 console.log("Error inserting : %s ", err);
             var data = [];
@@ -507,7 +515,7 @@ router.get('/alumno_pagos/:id', (req, res) => {
     } = req.params;
     const qu = pool.query('select * from pagos_ where id_alumno = ?', [id]);
     qu.then((resp) => {
-       // console.log(error, result, rows, fields);
+        // console.log(error, result, rows, fields);
         res.json(resp)
 
     }).catch((err) => {
@@ -522,7 +530,7 @@ router.get('/alumno/:id', (req, res) => {
     } = req.params;
     const qu = pool.query('select * from alumnos_ where id = ?', [id]);
     qu.then((resp) => {
-       // console.log(error, result, rows, fields);
+        // console.log(error, result, rows, fields);
         res.json(resp)
 
     }).catch((err) => {
@@ -600,9 +608,9 @@ function ensureToken(req, res, next) {
 }
 
 router.get('/cliente/:id', (req, res) => {
-    const {id} = req.params;
+    const { id } = req.params;
 
-    const qu = pool.query('SELECT * FROM clientes_ where id = ? ',[id]);
+    const qu = pool.query('SELECT * FROM clientes_ where id = ? ', [id]);
 
     qu.then((data) => {
         res.json(data);
@@ -611,8 +619,8 @@ router.get('/cliente/:id', (req, res) => {
 
 
 router.get('/alumno-cartera/:id', (req, res) => {
-    const {id} = req.params;
-    const qu = pool.query('SELECT * FROM cartera_ where id_alumno = ? ',[id]);
+    const { id } = req.params;
+    const qu = pool.query('SELECT * FROM cartera_ where id_alumno = ? ', [id]);
     qu.then((data) => {
         res.json(data);
     });
@@ -629,8 +637,8 @@ router.get('/clients', (req, res) => {
 
 router.get('/client/alumnos/:id', (req, res) => {
     const id_cliente = req.params;
-        console.log(id_cliente);
-    const qu = pool.query('SELECT * FROM alumnos_ where id_cliente = ?',[id_cliente.id]);
+    console.log(id_cliente);
+    const qu = pool.query('SELECT * FROM alumnos_ where id_cliente = ?', [id_cliente.id]);
 
     qu.then((data) => {
         res.json(data);
@@ -639,8 +647,8 @@ router.get('/client/alumnos/:id', (req, res) => {
 
 router.get('/client/pagos/:id', (req, res) => {
     const id_cliente = req.params.id;
-        
-    const qu = pool.query('SELECT * FROM pagos_ where id_cliente = ?',[id_cliente]);
+
+    const qu = pool.query('SELECT * FROM pagos_ where id_cliente = ?', [id_cliente]);
 
     qu.then((data) => {
         res.json(data);
@@ -650,8 +658,8 @@ router.get('/client/pagos/:id', (req, res) => {
 
 router.get('/pago/data/:id', (req, res) => {
     const id = req.params.id;
-        
-    const qu = pool.query('SELECT * FROM pagos_ where id = ?',[id]);
+
+    const qu = pool.query('SELECT * FROM pagos_ where id = ?', [id]);
 
     qu.then((data) => {
         res.json(data);
@@ -659,8 +667,8 @@ router.get('/pago/data/:id', (req, res) => {
 });
 
 router.get('/pagos/all', (req, res) => {
-    
-        
+
+
     const qu = pool.query('SELECT * FROM pagos_ ');
 
     qu.then((data) => {
@@ -670,8 +678,8 @@ router.get('/pagos/all', (req, res) => {
 
 
 router.get('/pagos/current_year/', (req, res) => {
-     
-        
+
+
     const qu = pool.query('SELECT * FROM pagos_ where YEAR(created_at) = YEAR(CURDATE())');
 
     qu.then((data) => {
@@ -679,16 +687,16 @@ router.get('/pagos/current_year/', (req, res) => {
     });
 });
 
-router.get('/pagos/current_month/', (req, res) => {    
-        
+router.get('/pagos/current_month/', (req, res) => {
+
     const qu = pool.query('SELECT * FROM pagos_ where Month(created_at) = Month(CURDATE()) && YEAR(created_at) = YEAR(CURDATE())');
 
     qu.then((data) => {
         res.json(data);
     });
 });
-router.get('/pagos/current_month/count', (req, res) => {    
-        
+router.get('/pagos/current_month/count', (req, res) => {
+
     const qu = pool.query('SELECT count(*) totalPagosMes FROM pagos_ where Month(created_at) = Month(CURDATE()) && YEAR(created_at) = YEAR(CURDATE())');
 
     qu.then((data) => {
@@ -703,13 +711,13 @@ router.get('/pagos/current_month/count', (req, res) => {
 router.post('/pago-add-personal', (req, res) => {
     console.log(req.body);
 
-    const pago = req.body;    
-    const qu = pool.query('Insert into pagos_personal set ?', [pago]);        
-    qu.then(async (result) => {
+    const pago = req.body;
+    const qu = pool.query('Insert into pagos_personal set ?', [pago]);
+    qu.then(async(result) => {
         if (result.insertId) {
             //const query = await pool.query('Update clientes_ set id_cartera = ? where id = ?', [result.insertId, id_cliente]);
             req.flash('message', 'Pago creado con éxito! Actualiza la info de este cliente segun corresponda!');
-            res.redirect('info_personal/'+req.body.id_staff);
+            res.redirect('info_personal/' + req.body.id_staff);
         }
     }).catch((err) => {
         console.log(err);
@@ -721,13 +729,13 @@ router.post('/pago-add-personal', (req, res) => {
 router.post('/pago-add', (req, res) => {
     console.log(req.body);
 
-    const pago = req.body;    
-    const qu = pool.query('Insert into pagos_ set ?', [pago]);        
-    qu.then(async (result) => {
+    const pago = req.body;
+    const qu = pool.query('Insert into pagos_ set ?', [pago]);
+    qu.then(async(result) => {
         if (result.insertId) {
             //const query = await pool.query('Update clientes_ set id_cartera = ? where id = ?', [result.insertId, id_cliente]);
             req.flash('message', 'Pago creado con éxito! Actualiza la info de este cliente segun corresponda!');
-            res.redirect('infocliente/'+req.body.id_cliente);
+            res.redirect('infocliente/' + req.body.id_cliente);
         }
     }).catch((err) => {
         console.log(err);
@@ -737,12 +745,12 @@ router.post('/pago-add', (req, res) => {
 
 
 router.get('/pagos-personal-list/:id', (req, res) => {
-    
+
     const id = req.params.id;
-    const qu = pool.query(' SELECT * from pagos_personal where id = ?',[id]);
-    qu.then(async (result) => {        
-            console.log(result);                     
-            res.json(result);        
+    const qu = pool.query(' SELECT * from pagos_personal where id = ?', [id]);
+    qu.then(async(result) => {
+        console.log(result);
+        res.json(result);
     }).catch((err) => {
         console.log(err);
     });
@@ -756,11 +764,11 @@ router.post('/expenses-add', (req, res) => {
     console.log(req.body);
 
     const pago = req.body;
-    
+
     const qu = pool.query('Insert into expensas_ set ?', [pago]);
-    
-    
-    qu.then(async (result) => {
+
+
+    qu.then(async(result) => {
         if (result.insertId) {
             console.log(result);
             //const query = await pool.query('Update clientes_ set id_cartera = ? where id = ?', [result.insertId, id_cliente]);
@@ -779,14 +787,14 @@ router.get('/expenses-month-get', (req, res) => {
     console.log(req.body);
 
     const pago = req.body;
-    
+
     const qu = pool.query('Select * from expensas_  Where Month(created_at) = Month(CURDATE()) || Year(created_at) = Year(CURDATE()) ');
-    
-    
-    qu.then(async (result) => {        
-            console.log(result);                     
-            res.json(result);
-        
+
+
+    qu.then(async(result) => {
+        console.log(result);
+        res.json(result);
+
 
     }).catch((err) => {
         console.log(err);
@@ -799,16 +807,16 @@ router.get('/expenses-month-get', (req, res) => {
 
 
 router.get('/cliente-pagos-all/:id', (req, res) => {
- 
+
     const id = req.params.id;
-    
-    const qu = pool.query('Select * from pagos_ where id_cliente = ?',[id]);
-    
-    
-    qu.then(async (result) => {        
-            console.log(result);                     
-            res.json(result);
-        
+
+    const qu = pool.query('Select * from pagos_ where id_cliente = ?', [id]);
+
+
+    qu.then(async(result) => {
+        console.log(result);
+        res.json(result);
+
 
     }).catch((err) => {
         console.log(err);
@@ -820,9 +828,9 @@ router.get('/cliente-pagos-all/:id', (req, res) => {
 router.get('/clientesEnDeuda', (req, res) => {
     console.log(req.body);
 
-    const pago = req.body;    
-    const qu = pool.query('SELECT * FROM clientes_ where estado = "deudor"');        
-    qu.then(async (result) => {
+    const pago = req.body;
+    const qu = pool.query('SELECT * FROM clientes_ where estado = "deudor"');
+    qu.then(async(result) => {
         res.json(result)
     }).catch((err) => {
         console.log(err);
@@ -833,9 +841,9 @@ router.get('/clientesEnDeuda', (req, res) => {
 router.get('/alumnosPrim', (req, res) => {
     console.log(req.body);
 
-    const pago = req.body;    
-    const qu = pool.query('SELECT * FROM alumnos_ where nivel = "primaria"');        
-    qu.then(async (result) => {
+    const pago = req.body;
+    const qu = pool.query('SELECT * FROM alumnos_ where nivel = "primaria"');
+    qu.then(async(result) => {
         res.json(result)
     }).catch((err) => {
         console.log(err);
@@ -846,9 +854,9 @@ router.get('/alumnosPrim', (req, res) => {
 router.get('/alumnosPree', (req, res) => {
     console.log(req.body);
 
-    const pago = req.body;    
-    const qu = pool.query('SELECT * FROM alumnos_ where nivel = "preescolar"');        
-    qu.then(async (result) => {
+    const pago = req.body;
+    const qu = pool.query('SELECT * FROM alumnos_ where nivel = "preescolar"');
+    qu.then(async(result) => {
         res.json(result)
     }).catch((err) => {
         console.log(err);
@@ -860,17 +868,17 @@ router.get('/alumnosPree', (req, res) => {
 router.get('/reiniciar-colegiaturas/', (req, res) => {
     console.log(req.body);
 
-    const pago = req.body;  
-    
-    const qu = pool.query("UPDATE clientes_ set estado = 'Deudor' " );
-   
+    const pago = req.body;
+
+    const qu = pool.query("UPDATE clientes_ set estado = 'Deudor' ");
+
 });
 
 
-router.get('/pagos-cliente-all-accounts/:id', (req, res) => {    
-        const id = req.params.id;
-        console.log(id)
-        const qu = pool.query(`
+router.get('/pagos-cliente-all-accounts/:id', (req, res) => {
+    const id = req.params.id;
+    console.log(id)
+    const qu = pool.query(`
         SELECT  pagos, saldofavor , saldoencontra 
         FROM (
         select sum(amount) pagos from pagos_ where id_cliente =  ${id}  
@@ -889,7 +897,7 @@ router.get('/pagos-cliente-all-accounts/:id', (req, res) => {
 });
 
 
-router.get('/colegiaturasReporte', (req, res) => {    
+router.get('/colegiaturasReporte', (req, res) => {
     const id = req.params.id;
     console.log(id)
     const qu = pool.query(`
@@ -903,13 +911,13 @@ router.get('/colegiaturasReporte', (req, res) => {
      
 `);
 
-qu.then((data) => {
-    res.json(data);
-});
+    qu.then((data) => {
+        res.json(data);
+    });
 });
 
-router.get('/expenses/current_month', (req, res) => {    
-        
+router.get('/expenses/current_month', (req, res) => {
+
     const qu = pool.query("SELECT * FROM expensas_ where  Month(created_at) = Month(CURDATE()) || Year(created_at) = Year(CURDATE()) ");
 
     qu.then((data) => {
@@ -917,8 +925,8 @@ router.get('/expenses/current_month', (req, res) => {
     });
 });
 
-router.get('/pagos/current_month/dates', (req, res) => {    
-        
+router.get('/pagos/current_month/dates', (req, res) => {
+
     const qu = pool.query("SELECT distinct DATE_FORMAT(created_at,'%d/%m/%Y') created_at  FROM pagos_ where Month(created_at) = Month(CURDATE())");
 
     qu.then((data) => {
@@ -926,8 +934,8 @@ router.get('/pagos/current_month/dates', (req, res) => {
     });
 });
 
-router.get('/pagos/current_month/count_per_day', (req, res) => {    
-        
+router.get('/pagos/current_month/count_per_day', (req, res) => {
+
     const qu = pool.query("SELECT DATE_FORMAT(created_at,'%d/%m/%Y') day , count(created_at) pagos FROM pagos_ where Month(created_at) = Month(CURDATE()) group by Day(created_at);");
 
     qu.then((data) => {
@@ -935,8 +943,8 @@ router.get('/pagos/current_month/count_per_day', (req, res) => {
     });
 });
 
-router.get('/pagos/current_month/all_pagos', (req, res) => {    
-        
+router.get('/pagos/current_month/all_pagos', (req, res) => {
+
     const qu = pool.query("SELECT count( DATE_FORMAT(created_at,'%d/%m/%Y') ) total FROM pagos_ where Month(created_at) = Month(CURDATE());");
 
     qu.then((data) => {
@@ -948,8 +956,8 @@ router.get('/pagos/current_month/all_pagos', (req, res) => {
 //Estados para tablas
 
 
-router.get('/alumnos-count/', (req, res) => {    
-        
+router.get('/alumnos-count/', (req, res) => {
+
     const qu = pool.query("SELECT count(*) totalAlumnos from alumnos_ ;");
 
     qu.then((data) => {
@@ -958,8 +966,8 @@ router.get('/alumnos-count/', (req, res) => {
 });
 
 
-router.get('/clientes-count/', (req, res) => {    
-        
+router.get('/clientes-count/', (req, res) => {
+
     const qu = pool.query("SELECT count(*) totalClientes from clientes_ ;");
 
     qu.then((data) => {
@@ -968,9 +976,9 @@ router.get('/clientes-count/', (req, res) => {
 });
 
 
-router.get('/alumnos-nivel-count/', (req, res) => {    
-        
-            const qu = pool.query(`
+router.get('/alumnos-nivel-count/', (req, res) => {
+
+    const qu = pool.query(`
             SELECT  primero, segundo, tercero, cuarto, quinto, sexto
     FROM (
          select Count(*) primero from alumnos_ where grado like '1' 
@@ -991,15 +999,15 @@ router.get('/alumnos-nivel-count/', (req, res) => {
          select Count(*) sexto from alumnos_ where grado like '6' 
          ) f on 1=1            
                  `);
-        
-            qu.then((data) => {
-                res.json(data);
-            });
-        });
 
-         router.get('/alumnos-genero-count/', (req, res) => {    
-        
-            const qu = pool.query(`SELECT  masculinos, femeninos, total
+    qu.then((data) => {
+        res.json(data);
+    });
+});
+
+router.get('/alumnos-genero-count/', (req, res) => {
+
+    const qu = pool.query(`SELECT  masculinos, femeninos, total
                 FROM (
                     select Count(*) masculinos from alumnos_ where sexo like 'masculin' 
                     ) a
@@ -1010,14 +1018,14 @@ router.get('/alumnos-nivel-count/', (req, res) => {
                     select Count(*) total from alumnos_  
                     ) c on 1=1
                  `);
-        
-            qu.then((data) => {
-                res.json(data);
-            });
-        });
 
-router.get('/alumnos-estados-count/', (req, res) => {    
-        
+    qu.then((data) => {
+        res.json(data);
+    });
+});
+
+router.get('/alumnos-estados-count/', (req, res) => {
+
     const qu = pool.query(`SELECT totalVigentes, totalNoVigentes, totalEnProrroga, estadoSinAsignar
     FROM (
          SELECT count(*) totalVigentes from alumnos_ where estado = 'Vigente'
@@ -1042,8 +1050,8 @@ router.get('/alumnos-estados-count/', (req, res) => {
 
 
 
-router.get('/clientes-estados-count/', (req, res) => {    
-        
+router.get('/clientes-estados-count/', (req, res) => {
+
     const qu = pool.query(`SELECT totalVigentes, totalNoVigentes, totalEnProrroga, estadoSinAsignar
     FROM (
          SELECT count(*) totalVigentes from clientes_ where estado = 'Vigente'
@@ -1066,12 +1074,12 @@ router.get('/clientes-estados-count/', (req, res) => {
 
 //Events
 
-router.get('/events-page/',(req, res) => { 
+router.get('/events-page/', (req, res) => {
 
     res.render('dashboard/events');
 });
 
-router.get('/events-all/',(req, res) => { 
+router.get('/events-all/', (req, res) => {
 
     const qu = pool.query('select * from events_');
 
@@ -1084,10 +1092,10 @@ router.get('/events-all/',(req, res) => {
 });
 
 
-router.get('/delete-event/:id',(req, res) => { 
+router.get('/delete-event/:id', (req, res) => {
 
-    const {id} = req.params;
-    const qu = pool.query('delete from events_ where id = ?',[id]);
+    const { id } = req.params;
+    const qu = pool.query('delete from events_ where id = ?', [id]);
 
     qu.then((result) => {
         req.flash('message', 'Evento eliminado con éxito');
@@ -1098,12 +1106,12 @@ router.get('/delete-event/:id',(req, res) => {
         res.render('dashboard/events');
     });
 });
-router.get('/events-monthnow/',(req, res) => { 
+router.get('/events-monthnow/', (req, res) => {
 
-    const qu = pool.query('SELECT *'+
-    ' FROM  events_'+
-    ' WHERE MONTH(event_date) = MONTH(CURRENT_DATE())'+
-    ' AND YEAR(event_date) = YEAR(CURRENT_DATE())');
+    const qu = pool.query('SELECT *' +
+        ' FROM  events_' +
+        ' WHERE MONTH(event_date) = MONTH(CURRENT_DATE())' +
+        ' AND YEAR(event_date) = YEAR(CURRENT_DATE())');
 
     qu.then((result) => {
         res.json(result);
@@ -1115,9 +1123,9 @@ router.get('/events-monthnow/',(req, res) => {
 
 
 
-router.post('/add-event/',(req, res) => { 
+router.post('/add-event/', (req, res) => {
 
-    const {event_date, title, description} = req.body;
+    const { event_date, title, description } = req.body;
     const event = {
         title,
         event_date,
@@ -1130,7 +1138,7 @@ router.post('/add-event/',(req, res) => {
         if (result.insertId) {
             req.flash('message', 'Evento creado con éxito');
             res.render('dashboard/events');
-        }else {
+        } else {
 
             req.flash('error', 'Puede que haya habido un error');
             res.render('dashboard/events');
@@ -1144,7 +1152,7 @@ router.post('/add-event/',(req, res) => {
 
 //Announcements
 
-router.get('/announcements-all/',(req, res) => { 
+router.get('/announcements-all/', (req, res) => {
 
     const qu = pool.query('select * from anuncios_');
 
@@ -1158,10 +1166,10 @@ router.get('/announcements-all/',(req, res) => {
 
 
 
-router.get('/delete-announcement/:id',(req, res) => { 
+router.get('/delete-announcement/:id', (req, res) => {
 
-    const {id} = req.params;
-    const qu = pool.query('delete from anuncios_ where id = ?',[id]);
+    const { id } = req.params;
+    const qu = pool.query('delete from anuncios_ where id = ?', [id]);
 
     qu.then((result) => {
         req.flash('message', 'Evento anuncio con éxito');
@@ -1172,12 +1180,12 @@ router.get('/delete-announcement/:id',(req, res) => {
         res.render('dashboard/events');
     });
 });
-router.get('/announcements-monthnow/',(req, res) => { 
+router.get('/announcements-monthnow/', (req, res) => {
 
-    const qu = pool.query('SELECT *'+
-    ' FROM  anuncios_ '+
-    ' WHERE MONTH(event_date) = MONTH(CURRENT_DATE())'+
-    ' AND YEAR(event_date) = YEAR(CURRENT_DATE())');
+    const qu = pool.query('SELECT *' +
+        ' FROM  anuncios_ ' +
+        ' WHERE MONTH(event_date) = MONTH(CURRENT_DATE())' +
+        ' AND YEAR(event_date) = YEAR(CURRENT_DATE())');
 
     qu.then((result) => {
         res.json(result);
@@ -1187,9 +1195,9 @@ router.get('/announcements-monthnow/',(req, res) => {
     });
 });
 
-router.post('/add-announcement/',(req, res) => { 
+router.post('/add-announcement/', (req, res) => {
 
-    const {event_date, title, description} = req.body;
+    const { event_date, title, description } = req.body;
     const event = {
         title,
         description
@@ -1201,7 +1209,7 @@ router.post('/add-announcement/',(req, res) => {
         if (result.insertId) {
             req.flash('message', 'Anuncio creado con éxito');
             res.render('dashboard/events');
-        }else {
+        } else {
 
             req.flash('error', 'Puede que haya habido un error');
             res.render('dashboard/events');
