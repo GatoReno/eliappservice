@@ -955,17 +955,6 @@ router.get('/pagos/current_month/all_pagos', (req, res) => {
 
 //Estados para tablas
 
-
-router.get('/alumnos-count/', (req, res) => {
-
-    const qu = pool.query("SELECT count(*) totalAlumnos from alumnos_ ;");
-
-    qu.then((data) => {
-        res.json(data);
-    });
-});
-
-
 router.get('/clientes-count/', (req, res) => {
 
     const qu = pool.query("SELECT count(*) totalClientes from clientes_ ;");

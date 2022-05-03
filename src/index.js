@@ -12,46 +12,46 @@ const jwt = require('jsonwebtoken');
 const path = require('path');
 const crypto = require('crypto');
 const flash = require('connect-flash');
-const session = require('express-session'); 
+const session = require('express-session');
 const mysqlStore = require('express-mysql-session');
 const passport = require('passport');
 
 
 const app = express();
 require('./lib/passport');
-const {database} = require('./keys');
+const { database } = require('./keys');
 
 const multer = require('multer');
 
 const storage = multer.diskStorage({
-  destination: 'public/uploads',
-  filename: (req, file, cb) => {
-    let customFileName = crypto.randomBytes(18).toString('hex');
-    fileExtension = file.originalname.split('.')[1]; // get file extension from original file name
-    cb(null, customFileName + '.' + fileExtension);
-  }
+    destination: 'public/uploads',
+    filename: (req, file, cb) => {
+        let customFileName = crypto.randomBytes(18).toString('hex');
+        fileExtension = file.originalname.split('.')[1]; // get file extension from original file name
+        cb(null, customFileName + '.' + fileExtension);
+    }
 });
 app.enable('trust proxy');
 
 // Middleware
 
 app.use(session({
-  secret: 'seceto',
-  resave: false,
-  saveUninitialized: false,
-  store: new mysqlStore(database)
+    secret: 'seceto',
+    resave: false,
+    saveUninitialized: false,
+    store: new mysqlStore(database)
 }));
 
 app.use(morgan('dev'));
 app.use(express.urlencoded({
-  extended: false
+    extended: false
 }));
 app.use(express.json());
-app.use(passport.initialize()); 
+app.use(passport.initialize());
 app.use(passport.session());
 app.use(multer({
-  storage: storage,
-  dest: 'public/uploads'
+    storage: storage,
+    dest: 'public/uploads'
 }).any('fx'));
 
 
@@ -60,60 +60,61 @@ app.use(flash());
 
 
 //Globar Variables
-app.use((req,res,next) => {
-  //variables para mensajes Flash
-  app.locals.success = req.flash('success');
-  app.locals.message = req.flash('message');
-  app.locals.errores = req.flash('errores');
+app.use((req, res, next) => {
+    //variables para mensajes Flash
+    app.locals.success = req.flash('success');
+    app.locals.message = req.flash('message');
+    app.locals.errores = req.flash('errores');
 
-  // Vairable local de usuario
-  app.locals.user = req.user;
-  next();
+    // Vairable local de usuario
+    app.locals.user = req.user;
+    next();
 });
 
 
 //ROUTES
 app.use(require('./routes/'));
 app.use(require('./routes/api'));
+app.use(require('./routes/alumnos/alumnos.js'))
 
 app.use(require('./routes/fbi'));
 app.use(require('./routes/tests'));
-app.use('/auth',require('./routes/auth'));
+app.use('/auth', require('./routes/auth'));
 
 // Publics
 app.use(express.static(path.join(__dirname, '../public/')));
 
 
-  app.set('port', process.env.PORT); //puerto 
-  app.set('views', path.join(__dirname, 'views')); //vistas
-  // view engine
-  app.engine('.hbs', hbs({
+app.set('port', process.env.PORT); //puerto 
+app.set('views', path.join(__dirname, 'views')); //vistas
+// view engine
+app.engine('.hbs', hbs({
     defaultLayout: 'main',
     layoutsDir: path.join(app.get('views'), 'layouts'),
     partialsDir: path.join(app.get('views'), 'partials'),
     extname: '.hbs',
-    helpers : require ('./lib/handlebars')
-  }));
-  
+    helpers: require('./lib/handlebars')
+}));
+
 app.set('view engine', '.hbs');
 
 
 
-  
-  // Start server
-    /*var x = app.get('port');
+
+// Start server
+/*var x = app.get('port');
   console.log;
   app.listen(5000, () => {
     console.log(`App listening on port `+x);
   });
 
 */
-  //H
+//H
 
-  var x = app.get('port');  
+var x = app.get('port');
 app.listen(5000, () => {
-  app.listen(x, () => {
-    console.log(`App listening on port ${app.get('port')}`);
-   // console.log(`App listening on port ${app.get('port')}`);
-  });
+    app.listen(x, () => {
+        console.log(`App listening on port ${app.get('port')}`);
+        // console.log(`App listening on port ${app.get('port')}`);
+    });
 });
