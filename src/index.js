@@ -76,7 +76,8 @@ app.use((req, res, next) => {
 app.use(require('./routes/'));
 app.use(require('./routes/api'));
 app.use(require('./routes/alumnos/alumnos.js'))
-
+app.use(require('./routes/announcements/announcements.js'))
+app.use(require('./routes/events/events.js'))
 app.use(require('./routes/fbi'));
 app.use(require('./routes/tests'));
 app.use('/auth', require('./routes/auth'));
