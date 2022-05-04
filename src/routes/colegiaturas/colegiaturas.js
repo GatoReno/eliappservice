@@ -1,3 +1,12 @@
+const express = require('express');
+const router = express.Router();
+const jwt = require('jsonwebtoken');
+const pool = require('../../db');
+
+const {
+    isLoggedIn,
+    isNotLoggedIn
+} = require('../../lib/auth');
 router.get('/reiniciar-colegiaturas/', (req, res) => {
     console.log(req.body);
 
@@ -27,3 +36,4 @@ router.get('/colegiaturasReporte', (req, res) => {
         res.json(data);
     });
 });
+module.exports = router;

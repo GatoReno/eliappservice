@@ -6,7 +6,7 @@ const pool = require('../../db');
 const {
     isLoggedIn,
     isNotLoggedIn
-} = require('../lib/auth');
+} = require('../../lib/auth');
 
 
 router.post('/add-personal', (req, res) => {
