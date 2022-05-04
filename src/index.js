@@ -78,6 +78,9 @@ app.use(require('./routes/api'));
 app.use(require('./routes/alumnos/alumnos.js'))
 app.use(require('./routes/announcements/announcements.js'))
 app.use(require('./routes/events/events.js'))
+app.use(require('./routes/clients/clients.js'))
+app.use(require('./routes/pagos/pagos.js'))
+app.use(require('./routes/cartera/cartera.js'))
 app.use(require('./routes/fbi'));
 app.use(require('./routes/tests'));
 app.use('/auth', require('./routes/auth'));
