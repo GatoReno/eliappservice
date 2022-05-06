@@ -1,4 +1,3 @@
-
 // -- /get-owners
 /*function getowners(){
     
@@ -47,18 +46,18 @@ function getprojects(){
 
 };*/
 
-function getclientsSelect(){
+function getclientsSelect() {
     $.ajax({
         type: 'GET',
         url: '/clients',
         dataType: 'json',
         success: (data) => {
 
-            data.forEach( ( item ) => {
+            data.forEach((item) => {
                 const row = `<option value="${ item.id }">
                     ${ item.name }
                    </option>`;
-                $('#clientselect').append( row );
+                $('#clientselect').append(row);
             });
         }
 
@@ -66,39 +65,39 @@ function getclientsSelect(){
 };
 
 
-function alumnosSelect(){
+function alumnosSelect() {
     $.ajax({
         type: 'GET',
         url: '/alumnos',
         dataType: 'json',
         success: (data) => {
 
-            data.forEach( ( item ) => {
+            data.forEach((item) => {
                 const row = `<option value="${ item.id }">
                     ${ item.name } - ${ item.lastnameP } - ${ item.lastnameM } 
                    </option>`;
-                $('#alumnosSelect').append( row );
+                $('#alumnosSelect').append(row);
             });
         }
 
     });
 };
 
-function getadmins(){
-    
+function getadmins() {
+
     $.ajax({
         type: 'GET',
         url: '/get-admins',
         dataType: 'json',
         success: (data) => {
 
-            data.forEach( ( item ) => {
+            data.forEach((item) => {
                 const row = `<tr>
                     <td><input value="${ item.id }"></td>
                     <td>${ item.name }</td>
                     <td><a class="btn btn-default">Ver</a></td>
                 </tr>`;
-                $('#usersT').append( row );
+                $('#usersT').append(row);
             });
         }
 
@@ -108,22 +107,22 @@ function getadmins(){
 };
 
 
-function getalumn(){
-    
+function getalumn() {
+
     $.ajax({
         type: 'GET',
         url: '/alumnos',
         dataType: 'json',
         success: (data) => {
 
-            data.forEach( ( item ) => {
+            data.forEach((item) => {
                 const row = `<tr>
                     <td>${ item.name }  ${ item.lastnameP }  ${ item.lastnameM }</td>
                     <td>${ item.created_at }</td>
                     <td>${ item.estado }</td>
                     <td><a href="/infoalumno/${ item.id }" class="btn btn-default">Ver</a></td>
                 </tr>`;
-                $('#alumnosT').append( row );
+                $('#alumnosT').append(row);
             });
             getalumnGenders();
             getalumnLevels();
@@ -134,29 +133,30 @@ function getalumn(){
 };
 
 
-function getalumnGenders(){
-    
+function getalumnGenders() {
+
     $.ajax({
         type: 'GET',
         url: '/alumnos-genero-count',
         dataType: 'json',
-        success: (data) => {            
-                $('#genero-data').empty();
-                $('#genero-data').append(`boys : ${ data[0].masculinos }  / girls : ${ data[0].femeninos } / total : ${ data[0].total }`);
-         
-        }});
+        success: (data) => {
+            $('#genero-data').empty();
+            $('#genero-data').append(`boys : ${ data[0].masculinos }  / girls : ${ data[0].femeninos } / total : ${ data[0].total }`);
+
+        }
+    });
 }
 
 
-function getalumnLevels(){
-    
+function getalumnLevels() {
+
     $.ajax({
         type: 'GET',
         url: '/alumnos-nivel-count',
         dataType: 'json',
-        success: (data) => {            
-                $('#nivel-data').empty();
-                $('#nivel-data').append(`
+        success: (data) => {
+            $('#nivel-data').empty();
+            $('#nivel-data').append(`
                 first : ${ data[0].primero }  / 
                 second : ${ data[0].segundo } / 
                 thrid : ${ data[0].tercero } /
@@ -165,26 +165,27 @@ function getalumnLevels(){
                 sixth : ${ data[0].sexto } / 
                 
                 `);
-         
-        }});
+
+        }
+    });
 }
 
-function getmaestros(){
-    
+function getmaestros() {
+
     $.ajax({
         type: 'GET',
         url: '/maestros',
         dataType: 'json',
         success: (data) => {
 
-            data.forEach( ( item ) => {
+            data.forEach((item) => {
                 const row = `<tr>
                     <td><input value="${ item.name }"></td>
                     <td>${ item.created_at }</td>
                     <td></td>
                     <td><a href="/info_personal/${ item.id }" class="btn btn-default">Ver</a></td>
                 </tr>`;
-                $('#maestrosT').append( row );
+                $('#maestrosT').append(row);
             });
         }
 
@@ -195,14 +196,14 @@ function getmaestros(){
 
 
 
-function getclients(){
+function getclients() {
     $.ajax({
         type: 'GET',
         url: '/clients',
         dataType: 'json',
         success: (data) => {
 
-            data.forEach( ( item ) => {
+            data.forEach((item) => {
                 const row = `<tr>
                     
                     <td>${ item.name} / ${ item.parentesco }</td>
@@ -210,7 +211,7 @@ function getclients(){
                     <td>${ item.mail }</td>
                     <td><a class="btn btn-default" href="/infocliente/${ item.id}">ver</a></td>
                    </tr>`;
-                $('#clientsT').append( row );
+                $('#clientsT').append(row);
             });
         }
 
@@ -220,19 +221,19 @@ function getclients(){
 //tableGastosTitle
 
 
-function getexpensassall(){
+function getexpensassall() {
     $.ajax({
         type: 'GET',
         url: '/expenses-month-get',
         dataType: 'json',
         success: (data) => {
-        //console.log(data);
-        $('#gastosT').empty();
-        
-        $('#tableGastosTitle').empty();
-        $('#tableGastosTitle').append('Gastos del mes ');
-       
-            data.forEach( ( item ) => {
+            //console.log(data);
+            $('#gastosT').empty();
+
+            $('#tableGastosTitle').empty();
+            $('#tableGastosTitle').append('Gastos del mes ');
+
+            data.forEach((item) => {
                 const row = `<tr>
                 <td>${ item.concepto }</td>
                    
@@ -240,27 +241,29 @@ function getexpensassall(){
                     <td>$ ${ item.created_at } mx</td>
  
                    </tr>`;
-                $('#gastosT').append( row );
+                $('#gastosT').append(row);
             });
-        }});};
+        }
+    });
+};
 
-        
 
-function getpagosall(){
+
+function getpagosall() {
     $.ajax({
         type: 'GET',
         url: '/pagos/all',
         dataType: 'json',
         success: (data) => {
-        //console.log(data);
-        $('#pagosT').empty();
-        
-        $('#saldo_concepto').empty();
-        $('#saldo_concepto').append('saldo pendiente');
-        $('#tablepagostitle').empty();
-        $('#tablepagostitle').append('Todos los pagos hasta hoy');
-        
-            data.forEach( ( item ) => {
+            //console.log(data);
+            $('#pagosT').empty();
+
+            $('#saldo_concepto').empty();
+            $('#saldo_concepto').append('saldo pendiente');
+            $('#tablepagostitle').empty();
+            $('#tablepagostitle').append('Todos los pagos hasta hoy');
+
+            data.forEach((item) => {
                 const row = `<tr>
                 <td>${ item.concepto } / ${ item.created_at }</td>
                    
@@ -268,34 +271,36 @@ function getpagosall(){
                     <td>$ ${ item.saldo_pendiente } mx</td>
                     <td><a class="btn btn-default"  data-toggle="modal" data-target="#modal_dash" onclick="return modal_pagosInfo(${ item.id})">ver</a></td>
                    </tr>`;
-                $('#pagosT').append( row );
+                $('#pagosT').append(row);
             });
-        }});};
+        }
+    });
+};
 
 
 
- 
+
 
 function LookFor_Pagos() {
-    
+
     var input, filter, table, tr, td, i, txtValue;
     input = document.getElementById("myInputPagos");
     filter = input.value.toUpperCase();
     table = document.getElementById("pagosT");
     tr = table.getElementsByTagName("tr");
     for (i = 0; i < tr.length; i++) {
-      td = tr[i].getElementsByTagName("td")[0];
-      if (td) {
-        txtValue = td.textContent || td.innerText;
-        //console.log(txtValue)
-        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-          tr[i].style.display = "";
-        } else {
-          tr[i].style.display = "none";
+        td = tr[i].getElementsByTagName("td")[0];
+        if (td) {
+            txtValue = td.textContent || td.innerText;
+            //console.log(txtValue)
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
+            }
         }
-      }       
     }
-  }
+}
 
 
 function LookFor_Alumnos() {
@@ -305,60 +310,60 @@ function LookFor_Alumnos() {
     table = document.getElementById("alumnosT");
     tr = table.getElementsByTagName("tr");
     for (i = 0; i < tr.length; i++) {
-      td = tr[i].getElementsByTagName("td")[0];
-      if (td) {
-        txtValue = td.textContent || td.innerText;
-        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-          tr[i].style.display = "";
-        } else {
-          tr[i].style.display = "none";
+        td = tr[i].getElementsByTagName("td")[0];
+        if (td) {
+            txtValue = td.textContent || td.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
+            }
         }
-      }       
     }
-  }
+}
 
-  function LookFor_Clients() {
+function LookFor_Clients() {
     var input, filter, table, tr, td, i, txtValue;
     input = document.getElementById("myInputclients");
     filter = input.value.toUpperCase();
     table = document.getElementById("clientsT");
     tr = table.getElementsByTagName("tr");
     for (i = 0; i < tr.length; i++) {
-      td = tr[i].getElementsByTagName("td")[0];
-      if (td) {
-        txtValue = td.textContent || td.innerText;
-        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-          tr[i].style.display = "";
-        } else {
-          tr[i].style.display = "none";
+        td = tr[i].getElementsByTagName("td")[0];
+        if (td) {
+            txtValue = td.textContent || td.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
+            }
         }
-      }       
     }
-  }
+}
 
 
-   function LookFor_Gastos() {
+function LookFor_Gastos() {
     var input, filter, table, tr, td, i, txtValue;
     input = document.getElementById("myInputGastos");
     filter = input.value.toUpperCase();
     table = document.getElementById("gastosT");
     tr = table.getElementsByTagName("tr");
     for (i = 0; i < tr.length; i++) {
-      td = tr[i].getElementsByTagName("td")[0];
-      if (td) {
-        txtValue = td.textContent || td.innerText;
-        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-          tr[i].style.display = "";
-        } else {
-          tr[i].style.display = "none";
+        td = tr[i].getElementsByTagName("td")[0];
+        if (td) {
+            txtValue = td.textContent || td.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
+            }
         }
-      }       
     }
-  }
+}
 
 
 
-function modal_reiniciarColegiaturas(){
+function modal_reiniciarColegiaturas() {
     $('#modal_title_dash').empty();
     $('#modal_body_dash').empty();
 
@@ -368,13 +373,13 @@ function modal_reiniciarColegiaturas(){
         <a class="btn btn-success" href="/restart-clogiaturas" >Si estoy seguro, continuar</a>
     `;
 
-$('#modal_body_dash').append(st);
+    $('#modal_body_dash').append(st);
 
 }
 
 
 
-function modal_addTicket(){
+function modal_addTicket() {
     $('#modal_title_dash').empty();
     $('#modal_body_dash').empty();
 
@@ -395,20 +400,23 @@ function modal_addTicket(){
             
 
             <hr>
-            <label>Referencia o ticker</label>
+            <label>Referencia o ticket</label>
             <input name="referencia" required class="form-control" placeholder="numero de referencia / factura / etc" type="">
             <br>
+            
+            <label>Adjunte una imagen de ticket (Opcional)</label>
+            <input type="file" id="myFile" name="ImagenDeTicket">
             <hr>
             <input type="submit" value="Save" class="btn btn-success "/>
     </form>
     `;
 
-$('#modal_body_dash').append(st);
+    $('#modal_body_dash').append(st);
 
 }
 
 
-function modal_GenerarInforme(){
+function modal_GenerarInforme() {
     $('#modal_title_dash').empty();
     $('#modal_body_dash').empty();
 
@@ -421,13 +429,13 @@ function modal_GenerarInforme(){
         <a class="btn btn-success " onclick="return GenerarReporteMensualPagos()">Si estoy seguro, continuar</a>
     `;
 
-$('#modal_body_dash').append(st);
+    $('#modal_body_dash').append(st);
 
 }
 
-function GenerarReporteMensualPagos(){
+function GenerarReporteMensualPagos() {
     $('#modal_dash').modal('hide');
-    $('body').removeClass('modal-open');//eliminamos la clase del body para poder hacer scroll
+    $('body').removeClass('modal-open'); //eliminamos la clase del body para poder hacer scroll
     $('.modal-backdrop').remove();
     $('#pagosStandar').hide();
 
@@ -437,34 +445,36 @@ function GenerarReporteMensualPagos(){
     getcurrentMonthPagos()
     $('#printRepo').removeClass("hidden");
     $('#backPagos').removeClass("hidden");
-    
+
     $('#pagosReporte').removeClass("hidden");
-    
+
 }
-function ShowPagos(){
+
+function ShowPagos() {
     $('#printRepo').hide();
     $('#backPagos').hide();
-    
+
     $('#pagosReporte').hide();
     $('#pagosStandar').show();
 }
-function getcurrentMonthPagos(){
-   
+
+function getcurrentMonthPagos() {
+
     $.ajax({
         url: '/pagos/current_month/',
         type: 'GET',
-        
+
         dataType: 'json',
         success: function(data) {
             console.log(data);
             $('#pagosCurrenT').empty();
             $('#pagosCurrenT').empty();
             $('#saldo_concepto').empty();
-        
-        $('#pagosCurrenTitle').empty();
-        $('#pagosCurrenTitle').append('Todos los pagos del mes hasta hoy');
-        
-            data.forEach( ( item ) => {
+
+            $('#pagosCurrenTitle').empty();
+            $('#pagosCurrenTitle').append('Todos los pagos del mes hasta hoy');
+
+            data.forEach((item) => {
                 const row = `<tr>
                 <td>${ item.concepto }</td>
                     <td>${ item.created_at }</td>
@@ -473,11 +483,11 @@ function getcurrentMonthPagos(){
                     <td>${ item.saldo_afavor }  </td>
                     <td>${ item.saldo_pendiente }  </td>
                    </tr>`;
-                $('#pagosCurrenT').append( row );
+                $('#pagosCurrenT').append(row);
             });
-        
-        
-         
+
+
+
         },
         error: function(jqXHR, textStatus, errorThrown) {
             var data = jqXHR.responseJSON;
@@ -488,21 +498,21 @@ function getcurrentMonthPagos(){
 
         }
     });
-} 
+}
 
-function getClienteEndeuda(){
+function getClienteEndeuda() {
     $.ajax({
         type: 'GET',
         url: '/clientesEnDeuda',
         dataType: 'json',
         success: (data) => {
-        //console.log(data);
-        $('#deudoresT').empty();
-        var total = ''+data.length;                                          
+            //console.log(data);
+            $('#deudoresT').empty();
+            var total = '' + data.length;
             $('#deudoresT').empty();
             $('#deudoresTitle').empty();
-            $('#deudoresTitle').append('total: '+total);
-            data.forEach( ( item ) => {
+            $('#deudoresTitle').append('total: ' + total);
+            data.forEach((item) => {
                 const row = `<tr>
                 <td>${ item.name }  </td>
                    
@@ -511,26 +521,27 @@ function getClienteEndeuda(){
                     <td> ${ item.estado } </td>                    
                     
                    </tr>`;
-                $('#deudoresT').append( row );
+                $('#deudoresT').append(row);
             });
-        }});
+        }
+    });
 }
 
- 
 
-function  getAlumnosPrim(){
+
+function getAlumnosPrim() {
     $.ajax({
         type: 'GET',
         url: '/alumnosPrim',
         dataType: 'json',
         success: (data) => {
-        //console.log(data);
-        $('#primariaT').empty();
-        var total = ''+data.length;                                                                                  
+            //console.log(data);
+            $('#primariaT').empty();
+            var total = '' + data.length;
             $('#primariaT').empty();
             $('#primariaTitle').empty();
-            $('#primariaTitle').append('total: '+total);
-            data.forEach( ( item ) => {
+            $('#primariaTitle').append('total: ' + total);
+            data.forEach((item) => {
                 const row = `<tr>
                 <td>${ item.name }  ${ item.lastnameP } ${ item.lastnameM }</td>
                    
@@ -538,25 +549,26 @@ function  getAlumnosPrim(){
                     <td> ${ item.estado }   </td>
                     <td> ${ item.grado }   </td>
                    </tr>`;
-                $('#primariaT').append( row );
+                $('#primariaT').append(row);
             });
-        }});
-    }
+        }
+    });
+}
 
 
-function  getAlumnosPreescolar(){
+function getAlumnosPreescolar() {
     $.ajax({
         type: 'GET',
         url: '/alumnosPree',
         dataType: 'json',
         success: (data) => {
-        //console.log(data);
-        $('#preescolarT').empty();
-            var total = ''+data.length;                                          
+            //console.log(data);
+            $('#preescolarT').empty();
+            var total = '' + data.length;
             $('#preescolarT').empty();
             $('#preescolarTitle').empty();
-            $('#preescolarTitle').append('total: '+total);
-            data.forEach( ( item ) => {
+            $('#preescolarTitle').append('total: ' + total);
+            data.forEach((item) => {
                 const row = `<tr>
                 <td>${ item.name }  ${ item.lastnameP } ${ item.lastnameM }</td>
                    
@@ -564,28 +576,29 @@ function  getAlumnosPreescolar(){
                     <td>  ${ item.estado }   </td>
                     
                    </tr>`;
-                $('#preescolarT').append( row );
+                $('#preescolarT').append(row);
             });
-        }});
-    }
+        }
+    });
+}
 
 
 
 
 
-function getAlumnoPagoDiv(id){
+function getAlumnoPagoDiv(id) {
 
     //div_name_modal
     $.ajax({
-        url: '/alumno/'+id,
+        url: '/alumno/' + id,
         type: 'GET',
-        
+
         dataType: 'json',
         success: function(resp) {
-           // console.log(resp);
+            // console.log(resp);
             $('#payment_for').empty();
-                     
-               $('#payment_for').append(` ${resp[0].name}   ${resp[0].lastnameP}  ${resp[0].lastnameM} `);                    
+
+            $('#payment_for').append(` ${resp[0].name}   ${resp[0].lastnameP}  ${resp[0].lastnameM} `);
         },
         error: function(jqXHR, textStatus, errorThrown) {
             var data = jqXHR.responseJSON;
@@ -598,17 +611,17 @@ function getAlumnoPagoDiv(id){
     });
 }
 
-function getClientPagoDiv(id){
+function getClientPagoDiv(id) {
     $.ajax({
-        url: '/cliente/'+id,
+        url: '/cliente/' + id,
         type: 'GET',
-        
+
         dataType: 'json',
         success: function(resp) {
             // console.log(resp);
             $('#payment_owner').empty();
-                     
-               $('#payment_owner').append(` <a href="/infocliente/${resp[0].id}"> ${resp[0].name} </a>`);                    
+
+            $('#payment_owner').append(` <a href="/infocliente/${resp[0].id}"> ${resp[0].name} </a>`);
         },
         error: function(jqXHR, textStatus, errorThrown) {
             var data = jqXHR.responseJSON;
@@ -621,19 +634,19 @@ function getClientPagoDiv(id){
     });
 }
 
-function modal_pagosInfo(id){
+function modal_pagosInfo(id) {
 
 
-$.ajax({
-    type: 'GET',
-    url: '/pago/data/'+id,
-    dataType: 'json',
-    success: (data) => {
-    //console.log(data);
-    $('#modal_title_dash').empty();
-    $('#modal_body_dash').empty();
-    //call alumno y cliente info
-        
+    $.ajax({
+        type: 'GET',
+        url: '/pago/data/' + id,
+        dataType: 'json',
+        success: (data) => {
+            //console.log(data);
+            $('#modal_title_dash').empty();
+            $('#modal_body_dash').empty();
+            //call alumno y cliente info
+
             const row = `
             <p>${ data[0].concepto } / ${ data[0].created_at }</p>
                
@@ -646,57 +659,60 @@ $.ajax({
                 <p>Cliente  <div id="payment_owner"></div> </p>
                 <p>Alumno  <div id="payment_for"></div> </p>
                `;
-               $('#modal_body_dash').append(row);
-               getAlumnoPagoDiv(data[0].id_alumno);
-               getClientPagoDiv(data[0].id_cliente);
-               $('#modal_title_dash').append(data[0].concepto);
-    }
+            $('#modal_body_dash').append(row);
+            getAlumnoPagoDiv(data[0].id_alumno);
+            getClientPagoDiv(data[0].id_cliente);
+            $('#modal_title_dash').append(data[0].concepto);
+        }
 
-});
+    });
 
 }
-function getLabelAndDataPagos(){
+
+function getLabelAndDataPagos() {
     $.ajax({
-       type: 'GET',
-       url: '/pagos/current_month/count_per_day',
-       dataType: 'json',
-       success: (data) => {
-       //console.log(data);
-       drawChartPagos(data);
-       
-       }
+        type: 'GET',
+        url: '/pagos/current_month/count_per_day',
+        dataType: 'json',
+        success: (data) => {
+            //console.log(data);
+            drawChartPagos(data);
 
-   });
+        }
+
+    });
 }
 
-function getLabelAndDataPagos(){
+function getLabelAndDataPagos() {
     $.ajax({
-       type: 'GET',
-       url: '/pagos/current_month/count_per_day',
-       dataType: 'json',
-       success: (data) => {
-       //console.log(data);
-       drawChartPagos(data);
+        type: 'GET',
+        url: '/pagos/current_month/count_per_day',
+        dataType: 'json',
+        success: (data) => {
+            //console.log(data);
+            drawChartPagos(data);
 
-       }
+        }
 
-   });
+    });
 }
 
-   function drawChartPagos(obj){
-   //console.log(obj);
+function drawChartPagos(obj) {
+    //console.log(obj);
 
-   var labels =[]
-   var data = [];
+    var labels = []
+    var data = [];
 
 
-   obj.forEach(e => {
+    obj.forEach(e => {
         labels.push(e.day);
         data.push(e.pagos);
     });
-    var t= new Date();
+    var t = new Date();
 
-    var date = new Date(), y = date.getFullYear(), m = date.getMonth();
+    var date = new Date(),
+        y = date.getFullYear(),
+        m = date.getMonth();
     var firstDay = new Date(y, m, 1);
     var lastDay = new Date(y, m + 1, 0);
 
@@ -706,163 +722,163 @@ function getLabelAndDataPagos(){
 
     var ctx = document.getElementById('myChart');
     var myChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-        labels: labels,
-        datasets: [{
-            label: '# pagos del mes',
-            data: data,
-            backgroundColor:  [ 
-                'rgba(75, 192, 192, 0.2)'
-            ],
-            borderColor: [ 
-                'rgba(75, 192, 192, 1)' 
-            ],
-            borderWidth: 1
-        }]
-    },
-    options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                }
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: '# pagos del mes',
+                data: data,
+                backgroundColor: [
+                    'rgba(75, 192, 192, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(75, 192, 192, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
             }
-        });
+        }
+    });
 
-   }
+}
 
-   function getClientesGeneral(){
+function getClientesGeneral() {
 
     $.ajax({
         type: 'GET',
         url: '/clientes-estados-count',
         dataType: 'json',
         success: (data) => {
-        
-        drawChartClientesGeneral(data);
- 
-        }
- 
-    });
-   }
 
-   function getAlumnosGeneral(){
+            drawChartClientesGeneral(data);
+
+        }
+
+    });
+}
+
+function getAlumnosGeneral() {
     $.ajax({
         type: 'GET',
         url: '/alumnos-estados-count',
         dataType: 'json',
         success: (data) => {
-        
-        drawChartAlumnosGeneral(data);
- 
-        }
- 
-    });
-   }
 
-   function drawChartAlumnosGeneral(obj){
+            drawChartAlumnosGeneral(data);
+
+        }
+
+    });
+}
+
+function drawChartAlumnosGeneral(obj) {
     console.log(obj);
 
-     if(obj[0].estadoSinAsignar){
-         alert("Tienes alumnos sin estado! Puedes consultarlos en Alumnos > Ver > Actualizar datos > 'eliges el estado' > Actualizar estado. Recuerda hacer esto siempre que registres un pago.");
-     }
- 
-     
-     new Chart(document.getElementById("myChartAlumnos"), {
+    if (obj[0].estadoSinAsignar) {
+        alert("Tienes alumnos sin estado! Puedes consultarlos en Alumnos > Ver > Actualizar datos > 'eliges el estado' > Actualizar estado. Recuerda hacer esto siempre que registres un pago.");
+    }
+
+
+    new Chart(document.getElementById("myChartAlumnos"), {
         type: 'pie',
         data: {
-          labels: ["Vigentes", "No vigentes", "En prorroga","Sin estado"],
-          datasets: [{
-            label: "Clientes",
-            backgroundColor: ["rgba(75, 192, 192, 0.7)", "rgba(241,39,39,0.7)","rgba(249,234,37,0.7)"],
-            borderColor: ["rgba(75, 192, 192, 1)","rgba(241,39,55,1)","rgba(249,245,26,1)"],
-            data: [obj[0].totalVigentes,obj[0].totalNoVigentes,obj[0].totalEnProrroga,obj[0].estadoSinAsignar]
-          }]
+            labels: ["Vigentes", "No vigentes", "En prorroga", "Sin estado"],
+            datasets: [{
+                label: "Clientes",
+                backgroundColor: ["rgba(75, 192, 192, 0.7)", "rgba(241,39,39,0.7)", "rgba(249,234,37,0.7)"],
+                borderColor: ["rgba(75, 192, 192, 1)", "rgba(241,39,55,1)", "rgba(249,245,26,1)"],
+                data: [obj[0].totalVigentes, obj[0].totalNoVigentes, obj[0].totalEnProrroga, obj[0].estadoSinAsignar]
+            }]
         },
         options: {
-          title: {
-            display: true,
-            text: 'Estado de los alumnos'
-          }
+            title: {
+                display: true,
+                text: 'Estado de los alumnos'
+            }
         }
     });
- 
-    }
-   function drawChartClientesGeneral(obj){
+
+}
+
+function drawChartClientesGeneral(obj) {
     console.log(obj);
 
-    if(obj[0].estadoSinAsignar){
+    if (obj[0].estadoSinAsignar) {
         alert("Tienes clientes sin estado! Puedes consultarlos en Clientes > Ver > Actualizar datos > 'eliges el estado' > Actualizar estado. Recuerda hacer esto siempre que registres un pago.");
     }
- 
-     
-     new Chart(document.getElementById("myChartClientes"), {
+
+
+    new Chart(document.getElementById("myChartClientes"), {
         type: 'pie',
         data: {
-          labels: ["Vigentes", "No vigentes", "En prorroga","Sin estado"],
-          datasets: [{
-            label: "Clientes",
-            backgroundColor: ["rgba(75, 192, 192, 0.7)", "rgba(241,39,39,0.7)","rgba(249,234,37,0.7)"],
-            borderColor: ["rgba(75, 192, 192, 1)","rgba(241,39,55,1)","rgba(249,245,26,1)"],
-            data: [obj[0].totalVigentes,obj[0].totalNoVigentes,obj[0].totalEnProrroga,obj[0].estadoSinAsignar]
-          }]
+            labels: ["Vigentes", "No vigentes", "En prorroga", "Sin estado"],
+            datasets: [{
+                label: "Clientes",
+                backgroundColor: ["rgba(75, 192, 192, 0.7)", "rgba(241,39,39,0.7)", "rgba(249,234,37,0.7)"],
+                borderColor: ["rgba(75, 192, 192, 1)", "rgba(241,39,55,1)", "rgba(249,245,26,1)"],
+                data: [obj[0].totalVigentes, obj[0].totalNoVigentes, obj[0].totalEnProrroga, obj[0].estadoSinAsignar]
+            }]
         },
         options: {
-          title: {
-            display: true,
-            text: 'Estado de los clientes'
-          }
+            title: {
+                display: true,
+                text: 'Estado de los clientes'
+            }
         }
     });
- 
-    }
+
+}
 
 
-    function countAlumnos(){
-        $.ajax({
-            type: 'GET',
-            url: '/alumnos-count',
-            dataType: 'json',
-            success: (data) => {
-            
-             $('#alumnos_count').empty();
-             $('#alumnos_count').append('Total de alumnos: '+data[0].totalAlumnos);
-     
-            }     
-        });
-    }
-    function countClientes(){
-        $.ajax({
-            type: 'GET',
-            url: '/clientes-count',
-            dataType: 'json',
-            success: (data) => {
-        
-                $('#clientes_count').empty();
-                $('#clientes_count').append('Total de clientes: '+data[0].totalClientes);
-                   
-               }     
-            }     
-        );
-    }
-    function countPagosTotalPorAlumno(){
-        //
-        $.ajax({
-            type: 'GET',
-            url: '/pagos/current_month/count',
-            dataType: 'json',
-            success: (data) => {
-        
-                $('#pagomes_count').empty();
-                $('#pagomes_count').append('Total de pagos en el mes : '+data[0].totalPagosMes);
-                   
-               }     
-            }     
-        );
-    }
-getLabelAndDataPagos(),getAlumnosGeneral(),countClientes(),countAlumnos(),countPagosTotalPorAlumno(),
-getadmins(),getclients(),getclientsSelect(),getalumn(),getmaestros(),alumnosSelect(),getpagosall()
-,getClientesGeneral(),getexpensassall();
+function countAlumnos() {
+    $.ajax({
+        type: 'GET',
+        url: '/alumnos-count',
+        dataType: 'json',
+        success: (data) => {
+
+            $('#alumnos_count').empty();
+            $('#alumnos_count').append('Total de alumnos: ' + data[0].totalAlumnos);
+
+        }
+    });
+}
+
+function countClientes() {
+    $.ajax({
+        type: 'GET',
+        url: '/clientes-count',
+        dataType: 'json',
+        success: (data) => {
+
+            $('#clientes_count').empty();
+            $('#clientes_count').append('Total de clientes: ' + data[0].totalClientes);
+
+        }
+    });
+}
+
+function countPagosTotalPorAlumno() {
+    //
+    $.ajax({
+        type: 'GET',
+        url: '/pagos/current_month/count',
+        dataType: 'json',
+        success: (data) => {
+
+            $('#pagomes_count').empty();
+            $('#pagomes_count').append('Total de pagos en el mes : ' + data[0].totalPagosMes);
+
+        }
+    });
+}
+getLabelAndDataPagos(), getAlumnosGeneral(), countClientes(), countAlumnos(), countPagosTotalPorAlumno(),
+    getadmins(), getclients(), getclientsSelect(), getalumn(), getmaestros(), alumnosSelect(), getpagosall(), getClientesGeneral(), getexpensassall();
