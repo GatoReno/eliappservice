@@ -2,12 +2,13 @@ const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const pool = require('../../db');
-const admin = require("../firebaseAdmin/firebaseAdmin.js")
+
 
 const {
     isLoggedIn,
     isNotLoggedIn
 } = require('../../lib/auth');
+
 
 
 router.post('/expenses-add', (req, res) => {
