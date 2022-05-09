@@ -45,6 +45,10 @@ function getprojects(){
     //$("#ownerT").load();
 
 };*/
+const adminFiB = require('./firebaseAdmin/firebaseAdmin.js').getAdminFiB();
+
+
+const { get } = require("prompt");
 
 function getclientsSelect() {
     $.ajax({
@@ -405,15 +409,35 @@ function modal_addTicket() {
             <br>
             
             <label>Adjunte una imagen de ticket (Opcional)</label>
-            <input type="file" id="myFile" name="ImagenDeTicket">
+            <input type="file" onchange="checkImageValue(this)" id="myFile" name="ImagenDeTicket">
+            <img id="img" width="200px" style="margin-top:5px">
             <hr>
-            <input type="submit" value="Save" class="btn btn-success "/>
+
+          
+           
+            <input type="submit"  value="Save" class="btn btn-success "/>
     </form>
     `;
 
     $('#modal_body_dash').append(st);
 
 }
+var files = []
+var reader = new FileReader()
+
+function checkImageValue(myfile) {
+
+    const [file] = myFile.files
+    if (file) {
+        document.getElementById("img").src = URL.createObjectURL(file)
+    }
+    console.log(file)
+    var fileHolder = myFile.files[0];
+    var filename = fileHolder.name;
+    console.log(filename)
+    adminFiB.storage().ref("images/" + filename).put(file)
+
+};
 
 
 function modal_GenerarInforme() {
