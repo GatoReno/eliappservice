@@ -1,0 +1,387 @@
+ <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#home">Perfil Admin</a></li>
+            <li><a data-toggle="tab" href="#menu1">All</a></li>
+            <li><a data-toggle="tab" href="#menu2">Create</a></li> 
+            {{!-- 
+            
+            <li><a data-toggle="tab" href="#menu5">Actividades</a></li> --}}
+
+</ul>
+
+
+ <div class="tab-content ">
+            <div id="home" class="tab-pane fade in active p3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a href="#">Perfil</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Actualizar datos</li>
+                    </ol>
+                </nav>
+
+
+
+                <div class="card hovercard">
+                    <div class="cardheader">
+
+                    </div>
+
+                    <div class="info">
+
+                        <p>hi</p>
+                    </div>
+                   
+                </div>
+
+                <div class="col-lg-6 col-md-g col-sm-6">
+                    <h3>Administración</h3>
+                    <div class="top2 table-wrapper-scroll-y">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Ver</th>
+
+                                </tr>
+                            </thead>
+                            <tbody id="usersT">
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+
+            </div>
+
+            {{!-- Pestañas --}}
+            <div id="menu1" class="tab-pane fade p3">
+                <h3>Clientes</h3>
+
+
+
+
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <div class="top2 table-wrapper-scroll-y">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">Nombre / Parentesco</th>
+                                <th scope="col">Estado</th>
+                                <th scope="col">Mail</th>
+                                <th>Acción</th>
+
+                            </tr>
+                        </thead>
+                         <input type="text" id="myInputclients" onkeyup="LookFor_Clients()" placeholder="Buscar cliente ..." class="form-control" title="Type in a name">
+                        <tbody id="clientsT">
+
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <form id="fibUserForm">
+
+
+                   
+                        <h4>Datos de cliente</h4>
+                        <br>
+                        <input type="submit" value="crear" class="btn btn-default pull-right">
+                        <label for="">Nombre required</label><br>
+                        <input class="form-control" type="text" id="name_padre" placeholder="Nombre" required><br>
+
+                        <label for="">Parentesco</label><br>
+                        <input class="form-control" type="text" id="parentesco" placeholder="parentesco" required><br>
+                        <label for="">Escolaridad</label><br>
+                        <input class="form-control" type="text" id="escolaridad_padre" placeholder="Escolaridad"
+                            required><br>
+
+
+                        <label for="">Ocupación</label><br>
+                        <input class="form-control" type="text" id="ocupacion_padre" placeholder="Ocupación"
+                            required><br>
+
+                        <label for="">Institución de trabajo</label><br>
+                        <input class="form-control" type="text" id="trabajo_padre" placeholder="Institución u oficina"
+                            required><br>
+
+
+                        <label for="">Teléfono</label><br>
+                        <input class="form-control" type="text" id="phone_padre" placeholder="telefono" required><br>
+
+                        <label for="">Oficina Teléfono</label><br>
+                        <input class="form-control" type="text" id="oficina_padre" placeholder="oficina" required><br>
+
+                        <label for="exampleInputEmail1">Email address</label><br>
+                        <input class="form-control" type="email" id="mail_padre" class="form-control"
+                              aria-describedby="emailHelp" placeholder="Enter email" 
+                            required><br>
+                            <hr>
+                                <small> se recomiendaa que la contraseña la proporcione el usuario y debe contener minimo 8 digitos, numeros o letras</small>
+                            <hr>
+
+                                                  <label for="exampleInputEmail1">Password</label><br>
+                        <input class="form-control" type="password" id="pass_padre" class="form-control"
+                              aria-describedby="password" placeholder="Enter Password" 
+                            required><br>
+                    </form>
+                </div>
+
+                {{!Owner table}}
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+
+
+
+                </div>
+
+                <!-- Modal -->
+                <div class="modal fade" id="myModalsubClient" role="dialog">
+                    <div class="modal-dialog">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Datos de cliente : <label for="">{{user.username}}</label></h4>
+                            </div>
+                            <div class="modal-body">
+                                <form  >
+
+                                    <h4>Datos de alumno</h4>
+                                    <br>
+
+                                    <label for="">Nombre</label><br>
+                                    <input class="form-control" type="text" name="name_alumno" placeholder="...."><br>
+                                    <br>
+                                    <label for="">Apellido Paterno</label><br>
+                                    <input class="form-control" type="text" name="lastnameP_alumno"
+                                        placeholder="...."><br>
+                                    <label for="">Apellido Materno</label><br>
+                                    <input class="form-control" type="text" name="lastnameM_alumno"
+                                        placeholder="...."><br>
+
+
+                                    <label for="">Alergias</label><br>
+                                    <input class="form-control" type="text" name="alergias_alumno"
+                                        placeholder="...."><br>
+
+                                    <label for="">Tipo de Sangre</label><br>
+                                    <input class="form-control" type="text" name="tiposangre_alumno"
+                                        placeholder="...."><br>
+
+                                    <label for="">Talla</label><br>
+                                    <input class="form-control" type="text" name="talla_alumno" placeholder="...."><br>
+
+                                    <label for="">Peso</label><br>
+                                    <input class="form-control" type="text" name="peso_alumno" placeholder="...."><br>
+
+                                    <label for="">Escuela de precendencia</label><br>
+                                    <input class="form-control" type="text" name="precede_alumno"
+                                        placeholder="...."><br>
+
+
+
+                                    <label for="">Clave</label><br>
+                                    <input class="form-control" type="text" name="clave_alumno"
+                                        placeholder="Apellido Materno"><br>
+
+
+
+                                    <h4>Datos del padre</h4>
+                                    <br>
+
+                                    <label for="">Nombre</label><br>
+                                    <input class="form-control" type="text" name="name_padre" placeholder="Nombre"><br>
+                                    <label for="">Escolaridad</label><br>
+                                    <input class="form-control" type="text" name="escolaridad_padre"
+                                        placeholder="Escolaridad"><br>
+
+
+                                    <label for="">Ocupación</label><br>
+                                    <input class="form-control" type="text" name="ocupacion_padre"
+                                        placeholder="Ocupación"><br>
+
+                                    <label for="">Institución de trabajo</label><br>
+                                    <input class="form-control" type="text" name="trabajo_padre"
+                                        placeholder="Institución u oficina"><br>
+
+
+                                    <label for="">Teléfono</label><br>
+                                    <input class="form-control" type="text" name="phone_padre"
+                                        placeholder="telefono"><br>
+
+                                    <label for="">Oficina Teléfono</label><br>
+                                    <input class="form-control" type="text" name="oficina_padre"
+                                        placeholder="oficina"><br>
+
+                                    <label for="exampleInputEmail1">Email address</label><br>
+                                    <input class="form-control" type="email" name="mail_padre" class="form-control"
+                                        id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"
+                                        autofocus><br>
+
+
+
+
+
+                                    <h4>Datos de la madre</h4>
+                                    <br>
+
+
+
+                                    <label for="">Nombre</label><br>
+                                    <input class="form-control" type="text" name="name_madre" placeholder="Nombre"><br>
+                                    <label for="">Escolaridad</label><br>
+                                    <input class="form-control" type="text" name="escolaridad_madre"
+                                        placeholder="Escolaridad"><br>
+
+
+                                    <label for="">Ocupación</label><br>
+                                    <input class="form-control" type="text" name="ocupacion_madre"
+                                        placeholder="Ocupación"><br>
+
+                                    <label for="">Institución de trabajo</label><br>
+                                    <input class="form-control" type="text" name="trabajo_madre"
+                                        placeholder="Institución u oficina"><br>
+
+
+                                    <label for="">Teléfono</label><br>
+                                    <input class="form-control" type="text" name="phone_madre"
+                                        placeholder="telefono"><br>
+
+                                    <label for="">Oficina Teléfono</label><br>
+                                    <input class="form-control" type="text" name="oficina_madre"
+                                        placeholder="oficina"><br>
+
+                                    <label for="exampleInputEmail1">Email address</label><br>
+                                    <input class="form-control" type="email" name="mail_madre" class="form-control"
+                                        id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"
+                                        autofocus><br>
+
+
+
+
+                                    <input type="text" value="{{user.id}}" name="id" class="hidden">
+
+                            </div>
+                            <div class="modal-footer">
+                                <input type="submit" value="Actaulizar" class="btn btn-default">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                            </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                {{! termina menu 1}}
+            </div>
+            <div id="menu2" class="tab-pane fade p3">
+                <h3>Alumnos</h3>
+
+
+                
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <div> <small id="genero-data"></small></div>
+                    <div class="top2 table-wrapper-scroll-y">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Nombre</th>
+                                    <th scope="col">Fecha de ingreso a sistema</th>
+                                    <th scope="col">Estado</th>
+                                    <th>Detalles</th>
+
+                                </tr>
+                            </thead>
+                            <input type="text" id="myInput" onkeyup="LookFor_Alumnos()" placeholder="Buscar alumno ..." class="form-control"   title="Type in a name">
+                            <tbody id="alumnosT">
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <hr>
+                    <div> <small id="nivel-data"></small></div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <form action="/add-alumno" method="POST">
+                        <input type="submit" class="btn btn-default pull-right" value="Crear">
+
+
+                        <h4>Agregar de alumno</h4>
+                        <br>
+                        <label for="">Elegir tutor</label> <small>Esta es una lista de los actuales clientes</small>
+                        <select class="form-control" name="id_client" id="clientselect" required>
+
+                        </select>
+                        <br>
+                        <input class="form-control" type="text" name="name_alumno" placeholder="Nombre " required><br>
+                        <input class="form-control" type="text" name="lastnameP_alumno" placeholder="Apellido Paterno"
+                            required><br>
+                        <input class="form-control" type="text" name="lastnameM_alumno" placeholder="Apellido Materno"
+                            required><br>
+
+
+                        <input class="form-control" type="text" name="alergias_alumno" placeholder="Alergias"
+                            required><br>
+
+                        <input class="form-control" type="text" name="tiposangre_alumno" placeholder="Tipo de Sangre"
+                            required><br>
+
+                        <input class="form-control" type="text" name="talla_alumno" placeholder="Talla" required><br>
+
+                        <input class="form-control" type="text" name="peso_alumno" placeholder="Peso" required><br>
+
+                        <input class="form-control" type="text" name="precede_alumno"
+                            placeholder="Escuela de precendencia" required><br>
+
+                        <input class="form-control" type="text" name="clave_alumno" placeholder="Clave" required><br>
+
+                        <input class="form-control" type="text" name="colegiatura" placeholder="Colegiatura - $.00 mx"
+                            required><br>
+
+
+
+
+                    </form>
+                </div>
+
+
+
+
+
+
+
+
+
+
+                {{! termina menu 2}}
+            </div>
+        
+
+        </div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+    crossorigin="anonymous"></script>
+  <!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
+
+  <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-app.js"></script>
+
+  <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+  <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-analytics.js"></script>
+
+  <!-- Add Firebase products that you want to use -->
+  <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-firestore.js"></script>
+
+<script src="/js/fib.js"> 
+
+
+
+
+</script>

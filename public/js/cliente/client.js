@@ -1,7 +1,10 @@
 
   
 $(document).ready(function() {
-    
+
+
+    $("#div_reporteCliente").hide();
+    $("#reporteHolder").hide();  
     var id_client = $("#id_client").val();
     getPagos(id_client);
     getAlumnosClient(id_client);
@@ -287,9 +290,7 @@ function getAlumno(id){
             $('#div_name_modal').empty();
              
         
-               $('#div_name_modal').append(` ${resp[0].name}   ${resp[0].lastnameP}  ${resp[0].lastnameM} `);
-           
-
+               $('#div_name_modal').append(` ${resp[0].name}   ${resp[0].lastnameP}  ${resp[0].lastnameM} `);           
          
         },
         error: function(jqXHR, textStatus, errorThrown) {
@@ -367,3 +368,160 @@ function getAlumnosClient(id_client){
         }
     });
 }
+
+function GenerarReportePagosCliente(id_client) {
+
+    $.ajax({
+        url: '/cliente-pagos-all/'+id_client,
+        type: 'GET',
+        
+        dataType: 'json',
+        success: function(resp) {
+            console.log(resp);
+            var t = ` 
+            
+            <div class="top2 table"  style="background-color: white;">
+            <h5 class="card-title">Pagos</h5>
+                <table class="table table-hover" style="background-color: white;" >
+                    <thead>
+                        <tr>
+                            <th scope="col"> Fecha</th>
+                            <th scope="col"> Concepto</th>
+                            <th scope="col"> Antidad</th>
+                            <th scope="col"> Prorroga  </th>
+                            <th scope="col"> Tipo de pago  </th>
+                            <th scope="col"> Referencia  </th>
+                        </tr>
+                    </thead>
+                    <tbody id="repoPagosT">
+
+
+                    </tbody>
+                </table>
+            </div>
+            `
+            $('#repoClient2').append(t);
+             
+        resp.forEach(e => {
+               const row = `<tr  style="background-color: white;">
+                    <td> ${ e.created_at }</td>
+                    <td>${ e.concepto }</td>
+                    <td> $ ${ e.amount } mx </td>
+                    <td> ${ e.prorroga } </td>
+                    <td> ${ e.tipo_pago } </td>
+                    <td> ${ e.referencia } </td>
+                </tr>`;
+                $('#repoPagosT').append( row );
+           });
+
+         
+          
+                  
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+            var data = jqXHR.responseJSON;
+            if (jqXHR.status == 401) {
+                //location.reload();
+            }
+            console.log(errorThrown)
+
+        }
+    });
+    
+
+ $.ajax({
+        url: '/pagos-cliente-all-accounts/'+id_client,
+        type: 'GET',
+        
+        dataType: 'json',
+        success: function(resp) {
+            console.log(resp);
+             
+             
+       $('#repoClient1').append('Saldo a en contra:  $ '+
+       resp[0].saldoencontra + ' mx / Saldo a favor:  $ '+
+       resp[0].saldofavor+' mx');
+         
+          
+ 
+
+                  
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            var data = jqXHR.responseJSON;
+            if (jqXHR.status == 401) {
+                //location.reload();
+            }
+            console.log(errorThrown)
+
+        }
+    });
+   $("#div_reporteCliente").show();  
+   $("#reporteHolder").show();  
+    
+}
+
+
+function fibClientInfo(email){
+    $.ajax({
+        url: '/fbi-client-per-email/'+email,
+        type: 'GET',        
+        dataType: 'json',
+        success: function(resp) {
+            console.log(resp);
+            if(resp.uid)
+            {
+                $('#fibFeatures').empty();
+                $('#fibFeatures').append(
+                    '<a class="btn btn-success" disabled >App habilitada</a> ');
+            } 
+            },
+        error: function(jqXHR, textStatus, errorThrown) {
+            var data = jqXHR.responseJSON;
+            if (jqXHR.status == 401) {
+                //location.reload();
+            }
+            if (jqXHR.status == 500) {
+                // var emailclient = $('#mail_client').val();
+                // $('#fibFeatures').append(
+                //     '<a class="btn btn-default" onclick="habilitarFib('+emailclient+')" >Habilitar app</a> ');
+       
+            }
+            console.log(errorThrown)
+
+        }
+    });
+}
+
+function habilitarFib(){
+    $('#modal_body').empty();
+    $('#modal_title_client').empty();
+    $('#modal_title_client').append('Habilitar applicacion para cliente');
+
+    var mail = $('#mail_client').val();
+    var phone = $('#phone_client').val();
+    var name = $('#name_client').val();
+    var id = $('#id_client').val();
+    $('#modal_body').append(
+        `
+        <form action="/fibRegistClient" method="POST">
+        <small>Por default la contraseña del cliente sera <b>12345678</b> se le sugiere al usuario la cambie desde su applicacion en la opcion de recuperar contraseña<small>
+        <hr>
+        <input type="hidden" class="form-control" name="id" value="${id}">
+            <input type="text" class="form-control" name="displayName" value="${name}">
+            <hr>
+            <input type="text" class="form-control" name="email" value="${mail}">
+            <hr>
+            <input type="text" class="form-control" name="phone" value="${phone}">
+            <hr>
+            <input type="submit" class="btn btn-success"   value="Habilitar para usar applicacion">
+            </form>
+        `
+    );
+
+    
+}
+
+var emailClient = $('#mail_client').val();
+
+fibClientInfo(emailClient);

@@ -75,6 +75,9 @@ app.use((req,res,next) => {
 //ROUTES
 app.use(require('./routes/'));
 app.use(require('./routes/api'));
+
+app.use(require('./routes/fbi'));
+app.use(require('./routes/tests'));
 app.use('/auth',require('./routes/auth'));
 
 // Publics

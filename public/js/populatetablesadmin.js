@@ -182,7 +182,7 @@ function getmaestros(){
                     <td><input value="${ item.name }"></td>
                     <td>${ item.created_at }</td>
                     <td></td>
-                    <td><a href="/infomaestro/${ item.id }" class="btn btn-default">Ver</a></td>
+                    <td><a href="/info_personal/${ item.id }" class="btn btn-default">Ver</a></td>
                 </tr>`;
                 $('#maestrosT').append( row );
             });
@@ -365,7 +365,7 @@ function modal_reiniciarColegiaturas(){
     $('#modal_title_dash').append('<h4>Seguro quieres reiniciar las colegiaturas?</h4>');
     var st = `<p>Al hacer esto actualizaras a todos los clientes y a todos los alumnos como deudores.</p>
     <small>Sabiendo esto seguro deseas continuar?<small><br>
-        <a class="btn btn-success ">Si estoy seguro, continuar</a>
+        <a class="btn btn-success" href="/restart-clogiaturas" >Si estoy seguro, continuar</a>
     `;
 
 $('#modal_body_dash').append(st);
@@ -418,12 +418,158 @@ function modal_GenerarInforme(){
     y clientes con un estado antes de hacer un reporte<b/>
     Se recomiendo hacer esta accion cada fin de mes y por lo menos una vez al mes.</p>
     <small>Sabiendo esto seguro deseas continuar?<small><br>
-        <a class="btn btn-success ">Si estoy seguro, continuar</a>
+        <a class="btn btn-success " onclick="return GenerarReporteMensualPagos()">Si estoy seguro, continuar</a>
     `;
 
 $('#modal_body_dash').append(st);
 
 }
+
+function GenerarReporteMensualPagos(){
+    $('#modal_dash').modal('hide');
+    $('body').removeClass('modal-open');//eliminamos la clase del body para poder hacer scroll
+    $('.modal-backdrop').remove();
+    $('#pagosStandar').hide();
+
+    getAlumnosPreescolar();
+    getAlumnosPrim();
+    getClienteEndeuda();
+    getcurrentMonthPagos()
+    $('#printRepo').removeClass("hidden");
+    $('#backPagos').removeClass("hidden");
+    
+    $('#pagosReporte').removeClass("hidden");
+    
+}
+function ShowPagos(){
+    $('#printRepo').hide();
+    $('#backPagos').hide();
+    
+    $('#pagosReporte').hide();
+    $('#pagosStandar').show();
+}
+function getcurrentMonthPagos(){
+   
+    $.ajax({
+        url: '/pagos/current_month/',
+        type: 'GET',
+        
+        dataType: 'json',
+        success: function(data) {
+            console.log(data);
+            $('#pagosCurrenT').empty();
+            $('#pagosCurrenT').empty();
+            $('#saldo_concepto').empty();
+        
+        $('#pagosCurrenTitle').empty();
+        $('#pagosCurrenTitle').append('Todos los pagos del mes hasta hoy');
+        
+            data.forEach( ( item ) => {
+                const row = `<tr>
+                <td>${ item.concepto }</td>
+                    <td>${ item.created_at }</td>
+                    <td>$ ${ item.amount } mx</td>
+                    
+                    <td>${ item.saldo_afavor }  </td>
+                    <td>${ item.saldo_pendiente }  </td>
+                   </tr>`;
+                $('#pagosCurrenT').append( row );
+            });
+        
+        
+         
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            var data = jqXHR.responseJSON;
+            if (jqXHR.status == 401) {
+                //location.reload();
+            }
+            console.log(errorThrown)
+
+        }
+    });
+} 
+
+function getClienteEndeuda(){
+    $.ajax({
+        type: 'GET',
+        url: '/clientesEnDeuda',
+        dataType: 'json',
+        success: (data) => {
+        //console.log(data);
+        $('#deudoresT').empty();
+        var total = ''+data.length;                                          
+            $('#deudoresT').empty();
+            $('#deudoresTitle').empty();
+            $('#deudoresTitle').append('total: '+total);
+            data.forEach( ( item ) => {
+                const row = `<tr>
+                <td>${ item.name }  </td>
+                   
+                    
+                    <td> ${ item.parentesco } </td>
+                    <td> ${ item.estado } </td>                    
+                    
+                   </tr>`;
+                $('#deudoresT').append( row );
+            });
+        }});
+}
+
+ 
+
+function  getAlumnosPrim(){
+    $.ajax({
+        type: 'GET',
+        url: '/alumnosPrim',
+        dataType: 'json',
+        success: (data) => {
+        //console.log(data);
+        $('#primariaT').empty();
+        var total = ''+data.length;                                                                                  
+            $('#primariaT').empty();
+            $('#primariaTitle').empty();
+            $('#primariaTitle').append('total: '+total);
+            data.forEach( ( item ) => {
+                const row = `<tr>
+                <td>${ item.name }  ${ item.lastnameP } ${ item.lastnameM }</td>
+                   
+                    <td>$ ${ item.colegiatura } mx</td>                    
+                    <td> ${ item.estado }   </td>
+                    <td> ${ item.grado }   </td>
+                   </tr>`;
+                $('#primariaT').append( row );
+            });
+        }});
+    }
+
+
+function  getAlumnosPreescolar(){
+    $.ajax({
+        type: 'GET',
+        url: '/alumnosPree',
+        dataType: 'json',
+        success: (data) => {
+        //console.log(data);
+        $('#preescolarT').empty();
+            var total = ''+data.length;                                          
+            $('#preescolarT').empty();
+            $('#preescolarTitle').empty();
+            $('#preescolarTitle').append('total: '+total);
+            data.forEach( ( item ) => {
+                const row = `<tr>
+                <td>${ item.name }  ${ item.lastnameP } ${ item.lastnameM }</td>
+                   
+                    <td>$ ${ item.colegiatura } mx</td>                    
+                    <td>  ${ item.estado }   </td>
+                    
+                   </tr>`;
+                $('#preescolarT').append( row );
+            });
+        }});
+    }
+
+
 
 
 
@@ -632,7 +778,7 @@ function getLabelAndDataPagos(){
           datasets: [{
             label: "Clientes",
             backgroundColor: ["rgba(75, 192, 192, 0.7)", "rgba(241,39,39,0.7)","rgba(249,234,37,0.7)"],
-            borderColor: ["rgba(75, 192, 192, 1)","(241,39,55,1)","rgba(249,245,26,1)"],
+            borderColor: ["rgba(75, 192, 192, 1)","rgba(241,39,55,1)","rgba(249,245,26,1)"],
             data: [obj[0].totalVigentes,obj[0].totalNoVigentes,obj[0].totalEnProrroga,obj[0].estadoSinAsignar]
           }]
         },
@@ -660,7 +806,7 @@ function getLabelAndDataPagos(){
           datasets: [{
             label: "Clientes",
             backgroundColor: ["rgba(75, 192, 192, 0.7)", "rgba(241,39,39,0.7)","rgba(249,234,37,0.7)"],
-            borderColor: ["rgba(75, 192, 192, 1)","(241,39,55,1)","rgba(249,245,26,1)"],
+            borderColor: ["rgba(75, 192, 192, 1)","rgba(241,39,55,1)","rgba(249,245,26,1)"],
             data: [obj[0].totalVigentes,obj[0].totalNoVigentes,obj[0].totalEnProrroga,obj[0].estadoSinAsignar]
           }]
         },

@@ -88,6 +88,7 @@ router.post('/add-client', (req, res) => {
         id_cartera: 0
     }
 
+    //console.log(client)
 
     const qu = pool.query('Insert into clientes_ set ?', [client]);
 
@@ -226,49 +227,6 @@ router.post('/add-alumno', (req, res) => {
 });
 
 
-router.post('/add-maestro', (req, res) => {
-    console.log(req.body);
-    const {
-        name,
-        numerotel,
-        asignatura,
-        sueldo,
-        curp,
-        profesion,
-        mail,
-        rfc,
-        fingreso,
-        fegreso,
-    } = req.body;
-
-    const maestro = {
-        name: name,
-        numerotel: numerotel,
-        asignatura: asignatura,
-        sueldo: sueldo,
-        curp: curp,
-        profesion: profesion,
-        mail: mail,
-        rfc: rfc,
-        fingreso: fingreso,
-        fegreso: fegreso
-    }
-
-
-
-    const qu = pool.query('Insert into maestros_ set ?', [maestro]);
-
-    qu.then((result) => {
-        if (result.insertId) {
-            req.flash('message', 'Maestro creado con éxito');
-            res.render('dashboard/dashboard');
-        }
-
-    }).catch((err) => {
-        console.log(err);
-    });
-
-});
 
 
 router.post('/cartera-update', (req, res) => {
@@ -338,7 +296,7 @@ router.get('/carteras/:id', (req, res) => {
 });
 
 router.get('/maestros', (req, res) => {
-    const qu = pool.query('select * from maestros_');
+    const qu = pool.query('select * from personal_');
 
     qu.then((result) => {
         res.json(result);
@@ -400,12 +358,82 @@ router.get('/alumnos-sincartera', (req, res) => {
 
 });
 
-router.get('/infomaestro/:id', (req, res) => {
+
+router.post('/add-personal', (req, res) => {
+    console.log(req.body);
+    const {
+        name,
+        telefono,
+            
+        sueldo,
+        curp,
+        profesion,
+        email,
+        rfc,
+        fingreso,estudios,porhora,
+    } = req.body;
+
+    const maestro = {
+        name: name,
+        estudios:estudios,
+        porhora :porhora,
+        telefono: telefono,
+        
+        sueldo: sueldo,
+        curp: curp,
+        profesion: profesion,
+        email: email,
+        rfc: rfc,
+        fecha_ingreso: fingreso
+    }
+
+
+
+    const qu = pool.query('Insert into personal_ set ?', [maestro]);
+
+    qu.then((result) => {
+        if (result.insertId) {
+            req.flash('message', 'Personal creado con éxito');
+            res.render('dashboard/dashboard');
+        }
+
+    }).catch((err) => {
+        console.log(err);
+    });
+
+});
+
+
+router.get('/data_personal/:id', (req, res) => {
 
     const {
         id
     } = req.params;
-    const qu = pool.query('select * from maestros_ where id = ?', [id]);
+    const qu = pool.query('select * from personal_ where id = ?', [id]);
+
+    
+
+    qu.then((data) => {
+
+        console.log(data)
+        data.forEach((data) => {
+           res.json(data);
+        });
+
+      
+
+    }).catch((err) => {
+        console.log(err)
+    });
+
+});
+
+router.get('/info_personal/:id', (req, res) => {
+
+    const {
+        id
+    } = req.params;
+    const qu = pool.query('select * from personal_ where id = ?', [id]);
 
     const maestro = [];
 
@@ -670,21 +698,51 @@ router.get('/pagos/current_month/count', (req, res) => {
 
 
 
+
+
+router.post('/pago-add-personal', (req, res) => {
+    console.log(req.body);
+
+    const pago = req.body;    
+    const qu = pool.query('Insert into pagos_personal set ?', [pago]);        
+    qu.then(async (result) => {
+        if (result.insertId) {
+            //const query = await pool.query('Update clientes_ set id_cartera = ? where id = ?', [result.insertId, id_cliente]);
+            req.flash('message', 'Pago creado con éxito! Actualiza la info de este cliente segun corresponda!');
+            res.redirect('info_personal/'+req.body.id_staff);
+        }
+    }).catch((err) => {
+        console.log(err);
+    });
+});
+
+
+
 router.post('/pago-add', (req, res) => {
     console.log(req.body);
 
-    const pago = req.body;
-    
-    const qu = pool.query('Insert into pagos_ set ?', [pago]);
-    
-    
+    const pago = req.body;    
+    const qu = pool.query('Insert into pagos_ set ?', [pago]);        
     qu.then(async (result) => {
         if (result.insertId) {
             //const query = await pool.query('Update clientes_ set id_cartera = ? where id = ?', [result.insertId, id_cliente]);
             req.flash('message', 'Pago creado con éxito! Actualiza la info de este cliente segun corresponda!');
             res.redirect('infocliente/'+req.body.id_cliente);
         }
+    }).catch((err) => {
+        console.log(err);
+    });
+});
 
+
+
+router.get('/pagos-personal-list/:id', (req, res) => {
+    
+    const id = req.params.id;
+    const qu = pool.query(' SELECT * from pagos_personal where id = ?',[id]);
+    qu.then(async (result) => {        
+            console.log(result);                     
+            res.json(result);        
     }).catch((err) => {
         console.log(err);
     });
@@ -716,6 +774,7 @@ router.post('/expenses-add', (req, res) => {
 
 });
 
+
 router.get('/expenses-month-get', (req, res) => {
     console.log(req.body);
 
@@ -735,8 +794,119 @@ router.get('/expenses-month-get', (req, res) => {
 
 });
 
-//
 
+//  
+
+
+router.get('/cliente-pagos-all/:id', (req, res) => {
+ 
+    const id = req.params.id;
+    
+    const qu = pool.query('Select * from pagos_ where id_cliente = ?',[id]);
+    
+    
+    qu.then(async (result) => {        
+            console.log(result);                     
+            res.json(result);
+        
+
+    }).catch((err) => {
+        console.log(err);
+    });
+
+});
+
+
+router.get('/clientesEnDeuda', (req, res) => {
+    console.log(req.body);
+
+    const pago = req.body;    
+    const qu = pool.query('SELECT * FROM clientes_ where estado = "deudor"');        
+    qu.then(async (result) => {
+        res.json(result)
+    }).catch((err) => {
+        console.log(err);
+    });
+});
+
+
+router.get('/alumnosPrim', (req, res) => {
+    console.log(req.body);
+
+    const pago = req.body;    
+    const qu = pool.query('SELECT * FROM alumnos_ where nivel = "primaria"');        
+    qu.then(async (result) => {
+        res.json(result)
+    }).catch((err) => {
+        console.log(err);
+    });
+});
+
+
+router.get('/alumnosPree', (req, res) => {
+    console.log(req.body);
+
+    const pago = req.body;    
+    const qu = pool.query('SELECT * FROM alumnos_ where nivel = "preescolar"');        
+    qu.then(async (result) => {
+        res.json(result)
+    }).catch((err) => {
+        console.log(err);
+    });
+});
+
+
+
+router.get('/reiniciar-colegiaturas/', (req, res) => {
+    console.log(req.body);
+
+    const pago = req.body;  
+    
+    const qu = pool.query("UPDATE clientes_ set estado = 'Deudor' " );
+   
+});
+
+
+router.get('/pagos-cliente-all-accounts/:id', (req, res) => {    
+        const id = req.params.id;
+        console.log(id)
+        const qu = pool.query(`
+        SELECT  pagos, saldofavor , saldoencontra 
+        FROM (
+        select sum(amount) pagos from pagos_ where id_cliente =  ${id}  
+        ) a
+        INNER JOIN (
+        select sum(saldo_afavor) saldofavor from pagos_ where id_cliente =   ${id} 
+        ) b on 1=1
+        INNER JOIN (
+        select sum(saldo_pendiente) saldoencontra from pagos_ where id_cliente =  ${id} 
+        ) c on 1=1  
+    `);
+
+    qu.then((data) => {
+        res.json(data);
+    });
+});
+
+
+router.get('/colegiaturasReporte', (req, res) => {    
+    const id = req.params.id;
+    console.log(id)
+    const qu = pool.query(`
+    SELECT  primariaTotal, preescolarT 
+    FROM (
+        select sum(colegiatura) pagos from alumnos_ where nivel = 'primaria' && Month(created_at) = Month(CURDATE()) && Year(created_at) = Year(CURDATE()) ;
+    ) a
+    INNER JOIN (
+        select sum(colegiatura) pagos from alumnos_ where nivel = 'preescolar' && Month(created_at) = Month(CURDATE()) && Year(created_at) = Year(CURDATE()) ;
+    ) b on 1=1
+     
+`);
+
+qu.then((data) => {
+    res.json(data);
+});
+});
 
 router.get('/expenses/current_month', (req, res) => {    
         
@@ -892,6 +1062,157 @@ router.get('/clientes-estados-count/', (req, res) => {
         res.json(data);
     });
 });
+
+
+//Events
+
+router.get('/events-page/',(req, res) => { 
+
+    res.render('dashboard/events');
+});
+
+router.get('/events-all/',(req, res) => { 
+
+    const qu = pool.query('select * from events_');
+
+    qu.then((result) => {
+        res.json(result);
+
+    }).catch((err) => {
+        console.log(err);
+    });
+});
+
+
+router.get('/delete-event/:id',(req, res) => { 
+
+    const {id} = req.params;
+    const qu = pool.query('delete from events_ where id = ?',[id]);
+
+    qu.then((result) => {
+        req.flash('message', 'Evento eliminado con éxito');
+        res.render('dashboard/events');
+
+    }).catch((err) => {
+        req.flash('error', err);
+        res.render('dashboard/events');
+    });
+});
+router.get('/events-monthnow/',(req, res) => { 
+
+    const qu = pool.query('SELECT *'+
+    ' FROM  events_'+
+    ' WHERE MONTH(event_date) = MONTH(CURRENT_DATE())'+
+    ' AND YEAR(event_date) = YEAR(CURRENT_DATE())');
+
+    qu.then((result) => {
+        res.json(result);
+
+    }).catch((err) => {
+        console.log(err);
+    });
+});
+
+
+
+router.post('/add-event/',(req, res) => { 
+
+    const {event_date, title, description} = req.body;
+    const event = {
+        title,
+        event_date,
+        description
+    }
+    const qu = pool.query('Insert into events_ set ?', [event]);
+
+    qu.then((result) => {
+        console.log(result)
+        if (result.insertId) {
+            req.flash('message', 'Evento creado con éxito');
+            res.render('dashboard/events');
+        }else {
+
+            req.flash('error', 'Puede que haya habido un error');
+            res.render('dashboard/events');
+        }
+
+    }).catch((err) => {
+        console.log(err);
+    });
+
+});
+
+//Announcements
+
+router.get('/announcements-all/',(req, res) => { 
+
+    const qu = pool.query('select * from anuncios_');
+
+    qu.then((result) => {
+        res.json(result);
+
+    }).catch((err) => {
+        console.log(err);
+    });
+});
+
+
+
+router.get('/delete-announcement/:id',(req, res) => { 
+
+    const {id} = req.params;
+    const qu = pool.query('delete from anuncios_ where id = ?',[id]);
+
+    qu.then((result) => {
+        req.flash('message', 'Evento anuncio con éxito');
+        res.render('dashboard/events');
+
+    }).catch((err) => {
+        req.flash('error', err);
+        res.render('dashboard/events');
+    });
+});
+router.get('/announcements-monthnow/',(req, res) => { 
+
+    const qu = pool.query('SELECT *'+
+    ' FROM  anuncios_ '+
+    ' WHERE MONTH(event_date) = MONTH(CURRENT_DATE())'+
+    ' AND YEAR(event_date) = YEAR(CURRENT_DATE())');
+
+    qu.then((result) => {
+        res.json(result);
+
+    }).catch((err) => {
+        console.log(err);
+    });
+});
+
+router.post('/add-announcement/',(req, res) => { 
+
+    const {event_date, title, description} = req.body;
+    const event = {
+        title,
+        description
+    }
+    const qu = pool.query('Insert into anuncios_ set ?', [event]);
+
+    qu.then((result) => {
+        console.log(result)
+        if (result.insertId) {
+            req.flash('message', 'Anuncio creado con éxito');
+            res.render('dashboard/events');
+        }else {
+
+            req.flash('error', 'Puede que haya habido un error');
+            res.render('dashboard/events');
+        }
+
+    }).catch((err) => {
+        console.log(err);
+    });
+
+});
+
 
 
 

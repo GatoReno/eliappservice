@@ -24,6 +24,25 @@ router.get('/dashboard',isLoggedIn,(req,res)=>{
     res.render('dashboard/dashboard');
 });
 
+router.get('/dashboard/clients',isLoggedIn,(req,res)=>{
+    res.render('dashboard/clients');
+});
+
+router.get('/restart-clogiaturas',(req,res)=>{
+    try{
+        const clientes =  pool.query("update clientes_ set estado = 'Deudor'where estado = 'Vigente';");
+        const alumos =  pool.query("update alumnos_ set estado = 'Deudor' where estado = 'Vigente';");
+         if(clientes) console.log(clientes.id);
+                if(alumos) console.log(alumos.id); 
+    }
+    catch(e){
+        console.log(e)
+    }
+
+    res.redirect('/dashboard/', 200, req.flash('success',  ' colgiaturas restuaradas '));
+});
+
+
 router.get('/get-usersall',(req,res)=>{
     const admins = [];
     pool.query('SELECT * FROM USERS_');
