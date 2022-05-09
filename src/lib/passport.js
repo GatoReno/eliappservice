@@ -150,6 +150,7 @@ passport.deserializeUser(async (id, done) => {
     const qu = pool.query('SELECT * FROM USERS_ where id = ?', [id]);
     qu.then((res) => {
         console.log('datos recibido con éxito')
+        console.log(res)
         done(null, res[0]);  // datos de usuario por deseralizar
     }).catch((err) => {
         console.log(err)

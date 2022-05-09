@@ -1,15 +1,6 @@
 const express = require('express');
 const router = express.Router();
-
-const admin = require('firebase-admin');
-var serviceAccount =  require('../permissions/joanmiroapp-firebase-adminsdk-sz3cw-a38725b20f.json');
-
- 
-admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-    databaseURL: "https://joanmiroapp.firebaseio.com"
-  });
-
+const admin = require('./firebaseAdmin/firebaseAdmin.js').getAdminFiB();
 
 router.get('/fbi-clients',(req,res)=>{
     admin
@@ -55,7 +46,7 @@ router.post('/fibRegistClient',(req,res)=>{
 
 router.get('/fbi-client-per-email/:email',(req,res)=>{
     const {email} = req.params;
-
+    console.log('looking 4 user data: '+ {email});
      admin.auth().getUserByEmail(email).then((getUsersResult) => {
         console.log('Successfully fetched user data:');
         console.log(getUsersResult);

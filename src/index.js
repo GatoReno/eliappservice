@@ -23,7 +23,8 @@ const { database } = require('./keys');
 
 const multer = require('multer');
 
-const storage = multer.diskStorage({
+const storage = 
+multer.diskStorage({
     destination: 'public/uploads',
     filename: (req, file, cb) => {
         let customFileName = crypto.randomBytes(18).toString('hex');
@@ -106,17 +107,6 @@ app.engine('.hbs', hbs({
 app.set('view engine', '.hbs');
 
 
-
-
-// Start server
-/*var x = app.get('port');
-  console.log;
-  app.listen(5000, () => {
-    console.log(`App listening on port `+x);
-  });
-
-*/
-//H
 
 var x = app.get('port');
 app.listen(5000, () => {

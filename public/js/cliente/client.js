@@ -522,6 +522,3 @@ function habilitarFib(){
     
 }
 
-var emailClient = $('#mail_client').val();
-
-fibClientInfo(emailClient);

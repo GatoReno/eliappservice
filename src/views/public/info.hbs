@@ -206,10 +206,13 @@
               pdf.save(name+'.pdf');
           });
 }
+    var emailClient = $('#mail_client').val();
 
+    fibClientInfo(emailClient);
 </script>
 
     {{#if id_cartera}}
+
 
 {{!--
     <div class="col-lg-12">
