@@ -7,7 +7,7 @@ router.get('/fbi-clients',(req,res)=>{
     .auth()
     .listUsers(1000)
     .then((getUsersResult) => {
-        console.log('Successfully fetched user data:');
+        //console.log('Successfully fetched user data:');
         //console.log(getUsersResult); 
         res.json(getUsersResult);
     })
