@@ -474,7 +474,11 @@ function fibClientInfo(email){
                 $('#fibFeatures').empty();
                 $('#fibFeatures').append(
                     '<a class="btn btn-success" disabled >App habilitada</a> ');
-            } 
+            }else
+            {
+                var emailClient = $('#mail_client').val();
+                fibClientInfo(emailClient);
+            }
             },
         error: function(jqXHR, textStatus, errorThrown) {
             var data = jqXHR.responseJSON;
@@ -522,6 +526,3 @@ function habilitarFib(){
     
 }
 
-var emailClient = $('#mail_client').val();
-
-fibClientInfo(emailClient);

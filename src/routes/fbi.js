@@ -7,7 +7,7 @@ router.get('/fbi-clients',(req,res)=>{
     .auth()
     .listUsers(1000)
     .then((getUsersResult) => {
-        console.log('Successfully fetched user data:');
+        //console.log('Successfully fetched user data:');
         //console.log(getUsersResult); 
         res.json(getUsersResult);
     })
@@ -46,7 +46,7 @@ router.post('/fibRegistClient',(req,res)=>{
 
 router.get('/fbi-client-per-email/:email',(req,res)=>{
     const {email} = req.params;
-
+    console.log('looking 4 user data: '+ {email});
      admin.auth().getUserByEmail(email).then((getUsersResult) => {
         console.log('Successfully fetched user data:');
         console.log(getUsersResult);

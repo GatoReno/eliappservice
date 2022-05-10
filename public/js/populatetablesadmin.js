@@ -45,10 +45,6 @@ function getprojects(){
     //$("#ownerT").load();
 
 };*/
-const adminFiB = require('./firebaseAdmin/firebaseAdmin.js').getAdminFiB();
-
-
-const { get } = require("prompt");
 
 function getclientsSelect() {
     $.ajax({
@@ -251,8 +247,6 @@ function getexpensassall() {
     });
 };
 
-
-
 function getpagosall() {
     $.ajax({
         type: 'GET',
@@ -391,7 +385,7 @@ function modal_addTicket() {
     var st = `
     <small>Deseas agregar algun concepto a los gatos del mes?<small><br>
     <hr>
-    <form method="POST" action="/expenses-add">
+    <form method="POST" action="/expenses-add" enctype="multipart/form-data">
             <label>Concepto</label>
             <input name="concepto" required class="form-control" placeholder="Compra de inmueble / despensa / mantenimiento / pago de agua /  pago de luz" type="text">
             <br>
@@ -434,10 +428,19 @@ function checkImageValue(myfile) {
     console.log(file)
     var fileHolder = myFile.files[0];
     var filename = fileHolder.name;
-    console.log(filename)
-    adminFiB.storage().ref("images/" + filename).put(file)
+}
 
-};
+
+const [file] = myFile.files
+if (file) {
+    document.getElementById("img").src = URL.createObjectURL(file)
+}
+console.log(file)
+var fileHolder = myFile.files[0];
+var filename = fileHolder.name;
+console.log(filename)
+adminFiB.storage().ref("images/" + filename).put(file)
+
 
 
 function modal_GenerarInforme() {

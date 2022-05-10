@@ -36,7 +36,7 @@ router.post('/update-alumno', (req, res) => {
 
     qu.then((response) => {
         try {
-            console.log(response)
+
             req.flash('success', 'Datos actualizados');
             //res.redirect('/infoalumno/' + req.body. id);
             res.redirect('back');
@@ -155,7 +155,7 @@ router.get('/infoalumno/:id', (req, res) => {
 
     qu.then((data) => {
 
-        console.log(alumno)
+
         data.forEach((data) => {
             alumno.push(data);
         });

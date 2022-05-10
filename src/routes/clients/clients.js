@@ -17,8 +17,6 @@ router.get('/infocliente/:id', (req, res) => {
     const cliente = [];
 
     qu.then((data) => {
-
-        //console.log(cliente)
         data.forEach((data) => {
             cliente.push(data);
         });
@@ -170,7 +168,7 @@ router.get('/clientes-estados-count/', (req, res) => {
 });
 router.get('/client/alumnos/:id', (req, res) => {
     const id_cliente = req.params;
-    console.log(id_cliente);
+
     const qu = pool.query('SELECT * FROM alumnos_ where id_cliente = ?', [id_cliente.id]);
 
     qu.then((data) => {
@@ -187,7 +185,7 @@ router.get('/cliente-pagos-all/:id', (req, res) => {
 
 
     qu.then(async(result) => {
-        console.log(result);
+
         res.json(result);
 
 
@@ -199,7 +197,7 @@ router.get('/cliente-pagos-all/:id', (req, res) => {
 
 
 router.get('/clientesEnDeuda', (req, res) => {
-    console.log(req.body);
+
 
     const pago = req.body;
     const qu = pool.query('SELECT * FROM clientes_ where estado = "deudor"');

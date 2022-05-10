@@ -20,7 +20,7 @@ router.get('/reiniciar-colegiaturas/', (req, res) => {
 
 router.get('/colegiaturasReporte', (req, res) => {
     const id = req.params.id;
-    console.log(id)
+    
     const qu = pool.query(`
     SELECT  primariaTotal, preescolarT 
     FROM (
