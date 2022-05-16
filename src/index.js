@@ -27,9 +27,8 @@ const storage =
     multer.diskStorage({
         destination: 'public/uploads',
         filename: (req, file, cb) => {
-            let customFileName = crypto.randomBytes(18).toString('hex');
-            fileExtension = file.originalname.split('.')[1];
-            cb(null, customFileName + path.extname(file.originalname));
+
+            cb(null, file.originalname);
 
         }
     });
@@ -54,7 +53,7 @@ app.use(passport.session());
 app.use(multer({
     storage: storage,
     dest: 'public/uploads'
-}).any('fx'));
+}).any());
 
 
 // flash middle-ware
@@ -75,6 +74,7 @@ app.use((req, res, next) => {
 
 
 //ROUTES
+
 app.use(require('./routes/'));
 app.use(require('./routes/api'));
 app.use(require('./routes/alumnos/alumnos.js'))
@@ -83,6 +83,7 @@ app.use(require('./routes/events/events.js'))
 app.use(require('./routes/clients/clients.js'))
 app.use(require('./routes/pagos/pagos.js'))
 app.use(require('./routes/expenses/expenses.js'))
+app.use(require('./routes/expenses/expensesImagesUpload'))
 app.use(require('./routes/personal/personal.js'))
 app.use(require('./routes/colegiaturas/colegiaturas.js'))
 app.use(require('./routes/cartera/cartera.js'))

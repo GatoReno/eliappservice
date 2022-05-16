@@ -42,7 +42,8 @@
     "socket.io": "^2.3.0",
     "sqlite3": "^4.2.0",
     "stripe": "^6.36.0",
-    "timeago.js": "^4.0.2"
+    "timeago.js": "^4.0.2",
+    "uuidv4": "^6.2.13"
   },
   "devDependencies": {
     "nodemon": "^1.19.4"

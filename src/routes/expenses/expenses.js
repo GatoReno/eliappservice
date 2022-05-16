@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const pool = require('../../db');
-const admin = require('../firebaseAdmin/firebaseAdmin.js').getAdminFiB();
+// const admin = require('../firebaseAdmin/firebaseAdmin.js').getAdminFiB();
 const fs = require('fs');
 const multer = require("multer")
 
@@ -16,33 +16,9 @@ const path = require('path');
 const { getAdminFiB } = require('../firebaseAdmin/firebaseAdmin.js');
 
 
-//multer set up
-const fileStorageEngine = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, "../../imgs")
-    },
-    filename: (req, file, cb) => {
-        cb(null, Date.now() + file.fieldname + mime.extension)
-    }
-
-})
-
-const upload = multer({ storage: fileStorageEngine })
-router.post('/expenses-add', upload.single('imagenDeTicket'), (req, res) => {
-    //checking req body
-    if (typeof req.files[0] === 'object') {
-        getAdminFiB.storage().ref("/images" + req.files[0].filename).put(req.files[0])
-
-    } else if (typeof req.files[0] == 'undefined') {
-        console.log("no existe un file")
-    }
-
-    res.redirect("/dashboard")
 
 
-    // const { concepto, amount, referencia, ImsagenDeTicket } = req.body;
 
-});
 
 //confirmar que ImagenDeTicket sea una imagen // podrias o no usar multer
 

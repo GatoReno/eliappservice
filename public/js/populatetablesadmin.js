@@ -217,7 +217,7 @@ function getclients() {
 
     });
 };
-
+0
 //tableGastosTitle
 
 
@@ -227,25 +227,47 @@ function getexpensassall() {
         url: '/expenses-month-get',
         dataType: 'json',
         success: (data) => {
+
+
+
             //console.log(data);
             $('#gastosT').empty();
 
             $('#tableGastosTitle').empty();
             $('#tableGastosTitle').append('Gastos del mes ');
-
+            var imgId = 0;
             data.forEach((item) => {
-                const row = `<tr>
+                var img = item.imagenDelTicket
+
+                var row = `<tr>
                 <td>${ item.concepto }</td>
-                   
-                    <td>$ ${ item.amount } mx</td>                    
-                    <td>$ ${ item.created_at } mx</td>
- 
-                   </tr>`;
+                <td>$ ${ item.amount } mx</td>                    
+                <td>$ ${ item.created_at } mx</td>
+              
+                  `;
+
+                if (img != null) {
+                    row += `<td> <a  id="${imgId}"href="${img}">   Descargar imagen </a> </td>
+                   `
+                }
+                row += `<td> <a  href="/updateTicket/${imgId}" >   Actualizar imagen </a> </td> </tr>`
+
+
+                //hacer que desaparezca el hyperlink si href es null
                 $('#gastosT').append(row);
+
+
+
+                imgId++
+
             });
+
         }
     });
 };
+
+
+
 
 function getpagosall() {
     $.ajax({
@@ -403,7 +425,7 @@ function modal_addTicket() {
             <br>
             
             <label>Adjunte una imagen de ticket (Opcional)</label>
-            <input type="file" onchange="checkImageValue(this)" id="myFile" name="ImagenDeTicket">
+            <input type="file" onchange="checkImageValue(this)" id="myFile" name="ImagenDelTicket">
             <img id="img" width="200px" style="margin-top:5px">
             <hr>
 
@@ -431,15 +453,15 @@ function checkImageValue(myfile) {
 }
 
 
-const [file] = myFile.files
-if (file) {
-    document.getElementById("img").src = URL.createObjectURL(file)
-}
-console.log(file)
-var fileHolder = myFile.files[0];
-var filename = fileHolder.name;
-console.log(filename)
-adminFiB.storage().ref("images/" + filename).put(file)
+// const [file] = myFile.files
+// if (file) {
+//     document.getElementById("img").src = URL.createObjectURL(file)
+// }
+// console.log(file)
+// var fileHolder = myFile.files[0];
+// var filename = fileHolder.name;
+// console.log(filename)
+
 
 
 
