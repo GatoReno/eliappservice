@@ -4,8 +4,14 @@ const { firebase } = require('../../keys.js');
 const { v4: uuidv4 } = require('uuid');
 
 
+
+
+
 const pool = require('../../db');
 const admin = require('../firebaseAdmin/firebaseAdmin.js').getAdminFiB();
+
+const fibStorage = admin.storage()
+
 
 const fs = require('fs');
 const multer = require("multer")
@@ -41,7 +47,49 @@ async function uploadFile(path, filename) {
     return storage[0].metadata.mediaLink;
 }
 
+async function RemoveImgRefUrlFiB(URL) {
+    await admin.storage.refFromURL(URL)
+        .then(() => {
+            //3.
 
+            console.log("si se elimino")
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+}
+
+router.post("/updateTicket/", (req, res) => {
+
+
+    // const id = req.body.id
+    // const oldImage = req.body.img
+    // console.log(oldImage)
+
+    // RemoveImgRefUrlFiB(oldImage)
+
+
+    // pool.query("delete into table expensas_ where id = ?", [id])
+
+
+
+    // const httpsRef = fibStorage.refFromURL(oldImage)
+
+    // httpsRef.delete().then(function() {
+
+
+    //     console.log("File Deleted")
+    // }).catch(function(error) {
+
+    // });
+
+
+
+
+    // firebase.storage().bucket().file("imgs/" + imageName).delete();
+
+
+})
 
 //upload images to firebase
 router.post('/expenses-add', (req, res) => {
@@ -68,6 +116,7 @@ router.post('/expenses-add', (req, res) => {
 
 
             pool.query("insert into expensas_ set ?", [insert])
+
 
         })();
 

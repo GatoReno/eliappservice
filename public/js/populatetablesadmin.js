@@ -227,7 +227,7 @@ function getexpensassall() {
         url: '/expenses-month-get',
         dataType: 'json',
         success: (data) => {
-
+            console.log(data)
 
 
             //console.log(data);
@@ -238,6 +238,7 @@ function getexpensassall() {
             var imgId = 0;
             data.forEach((item) => {
                 var img = item.imagenDelTicket
+                console.log(item.id)
 
                 var row = `<tr>
                 <td>${ item.concepto }</td>
@@ -248,9 +249,17 @@ function getexpensassall() {
 
                 if (img != null) {
                     row += `<td> <a  id="${imgId}"href="${img}">   Descargar imagen </a> </td>
+                    
                    `
+
                 }
-                row += `<td> <a  href="/updateTicket/${imgId}" >   Actualizar imagen </a> </td> </tr>`
+
+                var id = item.id;
+                var c = item.concepto
+
+
+                row += `<td> <a  data-toggle="modal" data-target="#modal_dash"
+                 onclick="return modal_updateTicketImage(${id}, '${c}', '${img}')"   >   Actualizar imagen </a> </td> </tr>`
 
 
                 //hacer que desaparezca el hyperlink si href es null
@@ -432,6 +441,39 @@ function modal_addTicket() {
           
            
             <input type="submit"  value="Save" class="btn btn-success "/>
+            
+
+    </form>
+    `;
+
+    $('#modal_body_dash').append(st);
+
+}
+
+
+function modal_updateTicketImage(id, concepto, img) {
+
+    $('#modal_title_dash').empty();
+    $('#modal_body_dash').empty();
+
+    $('#modal_title_dash').append('<h4>Actualizar imagen de Ticket</h4>');
+    var st = `
+    <small>Concepto: ${concepto}  <small><br>
+    <hr>
+    <form method="post" action="/updateTicket" enctype="multipart/form-data">
+          
+            <label>Adjunte una imagen de ticket (Opcional)</label>
+            <input type="file" onchange="checkImageValue(this)" id="myFile" name="ImagenDelTicket" require>
+            <img id="img" width="200px" style="margin-top:5px">
+            
+
+         
+           <input type="hidden" value="${id}" name="id">
+           <input type="hidden" value="${img}" name="img">
+           <input type="hidden" value="${concepto}" name="concepto">
+
+            <input type="submit" value="Save" class="btn btn-success "/>
+        
     </form>
     `;
 
