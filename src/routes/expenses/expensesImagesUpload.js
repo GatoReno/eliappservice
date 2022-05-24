@@ -60,33 +60,46 @@ async function RemoveImgRefUrlFiB(URL) {
 }
 
 router.post("/updateTicket/", (req, res) => {
+    const bucket = admin.storage().bucket();
+    const id = req.body.id;
+
+    const oldImage = req.body.img
+    console.log(oldImage)
+    const name = req.files[0].filename;
 
 
-    // const id = req.body.id
-    // const oldImage = req.body.img
-    // console.log(oldImage)
+    async function deleteImageFromFirebase(imageName) {
+        await bucket.file("/imgs/" + imageName).delete();
+    }
+    deleteImageFromFirebase(oldImage);
 
-    // RemoveImgRefUrlFiB(oldImage)
+    (async() => {
+        const url = await uploadFile('\public\\uploads\\' + name, `${name}`);
+        const insert = {
 
+            ImagenDelTicket: url,
+            nombreDeImagen: req.body.filename
+        };
+        console.log(url, name)
 
-    // pool.query("delete into table expensas_ where id = ?", [id])
-
-
-
-    // const httpsRef = fibStorage.refFromURL(oldImage)
-
-    // httpsRef.delete().then(function() {
-
-
-    //     console.log("File Deleted")
-    // }).catch(function(error) {
-
-    // });
+        pool.query(` UPDATE expensas_
+        SET imagenDelTicket = '${url}', nombreDeImagen= '${name}'
+        WHERE id = ${id}`)
 
 
+    })();
 
 
-    // firebase.storage().bucket().file("imgs/" + imageName).delete();
+
+
+
+
+
+
+
+    res.redirect("/dashboard")
+
+
 
 
 })
@@ -111,7 +124,8 @@ router.post('/expenses-add', (req, res) => {
                 concepto: req.body.concepto,
                 amount: req.body.amount,
                 referencia: req.body.referencia,
-                ImagenDelTicket: url
+                ImagenDelTicket: url,
+                nombreDeImagen: name
             };
 
 

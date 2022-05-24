@@ -3,7 +3,8 @@ var serviceAccount = require('../../permissions/joanmiroapp-firebase-adminsdk-sz
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
-    databaseURL: "https://joanmiroapp.firebaseio.com"
+    databaseURL: "https://joanmiroapp.firebaseio.com",
+    storageBucket: "gs://joanmiroapp.appspot.com/"
 });
 
 function getAdminFiBInstance() {

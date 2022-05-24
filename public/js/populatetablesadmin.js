@@ -236,8 +236,11 @@ function getexpensassall() {
             $('#tableGastosTitle').empty();
             $('#tableGastosTitle').append('Gastos del mes ');
             var imgId = 0;
+
             data.forEach((item) => {
+
                 var img = item.imagenDelTicket
+                var imgName = item.nombreDeImagen
                 console.log(item.id)
 
                 var row = `<tr>
@@ -259,7 +262,7 @@ function getexpensassall() {
 
 
                 row += `<td> <a  data-toggle="modal" data-target="#modal_dash"
-                 onclick="return modal_updateTicketImage(${id}, '${c}', '${img}')"   >   Actualizar imagen </a> </td> </tr>`
+                 onclick="return modal_updateTicketImage(${id}, '${c}', '${imgName}')"   >   Actualizar imagen </a> </td> </tr>`
 
 
                 //hacer que desaparezca el hyperlink si href es null
