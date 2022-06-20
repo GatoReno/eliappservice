@@ -14,8 +14,7 @@ router.post('/pago', (req, res) => {
         mes,
         colegiatura
     } = req.body;
-    console.log(id_cliente, id_cartera, mes,
-        colegiatura);
+
 
 
 });
@@ -38,7 +37,7 @@ router.get('/pagos-personal-list/:id', (req, res) => {
     const id = req.params.id;
     const qu = pool.query(' SELECT * from pagos_personal where id = ?', [id]);
     qu.then(async(result) => {
-        console.log(result);
+
         res.json(result);
     }).catch((err) => {
         console.log(err);
@@ -46,7 +45,7 @@ router.get('/pagos-personal-list/:id', (req, res) => {
 
 });
 router.post('/pago-add', (req, res) => {
-    console.log(req.body);
+
 
     const pago = req.body;
     const qu = pool.query('Insert into pagos_ set ?', [pago]);
@@ -61,7 +60,7 @@ router.post('/pago-add', (req, res) => {
     });
 });
 router.post('/pago-add-personal', (req, res) => {
-    console.log(req.body);
+
 
     const pago = req.body;
     const qu = pool.query('Insert into pagos_personal set ?', [pago]);
@@ -162,7 +161,7 @@ router.get('/pagos/current_month/count_per_day', (req, res) => {
 });
 router.get('/pagos-cliente-all-accounts/:id', (req, res) => {
     const id = req.params.id;
-    console.log(id)
+
     const qu = pool.query(`
         SELECT  pagos, saldofavor , saldoencontra 
         FROM (

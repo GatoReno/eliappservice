@@ -10,27 +10,27 @@ passport.use('local.signin', new LStrategy({
     usernameField: 'name',
     passwordField: 'pass',
     passReqToCallback: true
-}, async (req, username, pass, done) => {
-    console.log(req.body);
+}, async(req, username, pass, done) => {
+
     console.log(username, pass);
 
-    const qu = pool.query('SELECT * FROM  USERS_ where username = ?',[username]);
-    qu.then( async (res) => {
+    const qu = pool.query('SELECT * FROM  USERS_ where username = ?', [username]);
+    qu.then(async(res) => {
         console.log(res.length);
 
         if (res.length > 0) {
             const user = res[0];
             console.log(user);
             const validpass = await helpers.matchPass(pass, user.pass);
-            
+
             if (validpass) {
-                done(null,user,req.flash('success','Bienvenido '+user.username));
-            }else{
-                done(null,false,req.flash('message','Contraseña invalida'));
+                done(null, user, req.flash('success', 'Bienvenido ' + user.username));
+            } else {
+                done(null, false, req.flash('message', 'Contraseña invalida'));
             }
 
-        }else {
-            done(null,false,req.flash('message','Usuario invalido '));
+        } else {
+            done(null, false, req.flash('message', 'Usuario invalido '));
         }
     }).catch((err) => {
         console.log(err);
@@ -42,7 +42,7 @@ passport.use('local.signup', new LStrategy({
     usernameField: 'name',
     passwordField: 'pass',
     passReqToCallback: true
-}, async (req, userName, pass, done) => {
+}, async(req, userName, pass, done) => {
 
     //console.log(req.body);
     const mail = req.body.mail;
@@ -59,13 +59,13 @@ passport.use('local.signup', new LStrategy({
 
     //console.log(newUser);
 
-    const query =  pool.query('INSERT INTO USERS_ set ?', [newUser]);
-    
+    const query = pool.query('INSERT INTO USERS_ set ?', [newUser]);
+
     query.then((data) => {
         //console.log(data.toString());
         newUser.id = parseInt(data.insertId);
         console.log(data.insertId);
-     return done(null, newUser,req.flash('message','Bienvenido '+newUser.username));
+        return done(null, newUser, req.flash('message', 'Bienvenido ' + newUser.username));
 
 
     }).catch((err) => {
@@ -80,16 +80,20 @@ passport.use('local.signup-subadmin', new LStrategy({
     usernameField: 'name',
     passwordField: 'pass',
     passReqToCallback: true
-}, async (req, userName, pass, done) => {
+}, async(req, userName, pass, done) => {
 
     //console.log(req.body);
     const mail = req.body.mail;
     //const name = req.body.name;
-    const { lastnameM,
-            lastnameP,
-            phone, 
-            datenac,
-            id,role ,name} = req.body;
+    const {
+        lastnameM,
+        lastnameP,
+        phone,
+        datenac,
+        id,
+        role,
+        name
+    } = req.body;
 
     const newUser = {
         username: userName,
@@ -103,37 +107,37 @@ passport.use('local.signup-subadmin', new LStrategy({
         phone: phone
     };
 
-    switch(role){
+    switch (role) {
         case 1:
-        newUser.admin = true;
-        newUser.owner = false;
-        
-        break;
+            newUser.admin = true;
+            newUser.owner = false;
+
+            break;
 
         case 2:
-        neUser.owner = true;
-        newUser.admin = false;
-        break;
+            neUser.owner = true;
+            newUser.admin = false;
+            break;
     }
-    
+
 
     newUser.pass = await helpers.encryptPass(pass);
 
     console.log(newUser);
 
     const query = pool.query('INSERT INTO USERS_ set ?', [newUser]);
-    
+
     query.then((data) => {
         //console.log(data.toString());
         newUser.id = parseInt(data);
         console.log(newUser);
-     return done(null, false,req.flash('message','Usuario '+newUser.username + 'credo con éxito.'));
+        return done(null, false, req.flash('message', 'Usuario ' + newUser.username + 'credo con éxito.'));
 
 
     }).catch((err) => {
         console.log(err);
 
-        return done(null,false,req.flash('errores','err:'+err))
+        return done(null, false, req.flash('errores', 'err:' + err))
     });
 
 
@@ -145,16 +149,17 @@ passport.serializeUser((user, done) => {
 });
 
 
-passport.deserializeUser(async (id, done) => {
-    console.log(id)
+passport.deserializeUser(async(id, done) => {
+
     const qu = pool.query('SELECT * FROM USERS_ where id = ?', [id]);
     qu.then((res) => {
         console.log('datos recibido con éxito')
-        done(null, res[0]);  // datos de usuario por deseralizar
+
+        done(null, res[0]); // datos de usuario por deseralizar
     }).catch((err) => {
         console.log(err)
     });
 
-    
+
     //user is an object resulted from a query be sure to use the correct property name
 });

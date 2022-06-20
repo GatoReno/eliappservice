@@ -14,7 +14,7 @@ router.post('/cartera-update', (req, res) => {
         id_alumno,
         id_cartera
     } = req.body;
-    console.log(id_alumno, id_cartera);
+
     const qu = pool.query('Update cartera_ set id_alumno = ?, status = ? where id = ?', [id_alumno, 'alta-en-sistema', id_cartera]);
     qu.then(async(resp, error, result, rows, fields) => {
         console.log(error, result, rows, fields);
