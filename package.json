@@ -29,6 +29,7 @@
     "express-validator": "^5.3.1",
     "firebase": "^8.1.1",
     "firebase-admin": "^9.4.1",
+    "jquery": "^3.6.0",
     "jsonwebtoken": "^8.5.0",
     "moment": "^2.27.0",
     "morgan": "^1.10.0",
@@ -46,6 +47,7 @@
     "uuidv4": "^6.2.13"
   },
   "devDependencies": {
-    "nodemon": "^1.19.4"
+    "nodemon": "^1.19.4",
+    "vanillajs-datepicker": "^1.2.0"
   }
 }

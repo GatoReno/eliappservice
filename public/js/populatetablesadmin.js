@@ -46,6 +46,7 @@ function getprojects(){
 
 };*/
 
+
 function getclientsSelect() {
     $.ajax({
         type: 'GET',
@@ -65,23 +66,6 @@ function getclientsSelect() {
 };
 
 
-function alumnosSelect() {
-    $.ajax({
-        type: 'GET',
-        url: '/alumnos',
-        dataType: 'json',
-        success: (data) => {
-
-            data.forEach((item) => {
-                const row = `<option value="${ item.id }">
-                    ${ item.name } - ${ item.lastnameP } - ${ item.lastnameM } 
-                   </option>`;
-                $('#alumnosSelect').append(row);
-            });
-        }
-
-    });
-};
 
 function getadmins() {
 
@@ -511,6 +495,7 @@ function checkImageValue(myfile) {
 
 
 function modal_GenerarInforme() {
+
     $('#modal_title_dash').empty();
     $('#modal_body_dash').empty();
 
