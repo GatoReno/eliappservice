@@ -13,20 +13,48 @@ $(function() {
     cambiarAlumno();
 
 
+
 });
+
 
 function cambiarSeccion() {
 
     let seccionElegida = document.getElementById("seccionSelect").value
-    console.log(seccionElegida)
+
     document.getElementById("seccionContrato").innerHTML = seccionElegida
+    var select = document.getElementById("seccionSelect")
+    var valueO = select.options[select.selectedIndex].value
+    document.getElementById("seccionAlumno").value = valueO
+    console.log(document.getElementById("seccionAlumno").value)
+
+
+
 }
 
 function cambiarAlumno() {
 
+
     let seccionElegida = document.getElementById("alumnosSelect").value
+    var select = document.getElementById("alumnosSelect")
+    var valueI = select.options[select.selectedIndex]
     console.log(seccionElegida)
+
+    document.getElementById("idAlumno").value = valueI.id
+
+    console.log(document.getElementById("idAlumno").value)
+
     document.getElementById("alumnoContrato").innerHTML = seccionElegida
+
+
+
+    // get selected option value
+
+
+
+}
+
+function idAlumnoEnForm(idAlumno) {
+    document.getElementById("idAlumno").value = idAlumno;
 
 }
 
@@ -36,16 +64,23 @@ function alumnosSelect() {
         url: '/alumnos',
         dataType: 'json',
         success: (data) => {
+            //revisar si data tiene valores
+            //si tiene, al primer valor de la lista asignar input oculto con id de estudiante
 
 
             data.forEach((item) => {
+
                 if (item.id_cliente == document.getElementById("alumnosSelect").name) {
 
-                    const row = `<option value="${ item.name }  ${ item.lastnameP }  ${ item.lastnameM }">
-                    ${ item.name }  ${ item.lastnameP }  ${ item.lastnameM } 
+                    const row = `<option id="${item.id}" value="${ item.name }  ${ item.lastnameP }  ${ item.lastnameM }">
+                    ${ item.name }  ${ item.lastnameP }  ${ item.lastnameM }
                    </option>`;
                     $('#alumnosSelect').append(row);
                     document.getElementById("alumnoContrato").innerHTML = row
+
+
+
+
                 }
 
             });
@@ -487,11 +522,140 @@ function getAlumnosClient(id_client) {
     });
 }
 
-function mostrarContrato() {
+function ocultarBotonContrato(id) {
+    $.ajax({
+        url: '/client/alumnos/' + id,
+        type: 'GET',
+
+        dataType: 'json',
+        success: function(resp) {
+            resp.forEach(element => {
+                if (element.nivel == null || element.grado == null || element.colegiatura == null)
+
+                {
+                    $("#botonDeContrato").hide();
+                    if (element.estado == "deudor") {
+                        alert("Este cliente es deudor y no podemos generar un contrato hasta cubrir la deuda.")
+
+                    } else {
+
+                        alert("Uno o más de tus alumnos de este usuario le faltan datos completa los datos de los alumnos para poder generar contratos.")
+                        return
+                    }
+
+
+
+                }
+            });
+
+
+
+        }
+    });
+
+
+}
+
+//tabla contratos
+function ocultarBotonContrato(id) {
+    $.ajax({
+        url: '/client/alumnos/' + id,
+        type: 'GET',
+
+        dataType: 'json',
+        success: function(resp) {
+            resp.forEach(element => {
+                if (element.nivel == null || element.grado == null || element.colegiatura == null)
+
+                {
+                    $("#botonDeContrato").hide();
+                    if (element.estado == "deudor") {
+                        alert("Este cliente es deudor y no podemos generar un contrato hasta cubrir la deuda.")
+
+                    } else {
+
+                        alert("Uno o más de tus alumnos de este usuario le faltan datos completa los datos de los alumnos para poder generar contratos.")
+                        return
+                    }
+
+
+
+                }
+            });
+
+
+
+        }
+    });
+
+
+}
+
+
+function pintarTabla(id) {
+    $.ajax({
+        type: 'GET',
+        url: '/alumnos',
+        dataType: 'json',
+        success: (data) => {
+            //revisar si data tiene valores
+            //si tiene, al primer valor de la lista asignar input oculto con id de estudiante
+
+
+            data.forEach((item) => {
+
+                if (item.id_cliente == id) {
+
+                    const row = ` <table class="table">
+                    <thead>
+                      <tr>
+                       
+                        <th scope="col">Alumno</th>
+                        <th scope="col">Contrato</th>
+                      
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                       
+                        <td>${item.name} ${item.lastnameP} ${item.lastnameM}</td>
+                        <td>${item.contrato}</td>
+                    
+                    
+                    </tbody>
+                  </table>`;
+                    $('#holderTablaContratos').append(row);
+
+
+
+
+
+                }
+
+            });
+        }
+
+    });
+};
+
+
+
+
+
+function mostrarContrato(id) {
+
+
+
+
+    //vuelve aqui
+
     $("#reporteHolder").hide();
     $("#contratoHolder").show();
+    cambiarAlumno()
+    pintarTabla(id)
 
 
+    //vuelve aqui
 }
 
 function GenerarReportePagosCliente(id_client) {

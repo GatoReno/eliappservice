@@ -7,10 +7,16 @@
   <div class="container">
     {{#if user}}
     
+    
 
    {{! soy usuario {{user.username} } }}
  
     {{#each cliente}}
+    
+    <script>window.addEventListener('load', (event) => {
+  ocultarBotonContrato({{id}})
+});</script>
+ 
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -23,8 +29,14 @@
       <div class="modal-body">
           <form method="POST" action="/enviarContrato" enctype="multipart/form-data">
                  <label>Adjunte su contrato</label>
-            <input type="file" onchange="checkImageValue(this)" id="miContrato" name="nuevoContrato">
+            <input type="file" onchange="checkImageValue(this)" onclick="cambiarAlumno(); cambiarSeccion()" id="miContrato" name="nuevoContrato">
        <input type="hidden" value="{{id}}" name="id" id="id_client">
+       <input type="hidden" value="" name="idAlumno" id="idAlumno">
+       <input type="hidden" value="" name="seccionAlumno" id="seccionAlumno">
+
+
+       
+          
             <img id="img" width="200px" style="margin-top:5px">
               <button type="submit" class="btn btn-primary">Enviar</button>
             </form>
@@ -63,6 +75,7 @@
 <input type="hidden" value="{{mail}}" id="mail_client">
 <input type="hidden" value="{{phone}}" id="phone_client">
 <input type="hidden" value="{{name}}" id="name_client">
+<input type="hidden" id="id_selected_student">
  
   <div class="col-lg-6 col-md-6 col-sm-6">
   
@@ -160,16 +173,18 @@
                      
                        
                        
-                       
-                          <li class="breadcrumb-item">
-                          <a class="btn btn-default"  onclick="return mostrarContrato()">Contrato</a>
+                       <div class="div" id="botonDeContrato">
+                          <li class="breadcrumb-item"  >
+                          <a class="btn btn-default"  onclick="return mostrarContrato({{id}}); pintarTabla({{id}})">Contrato</a>
                         </li>
                       
-
+</div>
                      
 
                        
-                      
+                      <script>
+ 
+                      </script>
                       
                         
                         
@@ -194,7 +209,9 @@
                     </div> 
 
 
+<div class="" id="holderTablaContratos">
 
+</div>
   
   <div id="contratoHolder" style="background-color:white">
   
@@ -206,13 +223,16 @@
             <option value="Primaria">Primaria</option>
        </select>
        </li>
-    
+    <form action="imprimirContrato"></form>
   <li class="breadcrumb-item">
    <a class="btn btn-default pull-right " onclick="return guardarPdfContrato()">Imprimir</a>
    </li>
-   <li>  <button type="button" class="btn btn-primary" data-toggle="modal" id="botonModalContrato"data-target="#exampleModal">
+   <li>  <button type="button" class="btn btn-primary" data-toggle="modal" id="botonModalContrato"data-target="#exampleModal" onclick="idAlumnoEnForm()">
   Actualizar Contrato
 </button></li>
+
+{{!-- enviar desde aqui el id del alumno para cacharlo en alumnosselect() y desde ahi enviarlo --}}
+
   <select  name="{{id}}" id="alumnosSelect" aria-placeholder="elige" onchange="cambiarAlumno()">
    
          
