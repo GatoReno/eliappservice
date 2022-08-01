@@ -591,6 +591,10 @@ function ocultarBotonContrato(id) {
 
 }
 
+function
+topdf(item) {
+    console.log(item)
+}
 
 function pintarTabla(id) {
     $.ajax({
@@ -606,6 +610,7 @@ function pintarTabla(id) {
 
                 if (item.id_cliente == id) {
 
+
                     const row = ` <table class="table">
                     <thead>
                       <tr>
@@ -619,20 +624,18 @@ function pintarTabla(id) {
                       <tr>
                        
                         <td>${item.name} ${item.lastnameP} ${item.lastnameM}</td>
-                        <td>${item.contrato}</td>
+                        
+                        <td><a> Descargar contrato </button></a>
+                        <td> <a href="${item.contrato}"> Eliminar </a></td>
                     
                     
                     </tbody>
                   </table>`;
                     $('#holderTablaContratos').append(row);
-
-
-
-
-
                 }
 
             });
+            $('#holderTablaContratos').append("<p>DE MOMENTO ES NECESARTIO AGREGAR .pdf A LOS ARCHIVOS PARA PODER SER LEIDOS PROPIAMENTE</p>");
         }
 
     });
@@ -652,7 +655,7 @@ function mostrarContrato(id) {
     $("#reporteHolder").hide();
     $("#contratoHolder").show();
     cambiarAlumno()
-    pintarTabla(id)
+
 
 
     //vuelve aqui

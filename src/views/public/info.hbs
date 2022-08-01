@@ -14,7 +14,7 @@
     {{#each cliente}}
     
     <script>window.addEventListener('load', (event) => {
-  ocultarBotonContrato({{id}})
+  ocultarBotonContrato({{id}}); pintarTabla({{id}})
 });</script>
  
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -152,6 +152,8 @@
       <hr>
    
  </div>
+ <div class="" id="holderTablaContratos">
+</div>
     <div class="col-md-12 col-sm-12" id="menuBotonesCliente" class="pull-right">
       <ol class="breadcrumb">
                         <li class="breadcrumb-item"> <form action="/delete-cliente" method="POST">
@@ -172,13 +174,12 @@
                         </li>
                      
                        
-                       
-                       <div class="div" id="botonDeContrato">
-                          <li class="breadcrumb-item"  >
+                      
+                          <li class="breadcrumb-item"  id="botonDeContrato" >
                           <a class="btn btn-default"  onclick="return mostrarContrato({{id}}); pintarTabla({{id}})">Contrato</a>
                         </li>
                       
-</div>
+
                      
 
                        
@@ -209,9 +210,7 @@
                     </div> 
 
 
-<div class="" id="holderTablaContratos">
 
-</div>
   
   <div id="contratoHolder" style="background-color:white">
   
@@ -223,7 +222,7 @@
             <option value="Primaria">Primaria</option>
        </select>
        </li>
-    <form action="imprimirContrato"></form>
+   
   <li class="breadcrumb-item">
    <a class="btn btn-default pull-right " onclick="return guardarPdfContrato()">Imprimir</a>
    </li>
