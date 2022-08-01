@@ -2,14 +2,54 @@
   crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js  "></script>
 
+
 <div class="row">
   <div class="container">
     {{#if user}}
     
+    
 
    {{! soy usuario {{user.username} } }}
-    
+ 
     {{#each cliente}}
+    
+    <script>window.addEventListener('load', (event) => {
+  ocultarBotonContrato({{id}}); pintarTabla({{id}})
+});</script>
+ 
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Actualizar Contrato</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <form method="POST" action="/enviarContrato" enctype="multipart/form-data">
+                 <label>Adjunte su contrato</label>
+            <input type="file" onchange="checkImageValue(this)" onclick="cambiarAlumno(); cambiarSeccion()" id="miContrato" name="nuevoContrato">
+       <input type="hidden" value="{{id}}" name="id" id="id_client">
+       <input type="hidden" value="" name="idAlumno" id="idAlumno">
+       <input type="hidden" value="" name="seccionAlumno" id="seccionAlumno">
+
+
+       
+          
+            <img id="img" width="200px" style="margin-top:5px">
+              <button type="submit" class="btn btn-primary">Enviar</button>
+            </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      
+      </div>
+    </div>
+  </div>
+</div>    
+    
+   
    {{! hay cliente
     {{name} }
     {{escolaridad} }
@@ -35,6 +75,7 @@
 <input type="hidden" value="{{mail}}" id="mail_client">
 <input type="hidden" value="{{phone}}" id="phone_client">
 <input type="hidden" value="{{name}}" id="name_client">
+<input type="hidden" id="id_selected_student">
  
   <div class="col-lg-6 col-md-6 col-sm-6">
   
@@ -52,7 +93,7 @@
           </tr>
         </thead>
         <tbody id="carterasT">
-           
+     
             <tr>
               <td>Estado Actual </td>
               <td>{{estado}}</td>
@@ -77,6 +118,17 @@
               <td>mail</td>
               <td>{{mail}}</td>
             </tr>
+             <tr>
+              
+              <td>direccion</td>
+              {{#if direccion}}
+              <td>{{direccion}}</td>
+             
+              {{else}}
+                <td>Por favor agregar direccion</td>
+                
+                 {{/if}}
+            </tr>
             
         </tbody>
       </table>
@@ -92,7 +144,7 @@
   </div>
 
     <div id="div_alumnos_client">
-   
+  
   </div>
 </div>
 
@@ -100,7 +152,9 @@
       <hr>
    
  </div>
-    <div class="col-md-12" class="pull-right">
+ <div class="" id="holderTablaContratos">
+</div>
+    <div class="col-md-12 col-sm-12" id="menuBotonesCliente" class="pull-right">
       <ol class="breadcrumb">
                         <li class="breadcrumb-item"> <form action="/delete-cliente" method="POST">
 
@@ -118,6 +172,22 @@
                         <li class="breadcrumb-item" id="fibFeatures">
                           <a class="btn btn-default" data-toggle="modal"  data-target="#modal_client" onclick="habilitarFib()"  >Habilitar app</a> 
                         </li>
+                     
+                       
+                      
+                          <li class="breadcrumb-item"  id="botonDeContrato" >
+                          <a class="btn btn-default"  onclick="return mostrarContrato({{id}}); pintarTabla({{id}})">Contrato</a>
+                        </li>
+                      
+
+                     
+
+                       
+                      <script>
+ 
+                      </script>
+                      
+                        
                         
                         
                     </ol>
@@ -137,14 +207,161 @@
 
                           <div style="background-color: whitex`;" id="repoClient2"></div>
                       </div>
-                    </div>
-     
+                    </div> 
 
+
+
+  
+  <div id="contratoHolder" style="background-color:white">
+  
+                         <ul class="breadcrumb">
+                          <li class="breadcrumb-item">
+       <select style="margin: 0%; padding: 5%" name="seccionSelect" id="seccionSelect" onchange="cambiarSeccion()">
+            <option value="Maternal">Maternal</option>
+            <option value="Kinder">Kinder</option>
+            <option value="Primaria">Primaria</option>
+       </select>
+       </li>
+   
+  <li class="breadcrumb-item">
+   <a class="btn btn-default pull-right " onclick="return guardarPdfContrato()">Imprimir</a>
+   </li>
+   <li>  <button type="button" class="btn btn-primary" data-toggle="modal" id="botonModalContrato"data-target="#exampleModal" onclick="idAlumnoEnForm()">
+  Actualizar Contrato
+</button></li>
+
+{{!-- enviar desde aqui el id del alumno para cacharlo en alumnosselect() y desde ahi enviarlo --}}
+
+  <select  name="{{id}}" id="alumnosSelect" aria-placeholder="elige" onchange="cambiarAlumno()">
+   
+         
+       </select>
+ 
+
+
+
+  
+  
+</ul> 
+           <!-- Modal -->
+    
+                    <div id="contratoHolderImprimir">
+                    <div  id="div_reporteCliente" style="background-color: white;padding: 6%;">
+                       <img class="pull-right" src="/img/apple-touch-icon.png" height="10%" width="10%" >
+                      <h3 style="margin-top: 10%">Colegio 
+                        Joan Miro Contrato                                          
+                      </h3>
+
+                    
+
+ 
         
-  
-  
-  
+
+
+
+                     
+                       
+                       
+                 <p>     <p> PREESCOLAR 07PJN0312G PRIMARIA 07PPR0585N </p>
+Desarrollo Integral y Formación Ecológica Para Niños De Alto potencial
+CONTRATO
+PRESTACION DE SERVICIOS
+<p> Que celebran por una parte el Colegio Joan Miró, representada en este acto por la C. Mtra. Elizabeth
+Pereyra Thomas y por la otra el (la) Sr. (a) <span  style="font-weight:bolder"> {{name}}</span> 
+en su carácter de padre o tutor al tenor de las siguientes declaraciones y cláusulas.
+DECLARACIONES</p>
+<p>1.- Para efectos de mayor brevedad en lo sucesivo se denominará al Colegio Joan Miró, como El Colegio y a
+él (la) Sr. (a), como padre o tutor.</p> 
+<p> 2.- El Colegio se declara estar legalmente establecida ante la Secretaría de Educación, con clave
+07PJN0312G, para preescolar y 07PPR0585N para primaria, con domicilio en Periférico Sur Poniente No.
+2115-A. Colonia Penipak, en Tuxtla Gutiérrez, Chiapas. </p>
+<p> 3.- “EL PADRE O TUTOR” declara que es una persona física con capacidad jurídica y con domicilio
+particular en 
+<span style="font-weight:bolder"id="direccionContrato"> {{direccion}}</span>
+que ha inscrito a <span style="font-weight:bolder" id="alumnoContrato"></span>
+como alumno (a) del El Colegio para el ciclo escolar 2022-2023, en el  <span style="font-weight:bolder" id="gradoContrato">grado </span>, de la <span style="font-weight:bolder">sección:</span>
+<span style="font-weight:bolder" id="seccionContrato"></span> y que tiene la solvencia económica suficiente para comprometerse a cubrir los pagos
+por concepto de inscripción y colegiaturas. </p>
+<p>CLAUSULAS</p> 
+<p> Primera. - EL COLEGIO se compromete a prestar en sus instalaciones el servicio de educación en el nivel
+correspondiente de acuerdo a los programas y planes de estudio autorizados por la Secretaría de Educación,
+teniendo para ello instalaciones adecuadas y personal debidamente capacitado.</p>
+<p> Segunda. - EL COLEGIO se compromete a mantener debidamente informado al padre o tutor del
+desempeño académico del alumno (a) a través de la entrega de boletines, reuniones con padres de familia y
+juntas generales.</p> 
+<p>Tercera. - EL PADRE O TUTOR se obliga a respetar y cumplir las indicaciones que EL COLEGIO estipule
+en su reglamento académico-disciplinario y administrativo, mismo que podrá consultar en el documento
+adjunto al presente contrato.</p>
+<p>Cuarta. - EL PADRE O TUTOR al inscribir a su hijo(a) es consciente de que EL COLEGIO, a la par del
+TUTOR comparten el compromiso en la formación emocional y académica del alumno, por lo que por este
+medio se reconoce la co-responsabilidad en dicha formación.</p>
+<p>Quinta. - El costo de los servicios educativos que el Colegio imparte, considera:
+1</p>
+<p>PREESCOLAR 07PJN0312G PRIMARIA 07PPR0585N</p>
+<p>Desarrollo Integral y Formación Ecológica Para Niños De Alto potencial</p>
+<p> Para los alumnos de nuevo ingreso, cuentan con el 50% de descuento en inscripción. Cualquier otro
+acuerdo económico en el pago de las colegiaturas, se establecerá de común acuerdo entre PADRE O
+TUTOR y EL COLEGIO. Es importante que sus pagos se hagan los primeros 5 días del mes para
+contar con los beneficios, caso contrario se deberá pagar el monto total del servicio</p>
+<p> El ciclo 2022-2023, queda claro que se conforma con 12 mensualidades en total, dando inicio la
+primera colegiatura en los primeros 5 días del mes de Septiembre del presente año y cubriendo
+la última mensualidad de agosto, en el mes de diciembre del presente año.</p>
+<p> Estas cuotas contemplan todos los gastos generados por el uso de todas las instalaciones del
+colegio, incluyendo la de medios, en los tiempos establecidos por sus maestros.</p>
+<p> Cualquier desperfecto que se dé por el mal uso de las instalaciones o acceder a ellas sin el
+acompañamiento de sus maestros, deberá cubrir los gastos generados por el tutor y/o
+responsable económico.</p>
+<p> Bajo ninguna circunstancia se introducirá alimentos o bebidas al aula de medios; de no
+cumplir con lo señalado, el alumno será merecedor de llamada de atención, de reincidir en
+ello, será motivo de suspensión.</p>
+<p>Sexta. - El PADRE O TUTOR se compromete a pagar el costo de las colegiaturas puntualmente durante los
+primeros 5 días naturales de cada mes, los pagos podrán hacerse vía bancaria de Banorte a Banorte al
+número de cuenta: 10-33-47-90-16, de otros bancos a Banorte con la clave: 072-100-010-334-790-166, o
+mediante transferencia electrónica al número de tarjeta: 4189 2810 4752 0532; los pagos no realizados en
+el Colegio deberán presentar comprobante de pago (voucher o captura de pantalla) para realizar el registro
+en el sistema del Colegio.</p>
+<p>Séptima. - Derivado de las condiciones de salud que aquejan a la población en general, el padre de familia
+deberá dar cumplimiento a las disposiciones de salud, que el colegio establezca para laborar dentro de un
+espacio preventivo. Estas condiciones serán revisadas y ajustadas a las necesidades que se vayan
+presentando de acuerdo al color del semáforo del estado.</p>
+<p>Octava. - EL PADRE O TUTOR acepta conforme a lo establecido en el Diario Oficial de la Federación de
+fecha 10 de marzo de 1992, que el incumplimiento en el pago de DOS COLEGIATURAS es causa de
+SUSPENSIÓN DEFINITIVA del servicio educativo y a la consecuente rescisión del presente contrato.
+Novena. - Es un compromiso establecido para todos los PADRES O TUTORES del Colegio el dar
+cumplimiento con el material pedagógico y de higiene para poder alcanzar los objetivos planteados con el
+programa y los compromisos con el padre o tutor y el alumno, si por alguna razón no se cumple con este
+punto, el padre o tutor deberá dirigir una carta a la dirección del centro explicando las razones y establecer
+nueva fecha para su cumplimiento.</p>
+<p>Décima. - La documentación reservada dentro del expediente de cada menor sólo podrá ser entregada
+mediante una solicitud por escrito con un mínimo de 2 días de anticipación y deberá estar al corriente en el
+pago de colegiaturas, libros y uniformes; en el caso de la solicitud de constancia de estudio, buena conducta
+y de no adeudo seguirán el mismo trámite.</p>
+<p>Las constancias de estudio, buena conducta, y de no adeudo TENDRÁN UN COSTO DE
+RECUPERACIÓN.</p>
+<p>2</p>
+<p>PREESCOLAR 07PJN0312G PRIMARIA 07PPR0585N</p>
+<p>
+Desarrollo Integral y Formación Ecológica Para Niños De Alto potencial
+Décima primera. - Bajo ninguna circunstancia se hará devolución de los pagos por concepto de
+preinscripción, inscripción o pagos anticipados de mensualidades.</p>
+<p>Décima segunda. - En caso de dar incumplimiento parcial o total a las cláusulas anteriores el Colegio, tiene
+la facultad de dar por concluida la prestación del servicio educativo, motivo del presente contrato
+Dada la lectura al contrato de servicios que el Colegio establece con los padres de familia, firma de
+conformidad los presentes, en la ciudad de Tuxtla Gutiérrez, Chiapas a <p style="font-weight:bold" id="diaContrato"></p> 
+<p style="font-weight:bold" id="mesContrato"></p> del 2022.</p>
+<p>Colegio Joan Miró</p>
+<p>Lic. Elizabeth Pereyra Thomas</p>
+<p>Directora</p>
+<p>Nombre y firma del responsable solidario(Padre o Tutor del menor)</p>
+<p>3</p>
+
+</p>
+                    </div> 
+
+
     </div>  
+    </div>
+
 
 
  
@@ -205,11 +422,57 @@
               pdf.addHTML($("#div_reporteCliente"),function() {
               pdf.save(name+'.pdf');
           });
-}
+};
 
+
+ function modalEnviarContratoAFirebase(){
+   $('#modal_title_dash').empty();
+    $('#modal_body_dash').empty();
+
+    $('#modal_title_dash').append('<h4>Seguro quieres reiniciar las colegiaturas?</h4>');
+    var st = `<p>Al hacer esto actualizaras a todos los clientes y a todos los alumnos como deudores.</p>
+    <small>Sabiendo esto seguro deseas continuar?<small><br>
+        <a class="btn btn-success" href="/restart-clogiaturas" >Si estoy seguro, continuar</a>
+    `;
+
+    $('#modal_body_dash').append(st);
+
+
+
+
+
+ }
+    function guardarPdfContrato(){
+      $("#botonModalContrato").show()
+      var today = new Date();
+      var dd = today.getDate();
+
+      var mm = today.getMonth()+1; 
+      var yyyy = today.getFullYear();
+      if(dd<10) 
+      {
+          dd='0'+dd;
+      } 
+
+      if(mm<10) 
+      {
+          mm='0'+mm;
+      } 
+      today = mm+'-'+dd+'-'+yyyy;
+    var name = 'Reporte de Pagos ' + $('#namerepo').val() + ' '+today ;
+   
+        var pdf = new jsPDF();
+              
+              pdf.addHTML($("#contratoHolderImprimir"),function() {
+              pdf.save(name+'.pdf');
+          });
+}
+  
+  
 </script>
 
     {{#if id_cartera}}
+
 
 {{!--
     <div class="col-lg-12">
@@ -325,12 +588,12 @@
 
         Este usuario aún no cuenta con cartera,la cartera es una referencia para lo pagos de los clientes
       </small>
-
+   </div>
 --}}
 
     
      
-    </div>
+ 
 
     {{else }}
 
@@ -357,6 +620,7 @@
 
     {{else}}
     {{/each}}
+   
 
 
     {{#each cartera}}
@@ -588,6 +852,8 @@
   </div>
 </div>
 
+{{!-- finish row --}}
+
 
 
     <script>
@@ -740,7 +1006,7 @@
 
     </div>
 
-    <div class="col-lg-12">
+   <div class="col-md-12 col-sm-12">
         <ol class="breadcrumb">
                         <li class="breadcrumb-item"> 
                           <a class="btn btn-danger" data-toggle="modal" data-target="#modal_staff"onclick="return eliminarPersonal()">Eliminar Staff</a>

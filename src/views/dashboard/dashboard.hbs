@@ -1,3 +1,4 @@
+<head><script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.11/jquery-ui.min.js"></script></head>
 {{#if user.user}}
 
 <h1>Usted no debería estar aquí</h1>
@@ -364,6 +365,9 @@
 
                         <input class="form-control" type="text" name="alergias_alumno" placeholder="Alergias"
                             required><br>
+                              <input class="form-control" type="text" name="seccion_alumno" placeholder="Seccion"
+                            required><br>
+
 
                         <input class="form-control" type="text" name="tiposangre_alumno" placeholder="Tipo de Sangre"
                             required><br>
@@ -652,9 +656,7 @@
                 </div>
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
             </div>
-<script>
 
-</script>
 
                 {{! termina menu 4}}
             </div>
@@ -662,6 +664,14 @@
 
             <div id="menu5" class="tab-pane fade p3">
                 <h3>expenses</h3>
+                    <input type="text" id="datedate" class="form-control">
+                    <script>
+    $('.datedate').datepicker({
+    });
+</script>
+              <br>
+<input type="text" name="foo">
+   
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a  data-toggle="modal" data-target="#modal_dash" onclick="return modal_addTicket()">Agregar Ticket</a></li>

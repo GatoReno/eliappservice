@@ -1,0 +1,13 @@
+{
+    "folders": [
+		{
+			"path": "..\\..\\.."
+		},
+		{
+			"path": "..\\..\\..\\..\\..\\Downloads\\jquery-ui-1.13.1.custom"
+		}
+	],
+    "settings": {
+        "git.ignoreLimitWarning": true
+    }
+}
