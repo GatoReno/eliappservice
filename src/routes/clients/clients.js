@@ -27,8 +27,6 @@ router.get('/infocliente/:id', (req, res) => {
     const cliente = [];
 
     qu.then((data) => {
-
-
         data.forEach((data) => {
 
             cliente.push(data);
