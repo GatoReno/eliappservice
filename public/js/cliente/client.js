@@ -624,8 +624,8 @@ function pintarTabla(id) {
                        
                         <td>${item.name} ${item.lastnameP} ${item.lastnameM}</td>
                         
-                        <td><a ref="${item.contrato}"> Descargar contrato </button></a>
-                        <td> <a h> Eliminar </a></td>
+                        <td><a href="${item.contrato}"> Descargar contrato </button></a>
+                        <td> <a> Eliminar </a></td>
                     
                     
                     </tbody>
