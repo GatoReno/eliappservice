@@ -606,8 +606,7 @@ function pintarTabla(id) {
             //si tiene, al primer valor de la lista asignar input oculto con id de estudiante
 
 
-            data.forEach((item) => {
-
+            data.forEach((item) => {                
                 if (item.id_cliente == id) {
 
 
@@ -625,8 +624,8 @@ function pintarTabla(id) {
                        
                         <td>${item.name} ${item.lastnameP} ${item.lastnameM}</td>
                         
-                        <td><a> Descargar contrato </button></a>
-                        <td> <a href="${item.contrato}"> Eliminar </a></td>
+                        <td><a ref="${item.contrato}"> Descargar contrato </button></a>
+                        <td> <a h> Eliminar </a></td>
                     
                     
                     </tbody>
@@ -635,6 +634,7 @@ function pintarTabla(id) {
                 }
 
             });
+            $('#holderTablaContratos').append("<p>Si el ciente no cuenta con algun contrato, entonces o tiene ocontratos, favor de crear uno.</p>");
             $('#holderTablaContratos').append("<p>DE MOMENTO ES NECESARTIO AGREGAR .pdf A LOS ARCHIVOS PARA PODER SER LEIDOS PROPIAMENTE</p>");
         }
 
