@@ -212,40 +212,9 @@ router.post('/enviarContrato', async(req, res) => {
                 console.log(error)
 
 
-
-
-                // const insert = {
-                //     contrato: url,
-
-                // };
-
-
-                // pool.query("update clientes_ set ? where id = ?", [insert, id])
-
-
-
             })();
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
-
-
-
-
-
-
 });
 
 
