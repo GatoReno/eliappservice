@@ -768,7 +768,7 @@
       today = mm+'-'+dd+'-'+yyyy;
     var name = 'Reporte General de Pagos JMAdmin '+today ;
    
-        var pdf = new jsPDF();
+        var pdf = new jsPDF('p', 'pt', 'a4');
               
               pdf.addHTML($("#pagosReporte_both"),function() {
               pdf.save(name+'.pdf');

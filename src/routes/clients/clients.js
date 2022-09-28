@@ -339,7 +339,7 @@ router.get('/cliente-pagos-all/:id', (req, res) => {
 
     const id = req.params.id;
 
-    const qu = pool.query('Select * from pagos_ where id_cliente = ?', [id]);
+    const qu = pool.query('Select * from  pagos_ where id_cliente = ? order by created_at  desc ', [id]);
 
 
     qu.then(async(result) => {

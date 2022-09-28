@@ -152,7 +152,7 @@
     <div class="col-md-12 col-sm-12" id="menuBotonesCliente" class="pull-right">
      
       <ol class="breadcrumb">
-                        <li class="breadcrumb-item"> <form action="/delete-cliente" method="POST">
+                        <li class="breadcrumb-item"> <form onsubmit="return confirm('Estas a punto de eliminar un cliente. ¿Continuar?');"  action="/delete-cliente" method="POST">
 
                                 <input  name="id_user" class="hidden" value="{{id}}"/>
                                 <input type="submit" value="Eliminar Cliente" class="btn btn-danger" />
@@ -219,7 +219,7 @@
                           </ul> 
                    <!-- Modal -->
     
-          <div id="contratoHolderImprimir">
+          <div id="contratoHolderImprimir" style="font-size: small;">
                     <div  id="div_reporteCliente" style="background-color: white;padding: 6%;">
                        <img class="pull-right" src="/img/apple-touch-icon.png" height="10%" width="10%" >
                       <h3 style="margin-top: 10%">Colegio 
@@ -375,10 +375,15 @@
       } 
       today = mm+'-'+dd+'-'+yyyy;
     var name = 'Reporte de Pagos ' + $('#namerepo').val() + ' '+today ;
-   
-        var pdf = new jsPDF();
+      var   length = document.getElementById("reporteHolder").offsetHeight / 2
+        var width =   document.getElementById("reporteHolder").offsetWidth / 2
+        console.log(length,width)
+        var pdf = new jsPDF('p', 'px',[ `${Math.floor(width)}`, `${Math.floor(length)}`]);
+     
+//vuelve aqui
               
-              pdf.addHTML($("#div_reporteCliente"),function() {
+              pdf.addHTML($("#reporteHolder"),function() {
+                
               pdf.save(name+'.pdf');
           });
 };
@@ -415,9 +420,15 @@
       today = mm+'-'+dd+'-'+yyyy;
     var name = 'Reporte de Pagos ' + $('#namerepo').val() + ' '+today ;
    
-        var pdf = new jsPDF();
+        var   length = document.getElementById("contratoHolderImprimir").offsetHeight / 2
+        var width =   document.getElementById("contratoHolderImprimir").offsetWidth / 2
+        console.log(length,width)
+        var pdf = new jsPDF('p', 'px',[ `${Math.floor(width)}`, `${Math.floor(length)}`]);
+     
+//vuelve aqui
               
               pdf.addHTML($("#contratoHolderImprimir"),function() {
+                
               pdf.save(name+'.pdf');
           });
 }
@@ -772,7 +783,7 @@
     </div>
 
     <div class="col-md-6">
-      <form action="/delete-alumno" method="POST">
+      <form onsubmit="return confirm('Estas a punto de eliminar un alumno. ¿Continuar?');" action="/delete-alumno" method="POST">
 
           <input  name="id_user" class="hidden" value="{{id}}"/>
           <input type="submit" value="Eliminar Alumno" class="btn btn-danger" />
