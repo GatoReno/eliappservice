@@ -111,7 +111,7 @@ app.set('view engine', '.hbs');
 
 
 var x = app.get('port');
-app.listen(x, () => {
+app.listen(3000, () => {
     app.listen(x, () => {
         console.log(`App listening on port ${app.get('port')}`);
         // console.log(`App listening on port ${app.get('port')}`);
