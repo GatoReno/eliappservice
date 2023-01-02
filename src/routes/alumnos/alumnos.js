@@ -82,7 +82,8 @@ router.post('/add-alumno', (req, res) => {
         clave: clave_alumno,
         id_cliente: id_client,
         colegiatura: colegiatura,
-        status: 'alta en sistema'
+        status: 'alta en sistema',
+        estado:'Alta en sistema'
     }
 
 

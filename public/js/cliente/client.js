@@ -634,7 +634,7 @@ function pintarTabla(id) {
                 }
 
             });
-            $('#holderTablaContratos').append("<p>Si el ciente no cuenta con algun contrato, entonces o tiene ocontratos, favor de crear uno.</p>");
+            $('#holderTablaContratos').append("<p>Si el ciente no cuenta con algun contrato favor de crear uno.</p>");
             $('#holderTablaContratos').append("<p>DE MOMENTO ES NECESARTIO AGREGAR .pdf A LOS ARCHIVOS PARA PODER SER LEIDOS PROPIAMENTE</p>");
         }
 

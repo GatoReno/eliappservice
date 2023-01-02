@@ -253,7 +253,7 @@ router.post('/signup-client', async (req, res) => {
 
 
     const queryalumn = pool.query('INSERT INTO alumnos_ set  ?', [alumno]);
-    queryalumn.then(  (err, resx) => {
+    queryalumn.then((err, resx) => {
         if (err) throw err;
 
         if (resx.length > 0) {

@@ -51,8 +51,9 @@ passport.use('local.signup', new LStrategy({
     const newUser = {
         username: name,
         mail: mail,
-        //datenac: datenac,
-        id_usercreated: 0
+        //datenac: datenac, //TODO Check this property to be set on singup
+        id_usercreated: 0,
+        //admin: 1 //TODO Fix Admin singup
     };
 
     newUser.pass = await helpers.encryptPass(pass);
