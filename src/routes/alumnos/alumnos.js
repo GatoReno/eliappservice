@@ -49,9 +49,6 @@ router.post('/update-alumno', (req, res) => {
 });
 
 
-
-
-
 router.post('/add-alumno', (req, res) => {
     console.log(req.body);
     const {
@@ -66,7 +63,15 @@ router.post('/add-alumno', (req, res) => {
         precede_alumno,
         clave_alumno,
         id_client,
-        colegiatura
+        colegiatura,
+        estado_alumno,
+
+        seguro_alumno,
+        grado_alumno,
+        observacion_alumno,
+        sexo_alumno,
+        promocion_alumno
+
     } = req.body;
 
     const alumno = {
@@ -82,7 +87,16 @@ router.post('/add-alumno', (req, res) => {
         clave: clave_alumno,
         id_cliente: id_client,
         colegiatura: colegiatura,
+        estado: estado_alumno,
+        seguro: seguro_alumno,
+        grado: grado_alumno,
+        observaciones: observacion_alumno,
+        promocion: promocion_alumno,
+        sexo: sexo_alumno,
+
+
         status: 'alta en sistema'
+
     }
 
 

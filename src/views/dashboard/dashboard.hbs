@@ -383,6 +383,19 @@
 
                         <input class="form-control" type="text" name="colegiatura" placeholder="Colegiatura - $.00 mx"
                             required><br>
+                             <input class="form-control" type="text" name="estado_alumno" placeholder="Estado" required><br> 
+
+ 
+    
+       <input class="form-control" type="text" name="seguro_alumno" placeholder="Seguro" required><br>
+
+        <input class="form-control" type="text" name="grado_alumno" placeholder="Grado" required><br>
+
+         <input class="form-control" type="text" name="observacion_alumno" placeholder="Observaciones" required><br>
+
+          <input class="form-control" type="text" name="sexo_alumno" placeholder="Sexo" required><br>
+           
+            <input class="form-control" type="text" name="promocion_alumno" placeholder="Promocion" required><br>
 
 
 
@@ -664,13 +677,17 @@
 
             <div id="menu5" class="tab-pane fade p3">
                 <h3>expenses</h3>
-                    <input type="text" id="datedate" class="form-control">
-                    <script>
-    $('.datedate').datepicker({
-    });
+                {{!-- datepicker original --}}
+                
+  <div class="form-group">
+                        <label for="exampleInputPassword1">Día de nacimiento</label>
+                        <input type="date" name="" class="form-control" id="exampleInputPassword1"
+                            placeholder="Password" autofocus>
+
+                    </div>
 </script>
               <br>
-<input type="text" name="foo">
+
    
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">

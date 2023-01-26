@@ -595,7 +595,7 @@ function
 topdf(item) {
     console.log(item)
 }
-
+//volver aqui datepicker expenses
 function pintarTabla(id) {
     $.ajax({
         type: 'GET',
@@ -606,7 +606,7 @@ function pintarTabla(id) {
             //si tiene, al primer valor de la lista asignar input oculto con id de estudiante
 
 
-            data.forEach((item) => {                
+            data.forEach((item) => {
                 if (item.id_cliente == id) {
 
 
