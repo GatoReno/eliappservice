@@ -541,39 +541,42 @@ function getAlumnosClient(id_client) {
     });
 }
 
-function ocultarBotonContrato(id) {
-    $.ajax({
-        url: '/client/alumnos/' + id,
-        type: 'GET',
+// function ocultarBotonContrato(id) {
+//     $.ajax({
+//         url: '/client/alumnos/' + id,
+//         type: 'GET',
 
-        dataType: 'json',
-        success: function(resp) {
-            resp.forEach(element => {
-                if (element.nivel == null || element.grado == null || element.colegiatura == null)
+//         dataType: 'json',
+//         success: function(resp) {
+//             resp.forEach(element => {
+//                 if (element.nivel == null || element.grado == null || element.colegiatura == null)
 
-                {
-                    $("#botonDeContrato").hide();
-                    if (element.estado == "deudor") {
-                        alert("Este cliente es deudor y no podemos generar un contrato hasta cubrir la deuda.")
+//                 {
+//                     $("#botonDeContrato").hide();
+//                     if (element.estado == "deudor") {
+//                         alert("Este cliente es deudor y no podemos generar un contrato hasta cubrir la deuda.")
 
-                    } else {
+//                     } else 
+//                     {
 
-                        alert("Uno o más de tus alumnos de este usuario le faltan datos completa los datos de los alumnos para poder generar contratos.")
-                        return
-                    }
+                       
 
-
-
-                }
-            });
+//                         alert("Uno o más de tus alumnos de este usuario le faltan datos completa los datos de los alumnos para poder generar contratos.")
+//                         return
+//                     }
 
 
 
-        }
-    });
+//                 }
+//             });
 
 
-}
+
+//         }
+//     });
+
+
+// }
 
 //tabla contratos
 function ocultarBotonContrato(id) {
@@ -590,11 +593,25 @@ function ocultarBotonContrato(id) {
                     $("#botonDeContrato").hide();
                     if (element.estado == "deudor") {
                         alert("Este cliente es deudor y no podemos generar un contrato hasta cubrir la deuda.")
+                        $('#mensajeCliente').append(`
+                        <hr>
+                        <div class="btn-danger">
+                        ste cliente es deudor y no podemos generar un contrato hasta cubrir la deuda.
+                        </div>
+
+                        <hr>
+                        `);
 
                     } else {
+                        $('#mensajeCliente').append(`
+                        <hr>
+                        <div class="btn-danger">
+                        Uno o más de tus alumnos de este usuario le faltan datos completa los datos de los alumnos para poder visualizar boton de contratos.
+                        </div>
 
-                        alert("Uno o más de tus alumnos de este usuario le faltan datos completa los datos de los alumnos para poder generar contratos.")
-                        return
+                        <hr>
+                        `);
+                         return
                     }
 
 
