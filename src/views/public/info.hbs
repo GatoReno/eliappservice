@@ -152,11 +152,12 @@
     <div class="col-md-12 col-sm-12" id="menuBotonesCliente" class="pull-right">
      
       <ol class="breadcrumb">
-                        <li class="breadcrumb-item"> <form action="/delete-cliente" method="POST">
+                        <li class="breadcrumb-item">  
 
-                                <input  name="id_user" class="hidden" value="{{id}}"/>
-                                <input type="submit" value="Eliminar Cliente" class="btn btn-danger" />
-                            </form>
+                                {{!-- <input  name="id_user" class="hidden" value="{{id}}"/>
+                                <input type="submit" value="Eliminar Cliente" class="btn btn-danger" /> --}}
+                                <a class="btn btn-default" data-toggle="modal" data-target="#modal_client" onclick="return modalEliminarCliente()">Eliminar Cliente</a>
+                         
                         </li>
                         <li class="breadcrumb-item">
                           <a class="btn btn-default" data-toggle="modal" data-target="#modal_client" onclick="return modalPago()">Generar Pago</a>

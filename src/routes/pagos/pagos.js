@@ -44,7 +44,8 @@ router.get('/pagos-personal-list/:id', (req, res) => {
     });
 
 });
-router.post('/pago-add', (req, res) => {
+router.post('/pago-add', (req, res) => 
+{
 
 
     const pago = req.body;

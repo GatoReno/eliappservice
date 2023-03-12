@@ -64,10 +64,9 @@ router.post('/update-info-admin', (req, res) => {
         colonia: colonia,
         cp: cp,
         estado: estado,
-
         status: 1,
         img: imgfn,
-        admin: true
+        admin: 1
     };
 
     const queryk = pool.query('UPDATE USERS_ set ? where id = ? ', [userd, id]);
