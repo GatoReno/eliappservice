@@ -246,19 +246,14 @@ function getDatosPago(id) {
 
 
 function modalEliminarCliente(idCliente)
-{
-    // if(id != null){
-      
-    //     var id_client = $("#id_client").val();
-    // }
-    var id_client = $("#id_client").val();
+{ 
     $('#modal_title_client').empty();
     $('#modal_title_client').append('Eliminar Cliente');
     $('#modal_body').empty();
     var str = `
     <form action="/delete-cliente" method="POST">
-        <h3>Usted esta apunto de eliminar este cliente</h3>
-        <input  name="id_user" class="hidden" value="{{id}}"/>
+        <h3>Usted esta apunto de eliminar este cliente</h3> 
+         <input  name="id_user" class=" " value="${idCliente}"/>
         <input type="submit" value="Eliminar Cliente" class="btn btn-danger" /> 
     </form>
     `;
