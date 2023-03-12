@@ -253,7 +253,9 @@ function modalEliminarCliente(idCliente)
     var str = `
     <form action="/delete-cliente" method="POST">
         <h3>Usted esta apunto de eliminar este cliente</h3> 
-         <input  name="id_user" class="hidden" value="${idCliente}"/>
+         <input  name="id_user" class="hidden
+         
+         " value="${idCliente}"/>
         <input type="submit" value="Eliminar Cliente" class="btn btn-danger" /> 
     </form>
     `;

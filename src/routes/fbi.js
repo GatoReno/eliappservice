@@ -39,6 +39,8 @@ router.post('/fibRegistClient', (req, res) => {
             res.redirect('/infocliente/' + id);
         })
         .catch((error) => {
+            req.flash('error', error.message);
+            res.redirect('/infocliente/' + id);
             console.log('Error creating new user:', error);
         });
 
