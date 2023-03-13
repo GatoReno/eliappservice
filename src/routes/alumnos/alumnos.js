@@ -22,6 +22,8 @@ router.post('/delete-alumno', (req, res) => {
         res.redirect('/dashboard');
     }).catch((err) => {
         res.json(err)
+        req.flash('message', 'Error eliminado alumno ');
+        //res.redirect('/dashboard');
     });
 });
 
