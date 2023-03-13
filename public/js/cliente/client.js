@@ -5,6 +5,8 @@ $(function() {
     $("#botonModalContrato").hide()
 
     var id_client = $("#id_client").val();
+    var estado =   $("#estado_client").val(); 
+    avisoEstado(estado);
     getPagos(id_client);
     getAlumnosClient(id_client);
     paintContract(id_client)
@@ -541,44 +543,31 @@ function getAlumnosClient(id_client) {
     });
 }
 
-// function ocultarBotonContrato(id) {
-//     $.ajax({
-//         url: '/client/alumnos/' + id,
-//         type: 'GET',
+ 
+function avisoEstado(estado)
+{
+    switch(estado)
+    {
+        case "Agregado a sistema":
+            $('#mensajeCliente').append(`
+            <hr>
+            <div class="btn-danger">
+            Actualizar estado de cliente para poder generar pagos
+            </div>
 
-//         dataType: 'json',
-//         success: function(resp) {
-//             resp.forEach(element => {
-//                 if (element.nivel == null || element.grado == null || element.colegiatura == null)
+            <hr>
+            `);
+            $('#btnPagoModal').attr("disabled", true);
+            $('#btnPagoModal').click(false);
+        break;
 
-//                 {
-//                     $("#botonDeContrato").hide();
-//                     if (element.estado == "deudor") {
-//                         alert("Este cliente es deudor y no podemos generar un contrato hasta cubrir la deuda.")
+    }
+    
+                        
 
-//                     } else 
-//                     {
-
-                       
-
-//                         alert("Uno o más de tus alumnos de este usuario le faltan datos completa los datos de los alumnos para poder generar contratos.")
-//                         return
-//                     }
-
-
-
-//                 }
-//             });
+}
 
 
-
-//         }
-//     });
-
-
-// }
-
-//tabla contratos
 function ocultarBotonContrato(id) {
     $.ajax({
         url: '/client/alumnos/' + id,

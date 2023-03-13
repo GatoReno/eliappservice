@@ -68,7 +68,16 @@
 <input type="hidden" value="{{mail}}" id="mail_client">
 <input type="hidden" value="{{phone}}" id="phone_client">
 <input type="hidden" value="{{name}}" id="name_client">
+<input type="hidden" value="{{estado}}" id="estado_client">
 <input type="hidden" id="id_selected_student">
+
+     <row>
+  <div>
+     <div class="" id="mensajeCliente">
+    </div>
+
+  </div>
+</row>
  
   <div class="col-lg-6 col-md-6 col-sm-6">
   
@@ -150,13 +159,6 @@
     <div class="" id="holderTablaContratos">
     </div>
     <br>
-     <row>
-  <div>
-     <div class="" id="mensajeCliente">
-    </div>
-
-  </div>
-</row>
   
     <br>
     <div class="col-md-12 col-sm-12" id="menuBotonesCliente" class="pull-right">
@@ -170,7 +172,9 @@
                          
                         </li>
                         <li class="breadcrumb-item">
-                          <a class="btn btn-default" data-toggle="modal" data-target="#modal_client" onclick="return modalPago()">Generar Pago</a>
+                          <a class="btn btn-default" data-toggle="modal" data-target="#modal_client" 
+                          id="btnPagoModal"
+                          onclick="return modalPago()">Generar Pago</a>
                         </li>
 
                          <li class="breadcrumb-item">
@@ -368,6 +372,8 @@
 <script src="/js/cliente/client.js"></script>
 
   <script>
+
+
     
     function guardarPdfReporte(){
       var today = new Date();
