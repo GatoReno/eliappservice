@@ -1,6 +1,5 @@
 require('dotenv').config()
 'use strict';
-
 module.exports = {
     database: {
         host: 'us-cdbr-east-06.cleardb.net',
@@ -12,3 +11,4 @@ module.exports = {
         storageKey: 'gs://joanmiroapp.appspot.com'
     }
 }
+// mysql://b89790c716b125:c3b01f29@us-cdbr-iron-east-02.cleardb.net/heroku_16c41959ed8b28c?reconnect=true

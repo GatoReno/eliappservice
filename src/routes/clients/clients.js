@@ -287,7 +287,8 @@ router.post('/add-client', (req, res) => {
         oficina: oficina_padre,
         mail: mail_padre,
         parentesco: parentesco,
-        id_cartera: 0
+        id_cartera: 0,
+        estado:"Agregado a sistema"
     }
 
     //console.log(client)

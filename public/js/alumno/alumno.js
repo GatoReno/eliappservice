@@ -7,6 +7,25 @@ $(document).ready(function() {
     
 });
 
+
+
+function modalEliminarAlumno(alumno)
+{ 
+    $('#modal_title_alumno').empty();
+    $('#modal_title_alumno').append('Eliminar Alumno');
+    $('#modal_body_alumno').empty();
+    var str = `
+    <form action="/delete-alumno" method="POST">
+    <h3>Usted esta apunto de eliminar este alumno</h3> 
+    <input  name="id_user" class="hidden" value="${alumno}"/>
+        <input type="submit" value="Eliminar Alumno" class="btn btn-danger" /> 
+    </form>
+    `;
+    $('#modal_body_alumno').append(str);
+}
+
+
+
 function modal_alumno_edit(id){
    
         console.log(id);

@@ -64,10 +64,9 @@ router.post('/update-info-admin', (req, res) => {
         colonia: colonia,
         cp: cp,
         estado: estado,
-
         status: 1,
         img: imgfn,
-        admin: true
+        admin: 1
     };
 
     const queryk = pool.query('UPDATE USERS_ set ? where id = ? ', [userd, id]);
@@ -253,7 +252,7 @@ router.post('/signup-client', async (req, res) => {
 
 
     const queryalumn = pool.query('INSERT INTO alumnos_ set  ?', [alumno]);
-    queryalumn.then(  (err, resx) => {
+    queryalumn.then((err, resx) => {
         if (err) throw err;
 
         if (resx.length > 0) {

@@ -61,7 +61,7 @@ function getadmins() {
             data.forEach((item) => {
                 const row = `<tr>
                     <td><input value="${ item.id }"></td>
-                    <td>${ item.name }</td>
+                    <td>${ item.username }</td>
                     <td><a class="btn btn-default">Ver</a></td>
                 </tr>`;
                 $('#usersT').append(row);

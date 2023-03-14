@@ -5,6 +5,8 @@ $(function() {
     $("#botonModalContrato").hide()
 
     var id_client = $("#id_client").val();
+    var estado =   $("#estado_client").val(); 
+    avisoEstado(estado);
     getPagos(id_client);
     getAlumnosClient(id_client);
     paintContract(id_client)
@@ -241,6 +243,25 @@ function getDatosPago(id) {
         }
     });
 
+}
+
+
+
+function modalEliminarCliente(idCliente)
+{ 
+    $('#modal_title_client').empty();
+    $('#modal_title_client').append('Eliminar Cliente');
+    $('#modal_body').empty();
+    var str = `
+    <form action="/delete-cliente" method="POST">
+        <h3>Usted esta apunto de eliminar este cliente</h3> 
+         <input  name="id_user" class="hidden
+         
+         " value="${idCliente}"/>
+        <input type="submit" value="Eliminar Cliente" class="btn btn-danger" /> 
+    </form>
+    `;
+    $('#modal_body').append(str);
 }
 
 function modalPago() {
@@ -522,41 +543,31 @@ function getAlumnosClient(id_client) {
     });
 }
 
-function ocultarBotonContrato(id) {
-    $.ajax({
-        url: '/client/alumnos/' + id,
-        type: 'GET',
+ 
+function avisoEstado(estado)
+{
+    switch(estado)
+    {
+        case "Agregado a sistema":
+            $('#mensajeCliente').append(`
+            <hr>
+            <div class="btn-danger">
+            Actualizar estado de cliente para poder generar pagos
+            </div>
 
-        dataType: 'json',
-        success: function(resp) {
-            resp.forEach(element => {
-                if (element.nivel == null || element.grado == null || element.colegiatura == null)
+            <hr>
+            `);
+            $('#btnPagoModal').attr("disabled", true);
+            $('#btnPagoModal').click(false);
+        break;
 
-                {
-                    $("#botonDeContrato").hide();
-                    if (element.estado == "deudor") {
-                        alert("Este cliente es deudor y no podemos generar un contrato hasta cubrir la deuda.")
-
-                    } else {
-
-                        alert("Uno o más de tus alumnos de este usuario le faltan datos completa los datos de los alumnos para poder generar contratos.")
-                        return
-                    }
-
-
-
-                }
-            });
-
-
-
-        }
-    });
-
+    }
+    
+                        
 
 }
 
-//tabla contratos
+
 function ocultarBotonContrato(id) {
     $.ajax({
         url: '/client/alumnos/' + id,
@@ -571,11 +582,25 @@ function ocultarBotonContrato(id) {
                     $("#botonDeContrato").hide();
                     if (element.estado == "deudor") {
                         alert("Este cliente es deudor y no podemos generar un contrato hasta cubrir la deuda.")
+                        $('#mensajeCliente').append(`
+                        <hr>
+                        <div class="btn-danger">
+                        ste cliente es deudor y no podemos generar un contrato hasta cubrir la deuda.
+                        </div>
+
+                        <hr>
+                        `);
 
                     } else {
+                        $('#mensajeCliente').append(`
+                        <hr>
+                        <div class="btn-danger">
+                        Uno o más de tus alumnos de este usuario le faltan datos completa los datos de los alumnos para poder visualizar boton de contratos.
+                        </div>
 
-                        alert("Uno o más de tus alumnos de este usuario le faltan datos completa los datos de los alumnos para poder generar contratos.")
-                        return
+                        <hr>
+                        `);
+                         return
                     }
 
 
@@ -634,7 +659,7 @@ function pintarTabla(id) {
                 }
 
             });
-            $('#holderTablaContratos').append("<p>Si el ciente no cuenta con algun contrato, entonces o tiene ocontratos, favor de crear uno.</p>");
+            $('#holderTablaContratos').append("<p>Si el ciente no cuenta con algun contrato favor de crear uno.</p>");
             $('#holderTablaContratos').append("<p>DE MOMENTO ES NECESARTIO AGREGAR .pdf A LOS ARCHIVOS PARA PODER SER LEIDOS PROPIAMENTE</p>");
         }
 
