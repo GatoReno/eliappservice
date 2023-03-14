@@ -129,7 +129,7 @@ router.post('/expenses-add', (req, res) => {
             };
 
 
-            pool.query("insert into expensas_ set ?", [insert])
+            pool.query("insert into _ set ?", [insert])
 
 
         })();

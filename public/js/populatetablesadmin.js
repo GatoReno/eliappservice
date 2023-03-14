@@ -1,50 +1,17 @@
-// -- /get-owners
-/*function getowners(){
-    
-    $.ajax({
-        type: 'GET',
-        url: '/get-owners',
-        dataType: 'json',
-        success: (data) => {
+function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
 
-            data.forEach( ( item ) => {
-                const row = `<tr>
-                    <td><img src="${ item.img }"></td>
-                    <td>${ item.name }</td>
-                    <td><button>Eliminar</button></td>
-                </tr>`;
-                $('#ownerT').append( row );
-            });
-        }
+    if (month.length < 2)
+        month = '0' + month;
+    if (day.length < 2)
+        day = '0' + day;
 
-    });
-    //$("#ownerT").load();
+    return [year, month, day].join('-');
+}
 
-};
-
-function getprojects(){
-    
-    $.ajax({
-        type: 'GET',
-        url: '/get-projects',
-        dataType: 'json',
-        success: (data) => {
-
-            data.forEach( ( item ) => {
-                const row = `<tr>
-                    <td><img width="155px" src="/uploads/${ item.img }"></td>
-                    <td>${ item.title }</td>
-                    <td><a href="/projects/update-project/${item.id}" class="btn btn-default">Editar</a></td>
-                    <td><a href="" class="btn btn-danger">Eliminar</a></td>
-                </tr>`;
-                $('#projectsT').append( row );
-            });
-        }
-
-    });
-    //$("#ownerT").load();
-
-};*/
 
 function getclientsSelect() {
     $.ajax({
@@ -203,6 +170,7 @@ function getclients() {
         dataType: 'json',
         success: (data) => {
 
+
             data.forEach((item) => {
                 const row = `<tr>
                     
@@ -217,16 +185,91 @@ function getclients() {
 
     });
 };
-0
+
 //tableGastosTitle
+function filterByDate() {
+    document.getElementById("botonRegresarTabla").removeAttribute("hidden")
+
+    var fi = document.getElementById("fechaInicial").value;
+    var ff = document.getElementById("fechaFinal").value;
+
+    var fechaInicial = fi.replace(/-/g, "")
+    var fechaFinal = ff.replace(/-/g, "")
 
 
-function getexpensassall() {
+
     $.ajax({
         type: 'GET',
         url: '/expenses-month-get',
         dataType: 'json',
         success: (data) => {
+            $('#gastosT').empty();
+            $('#tableGastosTitle').empty();
+            $('#tableGastosTitle').append('Gastos del mes ');
+
+            for (i in data) {
+                const d = formatDate(data[i].created_at)
+                    // console.log(d.replace(/-/g, ""))
+                if (d.replace(/-/g, "") >= fechaInicial && d.replace(/-/g, "") <= fechaFinal) {
+
+
+                    var imgId = 0;
+
+
+
+                    var img = data[i].imagenDelTicket
+                    var imgName = data[i].nombreDeImagen
+                    console.log(data[i].id)
+
+                    var row = `<tr>
+                <td>${ data[i].concepto }</td>
+                <td>$ ${ data[i].amount } mx</td>                    
+                <td> ${ formatDate(data[i].created_at) } </td>
+              
+                  `;
+
+                    if (img != null) {
+                        row += `<td> <a  id="${imgId}"href="${img}">   Descargar imagen </a> </td>
+                    
+                   `
+
+                    }
+
+                    var id = data[i].id;
+                    var c = data[i].concepto
+
+
+                    row += `<td> <a  data-toggle="modal" data-target="#modal_dash"
+                 onclick="return modal_updateTicketImage(${id}, '${c}', '${imgName}')"   >   Actualizar imagen </a> </td> </tr>`
+
+
+                    //hacer que desaparezca el hyperlink si href es null
+                    $('#gastosT').append(row);
+
+
+
+                    imgId++
+
+                    ;
+
+
+                }
+            }
+        }
+    })
+}
+
+
+
+function getexpensassall() {
+    let hidden = document.getElementById("botonRegresarTabla").getAttribute("hidden");
+    document.getElementById("botonRegresarTabla").setAttribute("hidden", "hidden")
+    $.ajax({
+        type: 'GET',
+        url: '/expenses-month-get',
+        dataType: 'json',
+        success: (data) => {
+
             console.log(data)
 
 
@@ -246,7 +289,7 @@ function getexpensassall() {
                 var row = `<tr>
                 <td>${ item.concepto }</td>
                 <td>$ ${ item.amount } mx</td>                    
-                <td>$ ${ item.created_at } mx</td>
+                <td> ${ formatDate(item.created_at) } </td>
               
                   `;
 
