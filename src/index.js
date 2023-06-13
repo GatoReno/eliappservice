@@ -91,6 +91,15 @@ app.use(require('./routes/fbi'));
 app.use(require('./routes/tests'));
 app.use('/auth', require('./routes/auth'));
 
+// app.use((req,res)=>
+// {
+//     res.status(404).sendFile('./views/fail-not-found.hbs', {root: __dirname});
+// });
+
+// app.get('*', function(req, res){
+//     res.status(404).send('what???');
+//   });
+
 // Publics
 app.use(express.static(path.join(__dirname, '../public/')));
 
